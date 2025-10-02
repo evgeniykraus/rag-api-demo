@@ -7,7 +7,8 @@ use LarAgent\Agent;
 
 class ProposalClassifierAgent extends Agent
 {
-    protected $model = 'gpt-5-mini';
+//    protected $model = 'gpt-5-mini';
+    protected $model = 'meta-llama-3-8b-instruct';
     protected $history = 'in_memory';
     protected $provider = 'default';
     protected $temperature = 0.3;

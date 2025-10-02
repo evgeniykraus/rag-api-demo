@@ -377,6 +377,18 @@
                                                                             </div>
                                                                     <div class="expandable">
                                         <div class="sl-flex sl-items-center sl-h-md sl-pr-4 sl-pl-8 sl-bg-canvas-100 hover:sl-bg-canvas-200 sl-cursor-pointer sl-select-none"
+                                             id="toc-item-endpoints-GETapi-v1-proposals-search">
+                                            <div class="sl-flex-1 sl-items-center sl-truncate sl-mr-1.5 sl-p-0" title="GET api/v1/proposals/search">
+                                                <a class="ElementsTableOfContentsItem sl-block sl-no-underline"
+                                                   href="#endpoints-GETapi-v1-proposals-search">
+                                                    GET api/v1/proposals/search
+                                                </a>
+                                            </div>
+                                                                                    </div>
+
+                                                                            </div>
+                                                                    <div class="expandable">
+                                        <div class="sl-flex sl-items-center sl-h-md sl-pr-4 sl-pl-8 sl-bg-canvas-100 hover:sl-bg-canvas-200 sl-cursor-pointer sl-select-none"
                                              id="toc-item-endpoints-GETapi-v1-dictionary-cities">
                                             <div class="sl-flex-1 sl-items-center sl-truncate sl-mr-1.5 sl-p-0" title="GET api/v1/dictionary/cities">
                                                 <a class="ElementsTableOfContentsItem sl-block sl-no-underline"
@@ -811,71 +823,35 @@ fetch(url, {
                                                        class="language-json sl-overflow-x-auto sl-overflow-y-auto">{
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 2,
-            &quot;content&quot;: &quot;Здравствуйте! Периодически мусоровоз Чистый город вывозит из Детского сада 232 мусор. В качестве подъездного пути  выбирает движение задним ходом с грохотом и предупреждающим пищанием ранним утром. Сегодня в 04:48 утра, когда жильцы дома по ул. В.Волошиной, 20 спят,выкатывая из детского сада с грохотом опусташают контейнер прямо под окнами жильцов (фото прилагается). Наш двор узкий и когда протискивается мусорвоз беспокоимся за свой авто. Считаю, что вывозить мусор из детского сада Чистый город не должны нарушая тишину и покой граждан, тем более оказывая услуги не жильцам, а детскому саду. Уже не однократно писала в Администрацию города разобраться с подъездными путями к ДС 232 напрямую между домами 19 и 20. Прошу оказать содействие! Видео по ссылке https://photos.app.goo.gl/Xm3k2toRkHaGQNyz9&quot;,
-            &quot;created_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
+            &quot;id&quot;: 810,
+            &quot;content&quot;: &quot;Вот таково состояние тротуара после ремонта дороги. Сам пешеходный переход тоже весь разломан, ямы, куски асфальта. И это не единственное пострадавшее место. Такая же картина и на Комсомольской, Московской. Как преодолевать эти препятствия пожилым, больным людям, мамам с колясками? Одно делается, другое ломается.&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
             &quot;city&quot;: {
-                &quot;id&quot;: 16,
-                &quot;name&quot;: &quot;Салаир&quot;
+                &quot;id&quot;: 7,
+                &quot;name&quot;: &quot;Гурьевск&quot;
             },
             &quot;category&quot;: {
-                &quot;id&quot;: 26,
-                &quot;name&quot;: &quot;Другое&quot;,
+                &quot;id&quot;: 70,
+                &quot;name&quot;: &quot;Наличие ям, выбоин на проезжей части, дороге&quot;,
                 &quot;parent&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
+                    &quot;id&quot;: 66,
+                    &quot;name&quot;: &quot;Автомобильные дороги&quot;
                 }
             }
         },
         {
-            &quot;id&quot;: 3,
-            &quot;content&quot;: &quot;Ужасное состочние дворов по адресам ул. Кирова 36, ул. Кирова 38, ул. Красноармейская 112, ул. Красноармейская 116. Дороги ужасные, Кирова 36,38 детская площадка ужасная, хотя в этих домах очень много маленьких детей. Кирова 38, выходя из подъезда сразу попадаешь на проезжую часть. Письма в администрацию никаких результатов не приносят. &quot;,
-            &quot;created_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
+            &quot;id&quot;: 811,
+            &quot;content&quot;: &quot;Здравствуйте, квартира 32.  Из 8 - 3 батареи холодные. В прошлом году вызывали ваших специалистов.  Определили, что это следствие низкого давления по причине неправильной работы котельной. В этом году котельную отремонтировали. Но эти 3 батареи были тёплыми только 1 раз. Прошу увеличить давление при подаче воды.&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
             &quot;city&quot;: {
-                &quot;id&quot;: 4,
-                &quot;name&quot;: &quot;Анжеро-Судженск&quot;
+                &quot;id&quot;: 12,
+                &quot;name&quot;: &quot;Мыски&quot;
             },
             &quot;category&quot;: {
-                &quot;id&quot;: 26,
-                &quot;name&quot;: &quot;Другое&quot;,
-                &quot;parent&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
-                }
-            }
-        },
-        {
-            &quot;id&quot;: 4,
-            &quot;content&quot;: &quot;Весь строительный мусор  вывезен  за заправку(асфальт,шины , бордюрины ) , видно все с  балкона на этот беспредел, куда не писал везде тишина&quot;,
-            &quot;created_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;city&quot;: {
-                &quot;id&quot;: 15,
-                &quot;name&quot;: &quot;Прокопьевск&quot;
-            },
-            &quot;category&quot;: {
-                &quot;id&quot;: 94,
-                &quot;name&quot;: &quot;Несоблюдение экологических требований при обращении с отходами&quot;,
-                &quot;parent&quot;: {
-                    &quot;id&quot;: 91,
-                    &quot;name&quot;: &quot;Экология&quot;
-                }
-            }
-        },
-        {
-            &quot;id&quot;: 5,
-            &quot;content&quot;: &quot;В июле 2019 раскопали стоянку автотранспорта (ремонт водопровода), сделали, а обратно не востановили.&quot;,
-            &quot;created_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;city&quot;: {
-                &quot;id&quot;: 13,
-                &quot;name&quot;: &quot;Осинники&quot;
-            },
-            &quot;category&quot;: {
-                &quot;id&quot;: 57,
-                &quot;name&quot;: &quot;Повреждение элементов общего имущества многоквартирного дома: продухи, отмастки, фундамент, пол, стены, водостоки, иное&quot;,
+                &quot;id&quot;: 31,
+                &quot;name&quot;: &quot;слабое давление (напор) горячей, холодной воды&quot;,
                 &quot;parent&quot;: {
                     &quot;id&quot;: 27,
                     &quot;name&quot;: &quot;Жилищно-коммунальное хозяйство&quot;
@@ -883,125 +859,53 @@ fetch(url, {
             }
         },
         {
-            &quot;id&quot;: 6,
-            &quot;content&quot;: &quot;Здравствуйте. По дороге от авиаторов 97 до пр. Мира каждое утро ходят родители с детьми в сад  школу и т.д. очень часто там ездят машины, т.к. дорога проездная и сквозная. Для безопасности граждан на этом проезде требуется сделать тротуар вдоль дороги, чтобы пешеходы безопасно ходили. Также там требуется минимальное освещение. Надеюсь моё предложение найдёт отклик.&quot;,
-            &quot;created_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;city&quot;: {
-                &quot;id&quot;: 14,
-                &quot;name&quot;: &quot;Полысаево&quot;
-            },
-            &quot;category&quot;: {
-                &quot;id&quot;: 18,
-                &quot;name&quot;: &quot;Необходимость оборудования тротуара (пешеходной дорожки) или обустройство нового покрытия тротуара (пешеходной дорожки)&quot;,
-                &quot;parent&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
-                }
-            }
-        },
-        {
-            &quot;id&quot;: 7,
-            &quot;content&quot;: &quot;Опять к теме вывоза крупногабарита. Поскольку толкового ответа на мой вопрос не последовало и спустя месяц проблема не решена, повторю опять. Первое. Укажите точные сроки обустройства площадки для крупногабарита. Второе. Почему вопрос был переадресован УК? Обустройство площадки должен производить собственник земли, на которой она расположена. По кадастровой карте площадка находится на муниципальной земле. Следовательно, прошу муниципальные власти обустроить на мусорной площадке место для складирования крупногабарита.&quot;,
-            &quot;created_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;city&quot;: {
-                &quot;id&quot;: 11,
-                &quot;name&quot;: &quot;Мариинск&quot;
-            },
-            &quot;category&quot;: {
-                &quot;id&quot;: 37,
-                &quot;name&quot;: &quot;Нарушение графика вывоза твердых коммунальных отходов, в том числе с контейнерных площадок&quot;,
-                &quot;parent&quot;: {
-                    &quot;id&quot;: 27,
-                    &quot;name&quot;: &quot;Жилищно-коммунальное хозяйство&quot;
-                }
-            }
-        },
-        {
-            &quot;id&quot;: 8,
-            &quot;content&quot;: &quot;Добрый день! На проспекте Металлургов, дом 8, над входом висят опасные сосульки. Между 1 и 2 подъездом, вход со двора.&quot;,
-            &quot;created_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;city&quot;: {
-                &quot;id&quot;: 15,
-                &quot;name&quot;: &quot;Прокопьевск&quot;
-            },
-            &quot;category&quot;: {
-                &quot;id&quot;: 52,
-                &quot;name&quot;: &quot;Наледь и сосульки на кровле многоквартирного дома&quot;,
-                &quot;parent&quot;: {
-                    &quot;id&quot;: 27,
-                    &quot;name&quot;: &quot;Жилищно-коммунальное хозяйство&quot;
-                }
-            }
-        },
-        {
-            &quot;id&quot;: 9,
-            &quot;content&quot;: &quot;Здравствуйте, при въезде во двор образовалась наледь на дороге, которая образовала большие ямы.&quot;,
-            &quot;created_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;city&quot;: {
-                &quot;id&quot;: 16,
-                &quot;name&quot;: &quot;Салаир&quot;
-            },
-            &quot;category&quot;: {
-                &quot;id&quot;: 26,
-                &quot;name&quot;: &quot;Другое&quot;,
-                &quot;parent&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
-                }
-            }
-        },
-        {
-            &quot;id&quot;: 10,
-            &quot;content&quot;: &quot;Между домами Волошиной, 20 и Волошиной, 22 проезжая часть завалена снегом- транспорт застревает. По этой же дороге подъезжают к детскому саду МАДОУ 223, паркуются родители учеников шк.№37. Прошу оказать содействие и принять меры по очистке подъездного пути.&quot;,
-            &quot;created_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
+            &quot;id&quot;: 812,
+            &quot;content&quot;: &quot;30.09 с потолка по электропроводке начала бежать вода. Была оставлена заявка в УК\&quot;Феникс\&quot;. На следующий день диспетчер сказала, что крышу обследовали, решили делать ремонт.\nВ Последующие дни протечку не устранили. Воды на полу стало больше. Завтра будет неделя, как не можем ничего добиться. Управляющая компания не принимает мер по устранению протечки.&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
             &quot;city&quot;: {
                 &quot;id&quot;: 19,
                 &quot;name&quot;: &quot;Топки&quot;
             },
             &quot;category&quot;: {
-                &quot;id&quot;: 26,
-                &quot;name&quot;: &quot;Другое&quot;,
+                &quot;id&quot;: 59,
+                &quot;name&quot;: &quot;Протечка кровли (крыши) многоквартирного дома&quot;,
                 &quot;parent&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
+                    &quot;id&quot;: 27,
+                    &quot;name&quot;: &quot;Жилищно-коммунальное хозяйство&quot;
                 }
             }
         },
         {
-            &quot;id&quot;: 11,
-            &quot;content&quot;: &quot;Здравствуйте, на повороте с Ул. Красноармейской на ул. Рукавишникова просто ужас, там ямы ужасные, пожалуйста заделайте их, и по всему Рукавишникова такие ямы прошлым летом делали, и опять. Заранее спасибо!!!&quot;,
-            &quot;created_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
+            &quot;id&quot;: 813,
+            &quot;content&quot;: &quot;Вопрос планируется ли установка уличного освещение по ул. Рослякова &quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
             &quot;city&quot;: {
-                &quot;id&quot;: 13,
-                &quot;name&quot;: &quot;Осинники&quot;
+                &quot;id&quot;: 11,
+                &quot;name&quot;: &quot;Мариинск&quot;
             },
             &quot;category&quot;: {
-                &quot;id&quot;: 26,
-                &quot;name&quot;: &quot;Другое&quot;,
+                &quot;id&quot;: 35,
+                &quot;name&quot;: &quot;предоставление электроснабжения с перебоями (ограничение)&quot;,
                 &quot;parent&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
+                    &quot;id&quot;: 27,
+                    &quot;name&quot;: &quot;Жилищно-коммунальное хозяйство&quot;
                 }
             }
         },
         {
-            &quot;id&quot;: 12,
-            &quot;content&quot;: &quot;Прошу обратить внимание властей и дорожных служб на состояние грузовой дороги в Кировский район! Дорожное полотно просто в фантастически безобразном состоянии!!!! Это многократно увеличивает риск ДТП и просто &laquo;убивает&raquo; автомобили!!!!&quot;,
-            &quot;created_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
+            &quot;id&quot;: 814,
+            &quot;content&quot;: &quot;По улице Юности когда клали асфальт убрали плитку с аллеи потом засыпали землей и так бросили траву вокруг этого болота уже совсем вытоптали с двух сторон\nВремя ответа - до 17.00 09.10.20г.\n&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
             &quot;city&quot;: {
-                &quot;id&quot;: 13,
-                &quot;name&quot;: &quot;Осинники&quot;
+                &quot;id&quot;: 10,
+                &quot;name&quot;: &quot;Ленинск-Кузнецкий&quot;
             },
             &quot;category&quot;: {
-                &quot;id&quot;: 26,
-                &quot;name&quot;: &quot;Другое&quot;,
+                &quot;id&quot;: 20,
+                &quot;name&quot;: &quot;Работы по благоустройству общественной, дворовой территории выполнены с ненадлежащим качеством&quot;,
                 &quot;parent&quot;: {
                     &quot;id&quot;: 1,
                     &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
@@ -1009,28 +913,10 @@ fetch(url, {
             }
         },
         {
-            &quot;id&quot;: 13,
-            &quot;content&quot;: &quot;Не прочищена дорога. В связи с погодными условиями, снег упал, образовались колеи. Проехать не представляется возможным. Просьба помочь!&quot;,
-            &quot;created_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;city&quot;: {
-                &quot;id&quot;: 5,
-                &quot;name&quot;: &quot;Белово&quot;
-            },
-            &quot;category&quot;: {
-                &quot;id&quot;: 26,
-                &quot;name&quot;: &quot;Другое&quot;,
-                &quot;parent&quot;: {
-                    &quot;id&quot;: 1,
-                    &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
-                }
-            }
-        },
-        {
-            &quot;id&quot;: 14,
-            &quot;content&quot;: &quot;Фото ЦЕНТРАЛЬНОГО перекрёстка в п. Боровой. В 50 м садик, проехать невозможно. Другие дороги ещё в худшем состоянии. Оставили 3 заявки в Кемдор вчера вечером, \&quot;результат\&quot; на фото. Просим почистить нам дороги!!!!!!!&quot;,
-            &quot;created_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
+            &quot;id&quot;: 815,
+            &quot;content&quot;: &quot;Обращаются к вам собственники жилья МКД ул.Новостройка. 13А. г.Киселёвска.\n1.09.2020г. по решению суда ООО \&quot;УК\&quot;Мирт\&quot; прекратила  обслуживание МКД ул.Новостройка. 13А. Общее собрание собственников  выбрало ООО \&quot;УК\&quot;Сапфир\&quot;, но в связи с оформлением документов и  внесением  МКД ул.Новостройка. 13А. в реестр лицензий ООО \&quot;УК\&quot;Сапфир\&quot; ГЖИ  Кемеровской области  дом остался  без обслуживания накануне зимы. Пока  идёт рассмотрение и оформление  документов в ГЖИ Кемеровской  области. По распоряжению УЖКХ г. Киселёвска ООО \&quot;УК\&quot;Сапфир\&quot; уже сейчас  может обслуживать  наш дом.  Заявление по этому поводу  находится в УЖКХ, но в силу  вступить не может, т.к   некому подписать бумаги. Начальник УЖКХ болеет и  никто не хочет  взять на себя ответственность в  решении этого вопроса.\n\nПредседатель Совета  МКД ул.Новостройка. 13А.  Гаев Евгений Александрович.\n\n&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
             &quot;city&quot;: {
                 &quot;id&quot;: 20,
                 &quot;name&quot;: &quot;Юрга&quot;
@@ -1045,31 +931,13 @@ fetch(url, {
             }
         },
         {
-            &quot;id&quot;: 92,
-            &quot;content&quot;: &quot;Здравствуйте. Очень плохая, вся разбитая, в ямах дорога по ул. Красилова. (Точилино), ездить невозможно. Сейчас под программу ремонта дорог попадает множество дворов. Прощу отремонтировать и эту дорогу! Спасибо.&quot;,
-            &quot;created_at&quot;: &quot;2025-10-01T11:58:30.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-10-01T11:58:30.000000Z&quot;,
+            &quot;id&quot;: 816,
+            &quot;content&quot;: &quot;Когда с улиц нашего города уберёт бездомных собак. Район Черкасов Камень.&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
             &quot;city&quot;: {
-                &quot;id&quot;: 18,
-                &quot;name&quot;: &quot;Таштагол&quot;
-            },
-            &quot;category&quot;: {
-                &quot;id&quot;: 70,
-                &quot;name&quot;: &quot;Наличие ям, выбоин на проезжей части, дороге&quot;,
-                &quot;parent&quot;: {
-                    &quot;id&quot;: 66,
-                    &quot;name&quot;: &quot;Автомобильные дороги&quot;
-                }
-            }
-        },
-        {
-            &quot;id&quot;: 15,
-            &quot;content&quot;: &quot;Из двора выехать нет возможности, с 2 детьми пришлось идти по лужам в больницу, вместо поездки на личном транспорте.\nВчера скорая к ребёнку заехать смогла с большим трудом...\nУК Радуга не торопится устранять проблемы, хотя заявки подаются ежедневно&quot;,
-            &quot;created_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;updated_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-            &quot;city&quot;: {
-                &quot;id&quot;: 7,
-                &quot;name&quot;: &quot;Гурьевск&quot;
+                &quot;id&quot;: 6,
+                &quot;name&quot;: &quot;Берёзовский&quot;
             },
             &quot;category&quot;: {
                 &quot;id&quot;: 26,
@@ -1077,6 +945,150 @@ fetch(url, {
                 &quot;parent&quot;: {
                     &quot;id&quot;: 1,
                     &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 817,
+            &quot;content&quot;: &quot;Течёт батарея в третьем подъезде, с утра звонили никто не пришёл, причём не мы одни звонили, после обеда позвонили узнать когда придут? На вопрос они ответили, что никто не прийдет!!! Бежит на втором этаже, заходишь в подъезд и на тебя капает водичка! Замечательно у нас работает жил сервис.&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 16,
+                &quot;name&quot;: &quot;Салаир&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 57,
+                &quot;name&quot;: &quot;Повреждение элементов общего имущества многоквартирного дома: продухи, отмастки, фундамент, пол, стены, водостоки, иное&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 27,
+                    &quot;name&quot;: &quot;Жилищно-коммунальное хозяйство&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 818,
+            &quot;content&quot;: &quot;Здравствуйте. Хотелось бы знать - почему бюджетом Кемеровского муниципального округа учтены только поступления (субвенции и т.д.) для городских округов? Разве Муниципальные образования не входят в состав округа, и сколько в составе Кемеровского муниципального округа, не путать с Кемеровским городским округом, есть городов, что для них идут поступления?  &quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 5,
+                &quot;name&quot;: &quot;Белово&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 26,
+                &quot;name&quot;: &quot;Другое&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 1,
+                    &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 819,
+            &quot;content&quot;: &quot;Все стояки в квартире 38 (2 подъезд, угловой) стабильно холодные. Ситуация повторяется из года в год. УК \&quot;Жилсервис\&quot;, к которым я неоднократно обращалась, заявляет, что проблему они решить не могут, так как виновата котельная номер 23. Котельная маломощная и подаёт слабое давление и поэтому дом завоздушивается и плохо отапливается.\nПрошу помочь в решении данного вопроса и сообщить, готовится ли переключение нашего дома к центральной котельной. \nСпасибо.&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 2,
+                &quot;name&quot;: &quot;Кемерово&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 36,
+                &quot;name&quot;: &quot;низкая температура (холодно) в жилом помещении&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 27,
+                    &quot;name&quot;: &quot;Жилищно-коммунальное хозяйство&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 820,
+            &quot;content&quot;: &quot; На детской площадке для детей с ограниченными возможностями, ул. Павлова,3. 28.09.2020 г. начато  строительство игровой зоны для детей. Проектом не предусмотрены подъездные пути к площадке. Площадка предназначена для инвалидов, вокруг площадки как видно на фотографиях и согласно проекту  нет асфальтового подъезда, только грунтовый. Это значит, что детям- колясочникам будет очень трудно попасть на площадку, а после дождя вообще невозможно. В ходе строительства это неудобство желательно устранить.&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 18,
+                &quot;name&quot;: &quot;Таштагол&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 12,
+                &quot;name&quot;: &quot;Ненадлежащее состояние игровых и иных элементов (например, лавочек, урн, ограждений, покрытий, песка) на детской, спортивной площадке&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 1,
+                    &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 821,
+            &quot;content&quot;: &quot;Спасибо, за ответ на мой вопрос, об отоплении в летний период. Уточните мне, пожалуйста, а это постановление на кооперативные дома не действует? Соседний дом, кооперативный, почему они не платят за отопление летом?&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 8,
+                &quot;name&quot;: &quot;Калтан&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 26,
+                &quot;name&quot;: &quot;Другое&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 1,
+                    &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 823,
+            &quot;content&quot;: &quot;Почему СМИ и городская власть скрывают проблемы городского здравоохранения? Я прекрасно понимаю напряженность работы медиков, но чтобы ждать врача сутками, этого нет в других городах области! Не получается решить вопрос на месте - обратитесь за помощью к губернатору! Может сразу писать в приёмную президента!!!&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 4,
+                &quot;name&quot;: &quot;Анжеро-Судженск&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 149,
+                &quot;name&quot;: &quot;Вызов врача на дом&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 132,
+                    &quot;name&quot;: &quot;Здравоохранение&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 824,
+            &quot;content&quot;: &quot;На улице Лазо , от перекрестка с ул. Березовая до перекрестка с улицей Луговой ,установлены дорожные знаки, которые давно надо убрать так как не соответствуют настоящей организации движения. Никакого движения маршрутных автобусов там нет (раньше была пятерка). Ну а уж разметки соответствующей этому знаку там не было никогда. Поэтому наличие знака дорога с полосой для маршрутного знака служит только для взыскания штрафов с водителей. И все!!! УБТС наведите  хотя бы порядок со знаками по ул. Лазо. Уберите не нужные.Отчитались же в этом году за ремонт этой дороги, хотя ремонт сделали только на 1/3  части ул. Лазо. Оставшаяся без ремонта большая часть улице вообще не соотвествует никаким критериям, еще и знаки не нужные понатыканы.&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 10,
+                &quot;name&quot;: &quot;Ленинск-Кузнецкий&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 71,
+                &quot;name&quot;: &quot;Необходимость установка новых дорожных знаков с внесением в схему дислокации, замены старых знаков на новые&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 66,
+                    &quot;name&quot;: &quot;Автомобильные дороги&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 825,
+            &quot;content&quot;: &quot;В марте 2020 года, как начались тёплые дни, началась оттепель и начал обильно таять снег на крышах. А с крыш он прямиком начал таять в чердачное помещение и по по перекрытия вода потекла в квартиры и подъезд. Обращались с коллективной жалобой в управляющую компанию \&quot;Жилсервис\&quot;, устно обещали отремонтировать кровлю, но по сей день никаких работ не производилось! На письменные жалобы ни в УК, ни на сайте приёмной губернатора ответов нет.&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 3,
+                &quot;name&quot;: &quot;Новокузнецк&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 59,
+                &quot;name&quot;: &quot;Протечка кровли (крыши) многоквартирного дома&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 27,
+                    &quot;name&quot;: &quot;Жилищно-коммунальное хозяйство&quot;
                 }
             }
         }
@@ -1185,7 +1197,7 @@ fetch(url, {
         &quot;path&quot;: &quot;http://localhost/api/v1/proposals&quot;,
         &quot;per_page&quot;: 15,
         &quot;to&quot;: 15,
-        &quot;total&quot;: 164687
+        &quot;total&quot;: 164689
     }
 }</code></pre>
                                                                             </div>
@@ -1700,7 +1712,7 @@ fetch(url, {
                 <span>Example:</span> <!-- <span> important for spacing -->
                 <div class="sl-flex sl-flex-1 sl-flex-wrap" style="gap: 4px;">
                     <div class="sl-max-w-full sl-break-all sl-px-1 sl-bg-canvas-tint sl-text-muted sl-rounded sl-border">
-                        2
+                        810
                     </div>
                 </div>
             </div>
@@ -1833,7 +1845,7 @@ fetch(url, {
                                         <input aria-label="id" name="id"
                                                id="urlparam-GETapi-v1-proposals--id--id"
                                                placeholder="The ID of the proposal."
-                                               value="2" data-component="url"
+                                               value="810" data-component="url"
                                                class="sl-relative sl-w-full sl-h-md sl-text-base sl-pr-2.5 sl-pl-2.5 sl-rounded sl-border-transparent hover:sl-border-input focus:sl-border-primary sl-border">
                                     </div>
                                 </div>
@@ -1929,7 +1941,7 @@ You can check the Dev Tools console for debugging information.</p>
                                     <div class="sl-px-0 sl-py-1">
                                         <div style="max-height: 400px;" class="sl-overflow-y-auto sl-rounded">
                                             <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8088/api/v1/proposals/2" \
+    --get "http://localhost:8088/api/v1/proposals/810" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre>                                        </div>
                                     </div>
@@ -1939,7 +1951,7 @@ You can check the Dev Tools console for debugging information.</p>
                                     <div class="sl-px-0 sl-py-1">
                                         <div style="max-height: 400px;" class="sl-overflow-y-auto sl-rounded">
                                             <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8088/api/v1/proposals/2"
+    "http://localhost:8088/api/v1/proposals/810"
 );
 
 const headers = {
@@ -2013,17 +2025,17 @@ fetch(url, {
                                                                                                                                                                         
                                             <pre><code style="max-height: 300px;"
                                                        class="language-json sl-overflow-x-auto sl-overflow-y-auto">{
-    &quot;id&quot;: 2,
-    &quot;content&quot;: &quot;Здравствуйте! Периодически мусоровоз Чистый город вывозит из Детского сада 232 мусор. В качестве подъездного пути  выбирает движение задним ходом с грохотом и предупреждающим пищанием ранним утром. Сегодня в 04:48 утра, когда жильцы дома по ул. В.Волошиной, 20 спят,выкатывая из детского сада с грохотом опусташают контейнер прямо под окнами жильцов (фото прилагается). Наш двор узкий и когда протискивается мусорвоз беспокоимся за свой авто. Считаю, что вывозить мусор из детского сада Чистый город не должны нарушая тишину и покой граждан, тем более оказывая услуги не жильцам, а детскому саду. Уже не однократно писала в Администрацию города разобраться с подъездными путями к ДС 232 напрямую между домами 19 и 20. Прошу оказать содействие! Видео по ссылке https://photos.app.goo.gl/Xm3k2toRkHaGQNyz9&quot;,
-    &quot;created_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
-    &quot;updated_at&quot;: &quot;2025-10-01T11:58:29.000000Z&quot;,
+    &quot;id&quot;: 810,
+    &quot;content&quot;: &quot;Вот таково состояние тротуара после ремонта дороги. Сам пешеходный переход тоже весь разломан, ямы, куски асфальта. И это не единственное пострадавшее место. Такая же картина и на Комсомольской, Московской. Как преодолевать эти препятствия пожилым, больным людям, мамам с колясками? Одно делается, другое ломается.&quot;,
+    &quot;created_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
+    &quot;updated_at&quot;: &quot;2025-10-01T11:58:31.000000Z&quot;,
     &quot;city&quot;: {
-        &quot;id&quot;: 16,
-        &quot;name&quot;: &quot;Салаир&quot;
+        &quot;id&quot;: 7,
+        &quot;name&quot;: &quot;Гурьевск&quot;
     },
     &quot;category&quot;: {
-        &quot;id&quot;: 26,
-        &quot;name&quot;: &quot;Другое&quot;
+        &quot;id&quot;: 70,
+        &quot;name&quot;: &quot;Наличие ям, выбоин на проезжей части, дороге&quot;
     }
 }</code></pre>
                                                                             </div>
@@ -2143,7 +2155,7 @@ fetch(url, {
                 <span>Example:</span> <!-- <span> important for spacing -->
                 <div class="sl-flex sl-flex-1 sl-flex-wrap" style="gap: 4px;">
                     <div class="sl-max-w-full sl-break-all sl-px-1 sl-bg-canvas-tint sl-text-muted sl-rounded sl-border">
-                        2
+                        810
                     </div>
                 </div>
             </div>
@@ -2336,7 +2348,7 @@ fetch(url, {
                                         <input aria-label="id" name="id"
                                                id="urlparam-PUTapi-v1-proposals--id--id"
                                                placeholder="The ID of the proposal."
-                                               value="2" data-component="url"
+                                               value="810" data-component="url"
                                                class="sl-relative sl-w-full sl-h-md sl-text-base sl-pr-2.5 sl-pl-2.5 sl-rounded sl-border-transparent hover:sl-border-input focus:sl-border-primary sl-border">
                                     </div>
                                 </div>
@@ -2460,7 +2472,7 @@ You can check the Dev Tools console for debugging information.</p>
                                     <div class="sl-px-0 sl-py-1">
                                         <div style="max-height: 400px;" class="sl-overflow-y-auto sl-rounded">
                                             <pre><code class="language-bash">curl --request PUT \
-    "http://localhost:8088/api/v1/proposals/2" \
+    "http://localhost:8088/api/v1/proposals/810" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
@@ -2475,7 +2487,7 @@ You can check the Dev Tools console for debugging information.</p>
                                     <div class="sl-px-0 sl-py-1">
                                         <div style="max-height: 400px;" class="sl-overflow-y-auto sl-rounded">
                                             <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8088/api/v1/proposals/2"
+    "http://localhost:8088/api/v1/proposals/810"
 );
 
 const headers = {
@@ -2606,7 +2618,7 @@ fetch(url, {
                 <span>Example:</span> <!-- <span> important for spacing -->
                 <div class="sl-flex sl-flex-1 sl-flex-wrap" style="gap: 4px;">
                     <div class="sl-max-w-full sl-break-all sl-px-1 sl-bg-canvas-tint sl-text-muted sl-rounded sl-border">
-                        2
+                        810
                     </div>
                 </div>
             </div>
@@ -2739,7 +2751,7 @@ fetch(url, {
                                         <input aria-label="id" name="id"
                                                id="urlparam-DELETEapi-v1-proposals--id--id"
                                                placeholder="The ID of the proposal."
-                                               value="2" data-component="url"
+                                               value="810" data-component="url"
                                                class="sl-relative sl-w-full sl-h-md sl-text-base sl-pr-2.5 sl-pl-2.5 sl-rounded sl-border-transparent hover:sl-border-input focus:sl-border-primary sl-border">
                                     </div>
                                 </div>
@@ -2835,7 +2847,7 @@ You can check the Dev Tools console for debugging information.</p>
                                     <div class="sl-px-0 sl-py-1">
                                         <div style="max-height: 400px;" class="sl-overflow-y-auto sl-rounded">
                                             <pre><code class="language-bash">curl --request DELETE \
-    "http://localhost:8088/api/v1/proposals/2" \
+    "http://localhost:8088/api/v1/proposals/810" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre>                                        </div>
                                     </div>
@@ -2845,7 +2857,7 @@ You can check the Dev Tools console for debugging information.</p>
                                     <div class="sl-px-0 sl-py-1">
                                         <div style="max-height: 400px;" class="sl-overflow-y-auto sl-rounded">
                                             <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8088/api/v1/proposals/2"
+    "http://localhost:8088/api/v1/proposals/810"
 );
 
 const headers = {
@@ -2861,6 +2873,621 @@ fetch(url, {
                                 </div>
                                                     </div>
                     
+                            </div>
+    </div>
+</div>
+
+                    <div class="sl-stack sl-stack--vertical sl-stack--8 HttpOperation sl-flex sl-flex-col sl-items-stretch sl-w-full">
+    <div class="sl-stack sl-stack--vertical sl-stack--5 sl-flex sl-flex-col sl-items-stretch">
+        <div class="sl-relative">
+            <div class="sl-stack sl-stack--horizontal sl-stack--5 sl-flex sl-flex-row sl-items-center">
+                <h2 class="sl-text-3xl sl-leading-tight sl-font-prose sl-text-heading sl-mt-5 sl-mb-1"
+                    id="endpoints-GETapi-v1-proposals-search">
+                    GET api/v1/proposals/search
+                </h2>
+            </div>
+        </div>
+
+        <div class="sl-relative">
+            <div title="http://localhost:8088/api/v1/proposals/search"
+                     class="sl-stack sl-stack--horizontal sl-stack--3 sl-inline-flex sl-flex-row sl-items-center sl-max-w-full sl-font-mono sl-py-2 sl-pr-4 sl-bg-canvas-50 sl-rounded-lg"
+                >
+                                            <div class="sl-text-lg sl-font-semibold sl-px-2.5 sl-py-1 sl-text-on-primary sl-rounded-lg"
+                             style="background-color: green;"
+                        >
+                            GET
+                        </div>
+                                        <div class="sl-flex sl-overflow-x-hidden sl-text-lg sl-select-all">
+                        <div dir="rtl"
+                             class="sl-overflow-x-hidden sl-truncate sl-text-muted">http://localhost:8088</div>
+                        <div class="sl-flex-1 sl-font-semibold">/api/v1/proposals/search</div>
+                    </div>
+
+                                                    <div class="sl-font-prose sl-font-semibold sl-px-1.5 sl-py-0.5 sl-text-on-primary sl-rounded-lg"
+                                 style="background-color: darkred"
+                            >requires authentication
+                            </div>
+                                                            </div>
+        </div>
+
+        
+    </div>
+    <div class="sl-flex">
+        <div data-testid="two-column-left" class="sl-flex-1 sl-w-0">
+            <div class="sl-stack sl-stack--vertical sl-stack--10 sl-flex sl-flex-col sl-items-stretch">
+                <div class="sl-stack sl-stack--vertical sl-stack--8 sl-flex sl-flex-col sl-items-stretch">
+                                            <div class="sl-stack sl-stack--vertical sl-stack--5 sl-flex sl-flex-col sl-items-stretch">
+                            <h3 class="sl-text-2xl sl-leading-snug sl-font-prose">
+                                Headers
+                            </h3>
+                            <div class="sl-text-sm">
+                                                                    <div class="sl-flex sl-relative sl-max-w-full sl-py-2 sl-pl-3">
+    <div class="sl-w-1 sl-mt-2 sl-mr-3 sl--ml-3 sl-border-t"></div>
+    <div class="sl-stack sl-stack--vertical sl-stack--1 sl-flex sl-flex-1 sl-flex-col sl-items-stretch sl-max-w-full sl-ml-2 ">
+        <div class="sl-flex sl-items-center sl-max-w-full">
+                                        <div class="sl-flex sl-items-baseline sl-text-base">
+                    <div class="sl-font-mono sl-font-semibold sl-mr-2">Content-Type</div>
+                                    </div>
+                                    </div>
+                                            <div class="sl-stack sl-stack--horizontal sl-stack--2 sl-flex sl-flex-row sl-items-baseline sl-text-muted">
+                <span>Example:</span> <!-- <span> important for spacing -->
+                <div class="sl-flex sl-flex-1 sl-flex-wrap" style="gap: 4px;">
+                    <div class="sl-max-w-full sl-break-all sl-px-1 sl-bg-canvas-tint sl-text-muted sl-rounded sl-border">
+                        application/json
+                    </div>
+                </div>
+            </div>
+            </div>
+</div>
+                                                                    <div class="sl-flex sl-relative sl-max-w-full sl-py-2 sl-pl-3">
+    <div class="sl-w-1 sl-mt-2 sl-mr-3 sl--ml-3 sl-border-t"></div>
+    <div class="sl-stack sl-stack--vertical sl-stack--1 sl-flex sl-flex-1 sl-flex-col sl-items-stretch sl-max-w-full sl-ml-2 ">
+        <div class="sl-flex sl-items-center sl-max-w-full">
+                                        <div class="sl-flex sl-items-baseline sl-text-base">
+                    <div class="sl-font-mono sl-font-semibold sl-mr-2">Accept</div>
+                                    </div>
+                                    </div>
+                                            <div class="sl-stack sl-stack--horizontal sl-stack--2 sl-flex sl-flex-row sl-items-baseline sl-text-muted">
+                <span>Example:</span> <!-- <span> important for spacing -->
+                <div class="sl-flex sl-flex-1 sl-flex-wrap" style="gap: 4px;">
+                    <div class="sl-max-w-full sl-break-all sl-px-1 sl-bg-canvas-tint sl-text-muted sl-rounded sl-border">
+                        application/json
+                    </div>
+                </div>
+            </div>
+            </div>
+</div>
+                                                            </div>
+                        </div>
+                    
+                    
+
+                                                <div class="sl-stack sl-stack--vertical sl-stack--6 sl-flex sl-flex-col sl-items-stretch">
+                                <h3 class="sl-text-2xl sl-leading-snug sl-font-prose">Query Parameters</h3>
+
+                                <div class="sl-text-sm">
+                                                                            <div class="sl-flex sl-relative sl-max-w-full sl-py-2 sl-pl-3">
+    <div class="sl-w-1 sl-mt-2 sl-mr-3 sl--ml-3 sl-border-t"></div>
+    <div class="sl-stack sl-stack--vertical sl-stack--1 sl-flex sl-flex-1 sl-flex-col sl-items-stretch sl-max-w-full sl-ml-2 ">
+        <div class="sl-flex sl-items-center sl-max-w-full">
+                                        <div class="sl-flex sl-items-baseline sl-text-base">
+                    <div class="sl-font-mono sl-font-semibold sl-mr-2">query</div>
+                                            <span class="sl-truncate sl-text-muted">string</span>
+                                    </div>
+                                    <div class="sl-flex-1 sl-h-px sl-mx-3"></div>
+                    <span class="sl-ml-2 sl-text-warning">required</span>
+                                    </div>
+                <div class="sl-prose sl-markdown-viewer" style="font-size: 12px;">
+            <p>validation.min.</p>
+        </div>
+                                            <div class="sl-stack sl-stack--horizontal sl-stack--2 sl-flex sl-flex-row sl-items-baseline sl-text-muted">
+                <span>Example:</span> <!-- <span> important for spacing -->
+                <div class="sl-flex sl-flex-1 sl-flex-wrap" style="gap: 4px;">
+                    <div class="sl-max-w-full sl-break-all sl-px-1 sl-bg-canvas-tint sl-text-muted sl-rounded sl-border">
+                        Не вывозят мусор неделями
+                    </div>
+                </div>
+            </div>
+            </div>
+</div>
+                                                                </div>
+                        </div>
+                    
+                    
+                                    </div>
+            </div>
+        </div>
+
+        <div data-testid="two-column-right" class="sl-relative sl-w-2/5 sl-ml-16" style="max-width: 500px;">
+            <div class="sl-stack sl-stack--vertical sl-stack--6 sl-flex sl-flex-col sl-items-stretch">
+
+                                    <div class="sl-inverted">
+    <div class="sl-overflow-y-hidden sl-rounded-lg">
+        <form class="TryItPanel sl-bg-canvas-100 sl-rounded-lg"
+              data-method="GET"
+              data-path="api/v1/proposals/search"
+              data-hasfiles="0"
+              data-hasjsonbody="0">
+                            <div class="sl-panel sl-outline-none sl-w-full expandable">
+                    <div class="sl-panel__titlebar sl-flex sl-items-center sl-relative focus:sl-z-10 sl-text-base sl-leading-none sl-pr-4 sl-pl-3 sl-bg-canvas-200 sl-text-body sl-border-input focus:sl-border-primary sl-cursor-pointer sl-select-none"
+                         role="button">
+                        <div class="sl-flex sl-flex-1 sl-items-center sl-h-lg">
+                            <div class="sl-flex sl-items-center sl-mr-1.5 expansion-chevrons expansion-chevrons-solid expanded">
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas"
+                                     data-icon="caret-down"
+                                     class="svg-inline--fa fa-caret-down fa-fw sl-icon" role="img"
+                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                    <path fill="currentColor"
+                                          d="M310.6 246.6l-127.1 128C176.4 380.9 168.2 384 160 384s-16.38-3.125-22.63-9.375l-127.1-128C.2244 237.5-2.516 223.7 2.438 211.8S19.07 192 32 192h255.1c12.94 0 24.62 7.781 29.58 19.75S319.8 237.5 310.6 246.6z"></path>
+                                </svg>
+                            </div>
+                            Auth
+                        </div>
+                    </div>
+                    <div class="sl-panel__content-wrapper sl-bg-canvas-100 children" role="region">
+                        <div class="ParameterGrid sl-p-4">
+                            <label aria-hidden="true"
+                                   for="auth-GETapi-v1-proposals-search">api-key</label>
+                            <span class="sl-mx-3">:</span>
+                            <div class="sl-flex sl-flex-1">
+                                <div class="sl-input sl-flex-1 sl-relative">
+                                    <code></code>
+                                    <input aria-label="api-key"
+                                           id="auth-GETapi-v1-proposals-search"
+                                           data-component="header"
+                                           data-prefix=""
+                                           name="api-key"
+                                           placeholder="{API_KEY}"
+                                           class="auth-value sl-relative sl-w-full sl-pr-2.5 sl-pl-2.5 sl-h-md sl-text-base sl-rounded sl-border-transparent hover:sl-border-input focus:sl-border-primary sl-border">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                            <div class="sl-panel sl-outline-none sl-w-full expandable">
+                    <div class="sl-panel__titlebar sl-flex sl-items-center sl-relative focus:sl-z-10 sl-text-base sl-leading-none sl-pr-4 sl-pl-3 sl-bg-canvas-200 sl-text-body sl-border-input focus:sl-border-primary sl-cursor-pointer sl-select-none"
+                         role="button">
+                        <div class="sl-flex sl-flex-1 sl-items-center sl-h-lg">
+                            <div class="sl-flex sl-items-center sl-mr-1.5 expansion-chevrons expansion-chevrons-solid expanded">
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas"
+                                     data-icon="caret-down"
+                                     class="svg-inline--fa fa-caret-down fa-fw sl-icon" role="img"
+                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                    <path fill="currentColor"
+                                          d="M310.6 246.6l-127.1 128C176.4 380.9 168.2 384 160 384s-16.38-3.125-22.63-9.375l-127.1-128C.2244 237.5-2.516 223.7 2.438 211.8S19.07 192 32 192h255.1c12.94 0 24.62 7.781 29.58 19.75S319.8 237.5 310.6 246.6z"></path>
+                                </svg>
+                            </div>
+                            Headers
+                        </div>
+                    </div>
+                    <div class="sl-panel__content-wrapper sl-bg-canvas-100 children" role="region">
+                        <div class="ParameterGrid sl-p-4">
+                                                                                            <label aria-hidden="true"
+                                       for="header-GETapi-v1-proposals-search-Content-Type">Content-Type</label>
+                                <span class="sl-mx-3">:</span>
+                                <div class="sl-flex sl-flex-1">
+                                    <div class="sl-input sl-flex-1 sl-relative">
+                                        <input aria-label="Content-Type" name="Content-Type"
+                                               id="header-GETapi-v1-proposals-search-Content-Type"
+                                               value="application/json" data-component="header"
+                                               class="sl-relative sl-w-full sl-h-md sl-text-base sl-pr-2.5 sl-pl-2.5 sl-rounded sl-border-transparent hover:sl-border-input focus:sl-border-primary sl-border">
+                                    </div>
+                                </div>
+                                                                                            <label aria-hidden="true"
+                                       for="header-GETapi-v1-proposals-search-Accept">Accept</label>
+                                <span class="sl-mx-3">:</span>
+                                <div class="sl-flex sl-flex-1">
+                                    <div class="sl-input sl-flex-1 sl-relative">
+                                        <input aria-label="Accept" name="Accept"
+                                               id="header-GETapi-v1-proposals-search-Accept"
+                                               value="application/json" data-component="header"
+                                               class="sl-relative sl-w-full sl-h-md sl-text-base sl-pr-2.5 sl-pl-2.5 sl-rounded sl-border-transparent hover:sl-border-input focus:sl-border-primary sl-border">
+                                    </div>
+                                </div>
+                                                    </div>
+                    </div>
+                </div>
+            
+            
+                            <div class="sl-panel sl-outline-none sl-w-full expandable">
+                    <div class="sl-panel__titlebar sl-flex sl-items-center sl-relative focus:sl-z-10 sl-text-base sl-leading-none sl-pr-4 sl-pl-3 sl-bg-canvas-200 sl-text-body sl-border-input focus:sl-border-primary sl-cursor-pointer sl-select-none"
+                         role="button">
+                        <div class="sl-flex sl-flex-1 sl-items-center sl-h-lg">
+                            <div class="sl-flex sl-items-center sl-mr-1.5 expansion-chevrons expansion-chevrons-solid expanded">
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas"
+                                     data-icon="caret-down"
+                                     class="svg-inline--fa fa-caret-down fa-fw sl-icon" role="img"
+                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                    <path fill="currentColor"
+                                          d="M310.6 246.6l-127.1 128C176.4 380.9 168.2 384 160 384s-16.38-3.125-22.63-9.375l-127.1-128C.2244 237.5-2.516 223.7 2.438 211.8S19.07 192 32 192h255.1c12.94 0 24.62 7.781 29.58 19.75S319.8 237.5 310.6 246.6z"></path>
+                                </svg>
+                            </div>
+                            Query Parameters
+                        </div>
+                    </div>
+                    <div class="sl-panel__content-wrapper sl-bg-canvas-100 children" role="region">
+                        <div class="ParameterGrid sl-p-4">
+                                                                                            <label aria-hidden="true"
+                                       for="queryparam-GETapi-v1-proposals-search-query">query</label>
+                                <span class="sl-mx-3">:</span>
+                                <div class="sl-flex sl-flex-1">
+                                    <div class="sl-input sl-flex-1 sl-relative">
+                                                                                    <input aria-label="query" name="query"
+                                                   id="queryparam-GETapi-v1-proposals-search-query"
+                                                   placeholder="validation.min."
+                                                   value="Не вывозят мусор неделями" data-component="query"
+                                                   class="sl-relative sl-w-full sl-h-md sl-text-base sl-pr-2.5 sl-pl-2.5 sl-rounded sl-border-transparent hover:sl-border-input focus:sl-border-primary sl-border"
+                                            >
+                                                                            </div>
+                                </div>
+                                                    </div>
+                    </div>
+                </div>
+            
+            
+            <div class="SendButtonHolder sl-mt-4 sl-p-4 sl-pt-0">
+                <div class="sl-stack sl-stack--horizontal sl-stack--2 sl-flex sl-flex-row sl-items-center">
+                    <button type="button" data-endpoint="GETapi-v1-proposals-search"
+                            class="tryItOut-btn sl-button sl-h-sm sl-text-base sl-font-medium sl-px-1.5 sl-bg-primary hover:sl-bg-primary-dark active:sl-bg-primary-darker disabled:sl-bg-canvas-100 sl-text-on-primary disabled:sl-text-body sl-rounded sl-border-transparent sl-border disabled:sl-opacity-70"
+                    >
+                        Send Request 💥
+                    </button>
+                </div>
+            </div>
+
+            <div data-endpoint="GETapi-v1-proposals-search"
+                 class="tryItOut-error expandable sl-panel sl-outline-none sl-w-full" hidden>
+                <div class="sl-panel__titlebar sl-flex sl-items-center sl-relative focus:sl-z-10 sl-text-base sl-leading-none sl-pr-4 sl-pl-3 sl-bg-canvas-200 sl-text-body sl-border-input focus:sl-border-primary sl-cursor-pointer sl-select-none"
+                     role="button">
+                    <div class="sl-flex sl-flex-1 sl-items-center sl-h-lg">
+                        <div class="sl-flex sl-items-center sl-mr-1.5 expansion-chevrons expansion-chevrons-solid expanded">
+                            <svg aria-hidden="true" focusable="false" data-prefix="fas"
+                                 data-icon="caret-down"
+                                 class="svg-inline--fa fa-caret-down fa-fw sl-icon" role="img"
+                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                <path fill="currentColor"
+                                      d="M310.6 246.6l-127.1 128C176.4 380.9 168.2 384 160 384s-16.38-3.125-22.63-9.375l-127.1-128C.2244 237.5-2.516 223.7 2.438 211.8S19.07 192 32 192h255.1c12.94 0 24.62 7.781 29.58 19.75S319.8 237.5 310.6 246.6z"></path>
+                            </svg>
+                        </div>
+                        Request failed with error
+                    </div>
+                </div>
+                <div class="sl-panel__content-wrapper sl-bg-canvas-100 children" role="region">
+                    <div class="sl-panel__content sl-p-4">
+                        <p class="sl-pb-2"><strong class="error-message"></strong></p>
+                        <p class="sl-pb-2">Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</p>
+                    </div>
+                </div>
+            </div>
+
+                <div data-endpoint="GETapi-v1-proposals-search"
+                     class="tryItOut-response expandable sl-panel sl-outline-none sl-w-full" hidden>
+                    <div class="sl-panel__titlebar sl-flex sl-items-center sl-relative focus:sl-z-10 sl-text-base sl-leading-none sl-pr-4 sl-pl-3 sl-bg-canvas-200 sl-text-body sl-border-input focus:sl-border-primary sl-cursor-pointer sl-select-none"
+                         role="button">
+                        <div class="sl-flex sl-flex-1 sl-items-center sl-h-lg">
+                            <div class="sl-flex sl-items-center sl-mr-1.5 expansion-chevrons expansion-chevrons-solid expanded">
+                                <svg aria-hidden="true" focusable="false" data-prefix="fas"
+                                     data-icon="caret-down"
+                                     class="svg-inline--fa fa-caret-down fa-fw sl-icon" role="img"
+                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                    <path fill="currentColor"
+                                          d="M310.6 246.6l-127.1 128C176.4 380.9 168.2 384 160 384s-16.38-3.125-22.63-9.375l-127.1-128C.2244 237.5-2.516 223.7 2.438 211.8S19.07 192 32 192h255.1c12.94 0 24.62 7.781 29.58 19.75S319.8 237.5 310.6 246.6z"></path>
+                                </svg>
+                            </div>
+                            Received response
+                        </div>
+                    </div>
+                    <div class="sl-panel__content-wrapper sl-bg-canvas-100 children" role="region">
+                        <div class="sl-panel__content sl-p-4">
+                            <p class="sl-pb-2 response-status"></p>
+                            <pre><code class="sl-pb-2 response-content language-json"
+                                       data-empty-response-text="<Empty response>"
+                                       style="max-height: 300px;"></code></pre>
+                        </div>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>
+                
+                                            <div class="sl-panel sl-outline-none sl-w-full sl-rounded-lg">
+                            <div class="sl-panel__titlebar sl-flex sl-items-center sl-relative focus:sl-z-10 sl-text-base sl-leading-none sl-pr-3 sl-pl-4 sl-bg-canvas-200 sl-text-body sl-border-input focus:sl-border-primary sl-select-none">
+                                <div class="sl-flex sl-flex-1 sl-items-center sl-h-lg">
+                                    <div class="sl--ml-2">
+                                        Example request:
+                                        <select class="example-request-lang-toggle sl-text-base"
+                                                aria-label="Request Sample Language"
+                                                onchange="switchExampleLanguage(event.target.value);">
+                                                                                            <option>bash</option>
+                                                                                            <option>javascript</option>
+                                                                                    </select>
+                                    </div>
+                                </div>
+                            </div>
+                                                            <div class="sl-bg-canvas-100 example-request example-request-bash"
+                                     style="">
+                                    <div class="sl-px-0 sl-py-1">
+                                        <div style="max-height: 400px;" class="sl-overflow-y-auto sl-rounded">
+                                            <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8088/api/v1/proposals/search?query=%D0%9D%D0%B5+%D0%B2%D1%8B%D0%B2%D0%BE%D0%B7%D1%8F%D1%82+%D0%BC%D1%83%D1%81%D0%BE%D1%80+%D0%BD%D0%B5%D0%B4%D0%B5%D0%BB%D1%8F%D0%BC%D0%B8" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre>                                        </div>
+                                    </div>
+                                </div>
+                                                            <div class="sl-bg-canvas-100 example-request example-request-javascript"
+                                     style="display: none;">
+                                    <div class="sl-px-0 sl-py-1">
+                                        <div style="max-height: 400px;" class="sl-overflow-y-auto sl-rounded">
+                                            <pre><code class="language-javascript">const url = new URL(
+    "http://localhost:8088/api/v1/proposals/search"
+);
+
+const params = {
+    "query": "Не вывозят мусор неделями",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre>                                        </div>
+                                    </div>
+                                </div>
+                                                    </div>
+                    
+                                            <div class="sl-panel sl-outline-none sl-w-full sl-rounded-lg">
+                            <div class="sl-panel__titlebar sl-flex sl-items-center sl-relative focus:sl-z-10 sl-text-base sl-leading-none sl-pr-3 sl-pl-4 sl-bg-canvas-200 sl-text-body sl-border-input focus:sl-border-primary sl-select-none">
+                                <div class="sl-flex sl-flex-1 sl-items-center sl-py-2">
+                                    <div class="sl--ml-2">
+                                        <div class="sl-h-sm sl-text-base sl-font-medium sl-px-1.5 sl-text-muted sl-rounded sl-border-transparent sl-border">
+                                            <div class="sl-mb-2 sl-inline-block">Example response:</div>
+                                            <div class="sl-mb-2 sl-inline-block">
+                                                <select
+                                                        class="example-response-GETapi-v1-proposals-search-toggle sl-text-base"
+                                                        aria-label="Response sample"
+                                                        onchange="switchExampleResponse('GETapi-v1-proposals-search', event.target.value);">
+                                                                                                            <option value="0">200</option>
+                                                                                                    </select></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button"
+                                        class="sl-button sl-h-sm sl-text-base sl-font-medium sl-px-1.5 hover:sl-bg-canvas-50 active:sl-bg-canvas-100 sl-text-muted hover:sl-text-body focus:sl-text-body sl-rounded sl-border-transparent sl-border disabled:sl-opacity-70">
+                                    <div class="sl-mx-0">
+                                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="copy"
+                                             class="svg-inline--fa fa-copy fa-fw fa-sm sl-icon" role="img"
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <path fill="currentColor"
+                                                  d="M384 96L384 0h-112c-26.51 0-48 21.49-48 48v288c0 26.51 21.49 48 48 48H464c26.51 0 48-21.49 48-48V128h-95.1C398.4 128 384 113.6 384 96zM416 0v96h96L416 0zM192 352V128h-144c-26.51 0-48 21.49-48 48v288c0 26.51 21.49 48 48 48h192c26.51 0 48-21.49 48-48L288 416h-32C220.7 416 192 387.3 192 352z"></path>
+                                        </svg>
+                                    </div>
+                                </button>
+                            </div>
+                                                            <div class="sl-panel__content-wrapper sl-bg-canvas-100 example-response-GETapi-v1-proposals-search example-response-GETapi-v1-proposals-search-0"
+                                     style=" "
+                                >
+                                    <div class="sl-panel__content sl-p-0">                                            <details class="sl-pl-2">
+                                                <summary style="cursor: pointer; list-style: none;">
+                                                    <small>
+                                                        <span class="expansion-chevrons">
+
+    <svg aria-hidden="true" focusable="false" data-prefix="fas"
+         data-icon="chevron-right"
+         class="svg-inline--fa fa-chevron-right fa-fw sl-icon sl-text-muted"
+         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+        <path fill="currentColor"
+              d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path>
+    </svg>
+                                                            </span>
+                                                        Headers
+                                                    </small>
+                                                </summary>
+                                                <pre><code class="language-http">                                                            cache-control
+                                                            : no-cache, private
+                                                                                                                    content-type
+                                                            : application/json
+                                                                                                                    access-control-allow-origin
+                                                            : *
+                                                         </code></pre>
+                                            </details>
+                                                                                                                                                                        
+                                            <pre><code style="max-height: 300px;"
+                                                       class="language-json sl-overflow-x-auto sl-overflow-y-auto">{
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 72811,
+            &quot;content&quot;: &quot;Не вывозят мусор неделями&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T12:01:23.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T12:01:23.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 4,
+                &quot;name&quot;: &quot;Анжеро-Судженск&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 37,
+                &quot;name&quot;: &quot;Нарушение графика вывоза твердых коммунальных отходов, в том числе с контейнерных площадок&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 27,
+                    &quot;name&quot;: &quot;Жилищно-коммунальное хозяйство&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 75840,
+            &quot;content&quot;: &quot;Не убирают мусор неделями&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T12:01:30.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T12:01:30.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 15,
+                &quot;name&quot;: &quot;Прокопьевск&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 4,
+                &quot;name&quot;: &quot;Неубранная дворовая территория&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 1,
+                    &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 102912,
+            &quot;content&quot;: &quot;Мусор не вывозится неделю&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T12:02:25.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T12:02:25.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 8,
+                &quot;name&quot;: &quot;Калтан&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 92,
+                &quot;name&quot;: &quot;Нарушения в деятельности региональных операторов по обращению с твердыми коммунальными отходами&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 91,
+                    &quot;name&quot;: &quot;Экология&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 132169,
+            &quot;content&quot;: &quot;Больше недели не увозят мусор&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T12:03:25.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T12:03:25.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 8,
+                &quot;name&quot;: &quot;Калтан&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 26,
+                &quot;name&quot;: &quot;Другое&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 1,
+                    &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 13601,
+            &quot;content&quot;: &quot;Неделю не вывозят мусор&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:58:57.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:58:57.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 7,
+                &quot;name&quot;: &quot;Гурьевск&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 37,
+                &quot;name&quot;: &quot;Нарушение графика вывоза твердых коммунальных отходов, в том числе с контейнерных площадок&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 27,
+                    &quot;name&quot;: &quot;Жилищно-коммунальное хозяйство&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 128105,
+            &quot;content&quot;: &quot;Не вывозят мусор по несколько дней&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T12:03:17.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T12:03:17.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 16,
+                &quot;name&quot;: &quot;Салаир&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 92,
+                &quot;name&quot;: &quot;Нарушения в деятельности региональных операторов по обращению с твердыми коммунальными отходами&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 91,
+                    &quot;name&quot;: &quot;Экология&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 109450,
+            &quot;content&quot;: &quot;Не вывозят мусор несколько дней&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T12:02:40.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T12:02:40.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 3,
+                &quot;name&quot;: &quot;Новокузнецк&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 37,
+                &quot;name&quot;: &quot;Нарушение графика вывоза твердых коммунальных отходов, в том числе с контейнерных площадок&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 27,
+                    &quot;name&quot;: &quot;Жилищно-коммунальное хозяйство&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 114645,
+            &quot;content&quot;: &quot;Не вывозят мусор уже больше недели&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T12:02:49.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T12:02:49.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 4,
+                &quot;name&quot;: &quot;Анжеро-Судженск&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 26,
+                &quot;name&quot;: &quot;Другое&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 1,
+                    &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 28859,
+            &quot;content&quot;: &quot;Уже неделю не вывозится мусор&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:59:32.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:59:32.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 20,
+                &quot;name&quot;: &quot;Юрга&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 8,
+                &quot;name&quot;: &quot;Несанкционированные свалки, навалы мусора на дворовой, общественной территории &quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 1,
+                    &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
+                }
+            }
+        },
+        {
+            &quot;id&quot;: 33929,
+            &quot;content&quot;: &quot;Мусор не вывозят две недели&quot;,
+            &quot;created_at&quot;: &quot;2025-10-01T11:59:44.000000Z&quot;,
+            &quot;updated_at&quot;: &quot;2025-10-01T11:59:44.000000Z&quot;,
+            &quot;city&quot;: {
+                &quot;id&quot;: 11,
+                &quot;name&quot;: &quot;Мариинск&quot;
+            },
+            &quot;category&quot;: {
+                &quot;id&quot;: 26,
+                &quot;name&quot;: &quot;Другое&quot;,
+                &quot;parent&quot;: {
+                    &quot;id&quot;: 1,
+                    &quot;name&quot;: &quot;Дворовые и общественные территории&quot;
+                }
+            }
+        }
+    ]
+}</code></pre>
+                                                                            </div>
+                                </div>
+                                                    </div>
                             </div>
     </div>
 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\NotMeaninglessTextRule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,6 +26,7 @@ class ProposalRequest extends FormRequest
         return [
             'city_id' => ['required', 'exists:cities,id'],
             'content' => ['required', 'string', 'max:4000'],
+//            'content' => ['required', 'string', 'max:4000', new NotMeaninglessTextRule()],
         ];
     }
 

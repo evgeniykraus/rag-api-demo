@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProposalRequest;
+use App\Http\Requests\ProposalSearchRequest;
 use App\Http\Requests\ProposalUpdateRequest;
 use App\Http\Resources\ProposalResource;
 use App\Models\Proposal;
@@ -71,5 +72,16 @@ class ProposalController extends Controller
     {
         $this->proposalService->destroy($proposal);
         return response()->noContent();
+    }
+
+    /**
+     * @param ProposalSearchRequest $request
+     * @return AnonymousResourceCollection
+     */
+    public function search(ProposalSearchRequest $request): AnonymousResourceCollection
+    {
+        return ProposalResource::collection(
+            $this->proposalService->search($request->get('query'))
+        );
     }
 }

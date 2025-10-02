@@ -17,7 +17,7 @@ class ProposalRepository
      */
     public function index(): LengthAwarePaginator
     {
-        return Proposal::query()->with(['category', 'category.parent', 'vector', 'city'])->paginate();
+        return Proposal::query()->with(['category', 'category.parent', 'city'])->paginate();
     }
 
     /**
@@ -80,6 +80,24 @@ class ProposalRepository
         return $this->topKBuilderByProposal($proposal, $k)->with($with)->get();
     }
 
+
+    /**
+     * @param Vector $vector
+     * @return Collection
+     */
+    public function getTopKByVector(Vector $vector): Collection
+    {
+        return Proposal::query()
+            ->select('proposals.*')
+            ->selectRaw('1 - (proposal_vectors.embedding <=> ?::vector) AS similarity', [$vector])
+            ->join('proposal_vectors', 'proposal_vectors.proposal_id', '=', 'proposals.id')
+            ->whereRaw('1 - (proposal_vectors.embedding <=> ?::vector) >= ?', [$vector, 0.905])
+            ->with(['category', 'category.parent', 'city'])
+            ->orderByRaw('proposal_vectors.embedding <=> ?::vector ASC', [$vector])
+            ->limit(10)
+            ->get();
+    }
+
     public function getSimilarCategories(Proposal $proposal, int $limit = 10): Collection
     {
         $sub = $this->topKBuilderByProposal($proposal, max($limit * 10, 100))
@@ -100,9 +118,10 @@ class ProposalRepository
     public function getSimilarCategoriesByVector(Vector $vector, int $limit = 10): Collection
     {
         $sub = $this->topKBuilder($vector, max($limit * 10, 100))
-            ->select('proposals.category_id');
+            ->select('proposals.category_id')
+            ->limit($limit);
 
-        return Category::query()
+        $topCategories = Category::query()
             ->with(['parent'])
             ->select('categories.*')
             ->selectRaw('COUNT(*) AS freq')
@@ -110,14 +129,22 @@ class ProposalRepository
             ->whereNotNull('categories.parent_id')
             ->groupBy('categories.id')
             ->orderByDesc('freq')
-            ->limit($limit)
-            ->get();
+            ->limit($limit);
+
+        $guaranteed = Category::query()
+            ->with(['parent'])
+            ->select('categories.*')
+            ->selectRaw('1 AS freq')
+            ->where('categories.id', 307);
+
+        return $topCategories->union($guaranteed)->get();
     }
 
     private function topKBuilderByProposal(Proposal $proposal, int $k): Builder
     {
         return $this->topKBuilder($proposal->vector->embedding, $k)
-            ->where('proposals.id', '!=', $proposal->id);
+            ->where('proposals.id', '!=', $proposal->id)
+            ->limit($k);
     }
 
     private function topKBuilder(Vector $vector, int $k): Builder
@@ -126,8 +153,7 @@ class ProposalRepository
             ->select('proposals.*')
             ->selectRaw('1 - (proposal_vectors.embedding <=> ?::vector) AS similarity', [$vector])
             ->join('proposal_vectors', 'proposal_vectors.proposal_id', '=', 'proposals.id')
-            ->orderByRaw('proposal_vectors.embedding <=> ?::vector ASC', [$vector])
-            ->limit($k);
+            ->orderByRaw('proposal_vectors.embedding <=> ?::vector ASC', [$vector]);
     }
 }
 

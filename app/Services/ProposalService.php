@@ -7,10 +7,12 @@ use App\DTO\SimilarProposalData;
 use App\Models\Category;
 use App\Models\Proposal;
 use App\Repositories\ProposalRepository;
+use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Nette\Utils\Random;
 use Pgvector\Laravel\Vector as PgVector;
+use Pgvector\Vector;
 use Throwable;
 
 
@@ -43,7 +45,7 @@ readonly class ProposalService
         $respond = ProposalClassifierAgent::for(Random::generate())->message(ProposalClassifierAgent::buildMessage($content, $categories))->respond();
 
         $categoryId = $respond['id'];
-        throw_if(Category::query()->whereId($categoryId)->doesntExist(), new \Exception("Category {$categoryId} not found"));
+        throw_if(Category::query()->where('id', $categoryId)->doesntExist(), new Exception("Категория с ID: {$categoryId} не найдена"));
 
         $data['category_id'] = $categoryId;
 
@@ -85,6 +87,17 @@ readonly class ProposalService
     public function destroy(Proposal $proposal): void
     {
         $this->proposalRepository->delete($proposal);
+    }
+
+    /**
+     * @param string $query
+     * @return Collection
+     */
+    public function search(string $query): Collection
+    {
+        return $this->proposalRepository->getTopKByVector(
+            new Vector($this->embeddingsService->embedOne($query))
+        );
     }
 
     /**
