@@ -58,7 +58,7 @@
                     Рост за период
                   </dt>
                   <dd class="text-lg font-medium text-gray-900">
-                    +{{ analytics.growth }}%
+                    {{ growthLabel }}
                   </dd>
                 </dl>
               </div>
@@ -98,7 +98,7 @@
                     Среднее время ответа
                   </dt>
                   <dd class="text-lg font-medium text-gray-900">
-                    {{ analytics.avgResponseTime }}ч
+                    {{ avgResponseTimeLabel }}
                   </dd>
                 </dl>
               </div>
@@ -127,6 +127,7 @@
           <div class="h-64">
             <canvas ref="categoryChart" class="w-full h-full"></canvas>
           </div>
+          <div ref="categoryLegend" class="mt-4 max-h-40 overflow-auto"></div>
         </div>
       </div>
 
@@ -246,10 +247,11 @@
 import { ref, computed, onMounted, watch, nextTick } from 'vue'
 import { useProposalsStore } from '@/stores/proposals'
 import { useDictionariesStore } from '@/stores/dictionaries'
+import { apiClient } from '@/services/api'
 import AppLayout from '@/components/common/AppLayout.vue'
 import {
   DocumentTextIcon,
-  TrendingUpIcon,
+  ArrowTrendingUpIcon,
   BuildingOfficeIcon,
   ClockIcon
 } from '@heroicons/vue/24/outline'
@@ -262,30 +264,42 @@ const dictionariesStore = useDictionariesStore()
 const selectedPeriod = ref('month')
 const monthlyChart = ref<HTMLCanvasElement>()
 const categoryChart = ref<HTMLCanvasElement>()
+const categoryLegend = ref<HTMLDivElement>()
+const periodSeries = ref<Array<{ label: string; count: number }>>([])
 
-// Mock analytics data
-const analytics = computed(() => ({
-  totalProposals: proposalsStore.pagination.total,
-  growth: 12.5,
-  activeCities: dictionariesStore.cities.length,
-  avgResponseTime: 24
-}))
+const loading = ref(false)
+const error = ref<string | null>(null)
 
-const topCities = computed(() => [
-  { name: 'Кемерово', count: 1250 },
-  { name: 'Новокузнецк', count: 980 },
-  { name: 'Прокопьевск', count: 750 },
-  { name: 'Междуреченск', count: 620 },
-  { name: 'Анжеро-Судженск', count: 480 }
-])
+const analytics = ref({
+  totalProposals: 0,
+  growth: 0,
+  activeCities: 0,
+  avgResponseTime: 0
+})
 
-const topCategories = computed(() => [
-  { name: 'Дворовые и общественные территории', count: 850 },
-  { name: 'Жилищно-коммунальное хозяйство', count: 720 },
-  { name: 'Автомобильные дороги', count: 650 },
-  { name: 'Экология', count: 420 },
-  { name: 'Безопасность', count: 380 }
-])
+const avgResponseTimeLabel = computed(() => {
+  const hours = analytics.value.avgResponseTime || 0
+  if (hours >= 1) {
+    return `${Math.round(hours * 10) / 10}ч`
+  }
+  const minutes = hours * 60
+  if (minutes >= 1) {
+    return `${Math.round(minutes)} мин`
+  }
+  const seconds = minutes * 60
+  return `${Math.max(1, Math.round(seconds))} с`
+})
+
+const growthLabel = computed(() => {
+  const v = analytics.value.growth || 0
+  if (v > 0) return `+${v}%`
+  if (v < 0) return `${v}%`
+  return '0%'
+})
+
+const topCities = ref<Array<{ name: string; count: number }>>([])
+
+const topCategories = ref<Array<{ name: string; count: number }>>([])
 
 const recentActivity = computed(() => 
   proposalsStore.proposals.slice(0, 5).map(proposal => ({
@@ -306,10 +320,10 @@ function createCharts() {
       new Chart(monthlyChart.value, {
         type: 'line',
         data: {
-          labels: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн'],
+          labels: periodSeries.value.map(i => i.label),
           datasets: [{
             label: 'Обращения',
-            data: [120, 150, 180, 160, 200, 220],
+            data: periodSeries.value.map(i => i.count),
             borderColor: 'rgb(59, 130, 246)',
             backgroundColor: 'rgba(59, 130, 246, 0.1)',
             tension: 0.4
@@ -334,7 +348,7 @@ function createCharts() {
 
     // Category chart
     if (categoryChart.value) {
-      new Chart(categoryChart.value, {
+      const chart = new Chart(categoryChart.value, {
         type: 'doughnut',
         data: {
           labels: topCategories.value.map(c => c.name),
@@ -353,26 +367,135 @@ function createCharts() {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: {
-              position: 'bottom'
-            }
+            legend: { display: false }
           }
         }
       })
+      buildCategoryLegend(chart)
     }
   })
 }
 
-watch(selectedPeriod, () => {
-  createCharts()
+function buildCategoryLegend(chart: any) {
+  if (!categoryLegend.value) return
+  const container = categoryLegend.value
+  // Clear
+  container.innerHTML = ''
+  const ul = document.createElement('ul')
+  ul.className = 'space-y-1'
+  const labels = chart.data.labels as string[]
+  const colors = chart.data.datasets[0].backgroundColor as string[]
+  const values = chart.data.datasets[0].data as number[]
+  labels.forEach((label, i) => {
+    const li = document.createElement('li')
+    li.className = 'flex items-start'
+    const box = document.createElement('span')
+    box.className = 'mt-1 mr-2 inline-block h-3 w-3 rounded'
+    box.style.backgroundColor = colors[i % colors.length]
+    const text = document.createElement('span')
+    text.textContent = `${label} — ${values[i]}`
+    text.className = 'text-sm text-gray-700 break-words whitespace-normal'
+    li.appendChild(box)
+    li.appendChild(text)
+    ul.appendChild(li)
+  })
+  container.appendChild(ul)
+}
+
+function getRangeForSelectedPeriod() {
+  const to = dayjs()
+  let from = to
+  switch (selectedPeriod.value) {
+    case 'week':
+      from = to.subtract(7, 'day')
+      break
+    case 'month':
+      from = to.subtract(1, 'month')
+      break
+    case 'quarter':
+      from = to.subtract(3, 'month')
+      break
+    case 'year':
+      from = to.subtract(1, 'year')
+      break
+    default:
+      from = to.subtract(1, 'month')
+  }
+  return { from: from.startOf('day').toISOString(), to: to.endOf('day').toISOString() }
+}
+
+function getGranularity() {
+  switch (selectedPeriod.value) {
+    case 'week':
+      return 'day'
+    case 'month':
+      return 'day'
+    case 'quarter':
+      return 'week'
+    case 'year':
+      return 'month'
+    default:
+      return 'day'
+  }
+}
+
+async function loadAnalytics() {
+  try {
+    loading.value = true
+    error.value = null
+
+    // Overview with range
+    const { from, to } = getRangeForSelectedPeriod()
+    const overview = await apiClient.getAnalyticsOverview({ from, to })
+    analytics.value = {
+      totalProposals: overview.total_proposals,
+      growth: 0,
+      activeCities: dictionariesStore.cities.length,
+      avgResponseTime: (overview.avg_response_time_seconds || 0) / 3600
+    }
+
+    // Period series
+    const period = await apiClient.getAnalyticsByPeriod({ granularity: getGranularity() as any, from, to })
+    periodSeries.value = period.map(p => ({
+      label: dayjs(p.period).format(getGranularity() === 'day' ? 'DD MMM' : getGranularity() === 'week' ? 'WW нед' : 'MMM YY'),
+      count: p.count
+    }))
+
+    // Compute growth if possible (last vs prev)
+    if (periodSeries.value.length >= 2) {
+      const last = periodSeries.value[periodSeries.value.length - 1].count
+      const prev = periodSeries.value[periodSeries.value.length - 2].count
+      analytics.value.growth = prev ? Math.round(((last - prev) / prev) * 1000) / 10 : 0
+    } else {
+      analytics.value.growth = 0
+    }
+
+    // Top categories / cities (static limits)
+    const [cats, cities] = await Promise.all([
+      apiClient.getAnalyticsByCategory(5),
+      apiClient.getAnalyticsByCity(5)
+    ])
+    topCategories.value = cats.map(c => ({ name: c.category, count: c.count }))
+    topCities.value = cities.map(c => ({ name: c.city, count: c.count }))
+
+    createCharts()
+  } catch (e: any) {
+    error.value = e.message || 'Ошибка загрузки аналитики'
+  } finally {
+    loading.value = false
+  }
+}
+
+watch(selectedPeriod, async () => {
+  await loadAnalytics()
 })
 
 onMounted(async () => {
   await Promise.all([
-    proposalsStore.fetchProposals(),
-    dictionariesStore.loadDictionaries()
+    dictionariesStore.loadDictionaries(),
+    proposalsStore.fetchProposals(1)
   ])
-  createCharts()
+  await loadAnalytics()
 })
 </script>
 

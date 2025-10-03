@@ -190,10 +190,10 @@
         <template #cell-created_at="{ item }">
           <div class="text-sm">
             <div class="font-medium text-gray-900">
-              {{ dayjs(item.created_at).format('DD.MM.YYYY') }}
+              {{ dayjs.utc(item.created_at).format('DD.MM.YYYY') }}
             </div>
             <div class="text-xs text-gray-500">
-              {{ dayjs(item.created_at).format('HH:mm') }}
+              {{ dayjs.utc(item.created_at).format('HH:mm') }}
             </div>
           </div>
         </template>
@@ -254,6 +254,8 @@ import {
 } from '@heroicons/vue/24/outline'
 import type { TableColumn, TableAction, Proposal } from '@/types'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 
 const router = useRouter()
 const proposalsStore = useProposalsStore()

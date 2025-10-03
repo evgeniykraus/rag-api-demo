@@ -94,6 +94,32 @@ class ApiClient {
     return response.data.data || response.data
   }
 
+  // Analytics API
+  async getAnalyticsOverview(params: { from?: string; to?: string } = {}) {
+    const response = await this.client.get('/api/v1/analytics/overview', { params })
+    return response.data as {
+      total_proposals: number
+      period_proposals: number
+      answered_share: number
+      avg_response_time_seconds: number | null
+    }
+  }
+
+  async getAnalyticsByPeriod(params: { granularity?: 'day' | 'week' | 'month'; from?: string; to?: string } = {}) {
+    const response = await this.client.get('/api/v1/analytics/by-period', { params })
+    return (response.data?.data || response.data) as Array<{ period: string; count: number }>
+  }
+
+  async getAnalyticsByCategory(limit = 10) {
+    const response = await this.client.get('/api/v1/analytics/by-category', { params: { limit } })
+    return (response.data?.data || response.data) as Array<{ category: string; count: number }>
+  }
+
+  async getAnalyticsByCity(limit = 10) {
+    const response = await this.client.get('/api/v1/analytics/by-city', { params: { limit } })
+    return (response.data?.data || response.data) as Array<{ city: string; count: number }>
+  }
+
   // Proposal response API
   async postProposalResponse(id: number, content: string): Promise<Proposal> {
     const response = await this.client.post(`/api/v1/proposals/${id}/response`, { content })

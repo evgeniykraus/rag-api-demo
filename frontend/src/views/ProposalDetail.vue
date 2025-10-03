@@ -319,6 +319,8 @@ import {
   EyeIcon
 } from '@heroicons/vue/24/outline'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 
 const router = useRouter()
 const route = useRoute()
@@ -344,7 +346,7 @@ const saveError = ref<string | null>(null)
 const generatingResponse = ref(false)
 
 function formatDate(date: string) {
-  return dayjs(date).format('DD.MM.YYYY HH:mm')
+  return dayjs.utc(date).format('DD.MM.YYYY HH:mm')
 }
 
 function toggleSimilarExpanded(index: number) {

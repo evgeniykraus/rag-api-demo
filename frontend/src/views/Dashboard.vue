@@ -226,6 +226,7 @@
 import { ref, onMounted, computed } from 'vue'
 import { useProposalsStore } from '@/stores/proposals'
 import { useDictionariesStore } from '@/stores/dictionaries'
+import { apiClient } from '@/services/api'
 import AppLayout from '@/components/common/AppLayout.vue'
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue'
 import {
@@ -238,21 +239,24 @@ import {
   ChartBarIcon
 } from '@heroicons/vue/24/outline'
 import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 
 const proposalsStore = useProposalsStore()
 const dictionariesStore = useDictionariesStore()
 
 const loading = ref(false)
 
+const totalProposals = ref(0)
+const todayProposals = ref(0)
+
 const stats = computed(() => ({
-  totalProposals: proposalsStore.pagination.total,
+  totalProposals: totalProposals.value,
   totalCities: dictionariesStore.cities.length,
   totalCategories: dictionariesStore.categories.reduce((total, category) => 
     total + (category.children?.length || 0), 0
   ),
-  todayProposals: proposalsStore.proposals.filter(p => 
-    dayjs(p.created_at).isSame(dayjs(), 'day')
-  ).length
+  todayProposals: todayProposals.value
 }))
 
 const recentProposals = computed(() => 
@@ -260,7 +264,8 @@ const recentProposals = computed(() =>
 )
 
 function formatDate(date: string) {
-  return dayjs(date).format('DD.MM.YYYY HH:mm')
+  // Parse ISO (Z) as UTC and display as-is (no local shift)
+  return dayjs.utc(date).format('DD.MM.YYYY HH:mm')
 }
 
 onMounted(async () => {
@@ -270,6 +275,14 @@ onMounted(async () => {
       proposalsStore.fetchProposals(1),
       dictionariesStore.loadDictionaries()
     ])
+    // Total from pagination of proposals index (already requested)
+    totalProposals.value = proposalsStore.pagination.total
+
+    // Use overview for 'today' with server-local timestamps to avoid TZ drift
+    const from = dayjs().startOf('day').format('YYYY-MM-DD HH:mm:ss')
+    const to = dayjs().endOf('day').format('YYYY-MM-DD HH:mm:ss')
+    const today = await apiClient.getAnalyticsOverview({ from, to })
+    todayProposals.value = today.period_proposals
   } finally {
     loading.value = false
   }
