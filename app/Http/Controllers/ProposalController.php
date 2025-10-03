@@ -6,6 +6,7 @@ use App\Http\Requests\ProposalRequest;
 use App\Http\Requests\ProposalSearchRequest;
 use App\Http\Requests\ProposalUpdateRequest;
 use App\Http\Resources\ProposalResource;
+use App\Http\Resources\SimilarProposalResource;
 use App\Models\Proposal;
 use App\Services\ProposalService;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -80,8 +81,19 @@ class ProposalController extends Controller
      */
     public function search(ProposalSearchRequest $request): AnonymousResourceCollection
     {
-        return ProposalResource::collection(
+        return SimilarProposalResource::collection(
             $this->proposalService->search($request->get('query'))
+        );
+    }
+
+    /**
+     * @param Proposal $proposal
+     * @return AnonymousResourceCollection
+     */
+    public function similar(Proposal $proposal): AnonymousResourceCollection
+    {
+        return SimilarProposalResource::collection(
+            $this->proposalService->findSimilarProposals($proposal, 3)
         );
     }
 }

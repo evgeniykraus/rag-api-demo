@@ -10,6 +10,7 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'proposals'], function () {
         Route::get('search', [ProposalController::class, 'search']);
+        Route::get('{proposal}/similar', [ProposalController::class, 'similar']);
     });
 
     Route::group(['prefix' => 'dictionary'], function () {

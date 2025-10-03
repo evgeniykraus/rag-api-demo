@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\AiAgents\ProposalClassifierAgent;
-use App\DTO\SimilarProposalData;
 use App\Models\Category;
 use App\Models\Proposal;
 use App\Repositories\ProposalRepository;
@@ -110,8 +109,7 @@ readonly class ProposalService
      */
     public function findSimilarProposals(Proposal $proposal, int $limit = 10): Collection
     {
-        $proposals = $this->proposalRepository->getTopK($proposal, $limit);
-        return SimilarProposalData::fromCollection($proposals);
+        return $this->proposalRepository->getTopK($proposal, $limit, ['category', 'category.parent', 'city']);
     }
 
     /**
@@ -136,28 +134,6 @@ readonly class ProposalService
     public function findSimilarCategories(Proposal $proposal, int $limit = 10): Collection
     {
         return $this->proposalRepository->getSimilarCategories($proposal, $limit);
-    }
-
-    /**
-     * Построить/обновить вектор для proposal.
-     *
-     * @param Proposal $proposal
-     * @return bool
-     */
-    public function buildVector(Proposal $proposal): bool
-    {
-        if (!$proposal->content) {
-            return false;
-        }
-
-        $vector = $this->embeddingsService->embedOne('passage: ' . $proposal->content);
-        if (empty($vector)) {
-            return false;
-        }
-
-        $this->proposalRepository->updateOrCreateVector($proposal, new PgVector($vector));
-
-        return true;
     }
 }
 
