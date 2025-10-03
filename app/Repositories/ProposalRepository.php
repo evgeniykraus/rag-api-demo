@@ -17,7 +17,7 @@ class ProposalRepository
      */
     public function index(): LengthAwarePaginator
     {
-        return Proposal::query()->with(['category', 'category.parent', 'city'])->paginate();
+        return Proposal::query()->with(['category', 'category.parent', 'city'])->orderByDesc('created_at')->paginate();
     }
 
     /**
@@ -46,6 +46,16 @@ class ProposalRepository
     public function delete(Proposal $proposal): void
     {
         $proposal->delete();
+    }
+
+    /**
+     * @param Proposal $proposal
+     * @param array $data
+     * @return void
+     */
+    public function storeResponse(Proposal $proposal, array $data): void
+    {
+        $proposal->response()->updateOrCreate(['proposal_id' => $proposal->id], $data);
     }
 
     /**
@@ -91,7 +101,7 @@ class ProposalRepository
             ->select('proposals.*')
             ->selectRaw('1 - (proposal_vectors.embedding <=> ?::vector) AS similarity', [$vector])
             ->join('proposal_vectors', 'proposal_vectors.proposal_id', '=', 'proposals.id')
-            ->whereRaw('1 - (proposal_vectors.embedding <=> ?::vector) >= ?', [$vector, 0.905])
+            ->whereRaw('1 - (proposal_vectors.embedding <=> ?::vector) >= ?', [$vector, 0.9])
             ->with(['category', 'category.parent', 'city'])
             ->orderByRaw('proposal_vectors.embedding <=> ?::vector ASC', [$vector])
             ->limit(10)

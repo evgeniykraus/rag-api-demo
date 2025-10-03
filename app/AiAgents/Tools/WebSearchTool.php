@@ -41,7 +41,6 @@ class WebSearchTool extends Tool
 
     public function execute(array $input): array
     {
-        dd($input);
         $query = $input['query'];
         return WebSearchService::search($query, WebSearchOptionsData::fromArray($input));
     }

@@ -35,14 +35,6 @@ const routes: RouteRecordRaw[] = [
     }
   },
   {
-    path: '/search',
-    name: 'Search',
-    component: () => import('@/views/Search.vue'),
-    meta: {
-      title: 'Поиск'
-    }
-  },
-  {
     path: '/analytics',
     name: 'Analytics',
     component: () => import('@/views/Analytics.vue'),

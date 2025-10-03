@@ -25,6 +25,7 @@ class ProposalResource extends JsonResource
             'updated_at' => $this->updated_at,
             'city' => CityResource::make($this->city),
             'category' => CategoryResource::make($this->category),
+            'response' => $this->whenLoaded('response', fn() => $this->response->content),
         ];
     }
 }

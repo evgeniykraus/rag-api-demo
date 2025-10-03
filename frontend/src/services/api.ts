@@ -94,6 +94,17 @@ class ApiClient {
     return response.data.data || response.data
   }
 
+  // Proposal response API
+  async postProposalResponse(id: number, content: string): Promise<Proposal> {
+    const response = await this.client.post(`/api/v1/proposals/${id}/response`, { content })
+    return response.data
+  }
+
+  async aiGenerateProposalResponse(id: number): Promise<string> {
+    const response = await this.client.get(`/api/v1/proposals/${id}/response/ai-generate`)
+    // API returns { response: string }
+    return response.data?.response ?? response.data
+  }
   // Dictionary API
   async getCities(): Promise<City[]> {
     const response = await this.client.get('/api/v1/dictionary/cities')

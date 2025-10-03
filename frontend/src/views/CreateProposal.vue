@@ -2,6 +2,20 @@
   <AppLayout>
     <div class="max-w-2xl mx-auto">
       <div class="space-y-6">
+        <!-- Page-level error -->
+        <div v-if="proposalsStore.error" class="bg-red-50 border border-red-200 rounded-md p-4">
+          <div class="flex">
+            <ExclamationTriangleIcon class="h-5 w-5 text-red-400" />
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-red-800">
+                Ошибка
+              </h3>
+              <div class="mt-2 text-sm text-red-700">
+                {{ proposalsStore.error }}
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- Header -->
         <div class="md:flex md:items-center md:justify-between">
           <div class="flex-1 min-w-0">
@@ -28,6 +42,19 @@
 
         <!-- Form -->
         <div class="bg-white shadow rounded-lg">
+          <!-- Form-level error -->
+          <div v-if="proposalsStore.error" class="px-6 pt-4">
+            <div class="bg-red-50 border border-red-200 rounded-md p-3">
+              <div class="flex">
+                <ExclamationTriangleIcon class="h-5 w-5 text-red-400" />
+                <div class="ml-3">
+                  <div class="text-sm text-red-700">
+                    {{ proposalsStore.error }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <form @submit.prevent="handleSubmit">
             <div class="px-6 py-4 border-b border-gray-200">
               <h3 class="text-lg font-medium text-gray-900">Основная информация</h3>
@@ -98,7 +125,7 @@ import { useProposalsStore } from '@/stores/proposals'
 import { useDictionariesStore } from '@/stores/dictionaries'
 import { useUIStore } from '@/stores/ui'
 import AppLayout from '@/components/common/AppLayout.vue'
-import { ChevronRightIcon } from '@heroicons/vue/24/outline'
+import { ChevronRightIcon, ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 import type { CreateProposalRequest } from '@/types'
 
 const router = useRouter()

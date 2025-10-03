@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\AiAgents\ProposalClassifierAgent;
+use App\AiAgents\ProposalResponseGeneratorAgent;
 use App\Models\Category;
 use App\Models\Proposal;
+use App\Models\ProposalResponse;
 use App\Repositories\ProposalRepository;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -110,6 +112,30 @@ readonly class ProposalService
     public function findSimilarProposals(Proposal $proposal, int $limit = 10): Collection
     {
         return $this->proposalRepository->getTopK($proposal, $limit, ['category', 'category.parent', 'city']);
+    }
+
+    /**
+     * @param Proposal $proposal
+     * @param array $data
+     * @return Proposal
+     */
+    public function storeResponse(Proposal $proposal, array $data): Proposal
+    {
+        $this->proposalRepository->storeResponse($proposal, $data);
+
+        return $proposal->load(['category', 'category.parent', 'city', 'response']);
+    }
+
+    /**
+     * @param Proposal $proposal
+     * @return string
+     * @throws Throwable
+     */
+    public function generateResponse(Proposal $proposal): string
+    {
+        $message = ProposalResponseGeneratorAgent::buildMessage($proposal, $this->findSimilarResponses($proposal, 3));
+
+        return ProposalResponseGeneratorAgent::for(uniqid())->message($message)->respond();
     }
 
     /**

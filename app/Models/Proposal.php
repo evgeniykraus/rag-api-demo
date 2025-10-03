@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property ProposalVector $vector
  * @property City $city
  * @property Category $category
+ * @property ProposalResponse $response
  */
 class Proposal extends Model
 {

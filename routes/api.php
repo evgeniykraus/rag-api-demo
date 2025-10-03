@@ -10,7 +10,17 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'proposals'], function () {
         Route::get('search', [ProposalController::class, 'search']);
-        Route::get('{proposal}/similar', [ProposalController::class, 'similar']);
+
+        Route::group(['prefix' => '{proposal}', 'where' => ['proposal' => '[0-9]+']], function () {
+            Route::get('similar', [ProposalController::class, 'similar']);
+
+            Route::group(['prefix' => 'response'], function () {
+                Route::post('', [ProposalController::class, 'storeResponse']);
+                Route::get('ai-generate', [ProposalController::class, 'generateResponse']);
+            });
+        });
+
+
     });
 
     Route::group(['prefix' => 'dictionary'], function () {

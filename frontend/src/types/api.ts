@@ -39,6 +39,12 @@ export interface Proposal {
   city: City
   category: Category
   similarity?: number
+  response?: string | {
+    id: number
+    content: string
+    created_at: string
+    updated_at: string
+  } | null
 }
 
 export interface ProposalWithParent extends Proposal {

@@ -28,13 +28,13 @@ export const useProposalsStore = defineStore('proposals', () => {
     try {
       loading.value = true
       error.value = null
-      
+
       // Подготавливаем параметры запроса
       const params: any = {
         page,
         per_page: pagination.value.perPage
       }
-      
+
       // Добавляем фильтры если они есть
       if (filters.value.city_id) {
         params.city_id = filters.value.city_id
@@ -48,10 +48,10 @@ export const useProposalsStore = defineStore('proposals', () => {
       if (filters.value.date_to) {
         params.date_to = filters.value.date_to
       }
-      
+
       const response = await apiClient.getProposals(page, pagination.value.perPage, params)
       proposals.value = response.data
-      
+
       if (response.meta) {
         pagination.value = {
           page: response.meta.current_page,
@@ -72,7 +72,7 @@ export const useProposalsStore = defineStore('proposals', () => {
     try {
       loading.value = true
       error.value = null
-      
+
       currentProposal.value = await apiClient.getProposal(id)
     } catch (err: any) {
       error.value = err.message || 'Ошибка загрузки обращения'
@@ -86,7 +86,7 @@ export const useProposalsStore = defineStore('proposals', () => {
     try {
       loading.value = true
       error.value = null
-      
+
       const newProposal = await apiClient.createProposal(data)
       proposals.value.unshift(newProposal)
       return newProposal
@@ -103,18 +103,18 @@ export const useProposalsStore = defineStore('proposals', () => {
     try {
       loading.value = true
       error.value = null
-      
+
       const updatedProposal = await apiClient.updateProposal(id, data)
-      
-      const index = proposals.value.findIndex(p => p.id === id)
+
+      const index = proposals.value.findIndex((p: Proposal) => p.id === id)
       if (index !== -1) {
         proposals.value[index] = updatedProposal
       }
-      
+
       if (currentProposal.value?.id === id) {
         currentProposal.value = updatedProposal
       }
-      
+
       return updatedProposal
     } catch (err: any) {
       error.value = err.message || 'Ошибка обновления обращения'
@@ -131,7 +131,7 @@ export const useProposalsStore = defineStore('proposals', () => {
       error.value = null
 
       await apiClient.deleteProposal(id)
-      proposals.value = proposals.value.filter(p => p.id !== id)
+      proposals.value = proposals.value.filter((p: Proposal) => p.id !== id)
 
       if (currentProposal.value?.id === id) {
         currentProposal.value = null
@@ -160,20 +160,62 @@ export const useProposalsStore = defineStore('proposals', () => {
     }
   }
 
+  async function saveProposalResponse(id: number, content: string) {
+    try {
+      loading.value = true
+      error.value = null
+      const updated = await apiClient.postProposalResponse(id, content)
+      // Обновляем в списке
+      const index = proposals.value.findIndex((p: Proposal) => p.id === id)
+      if (index !== -1) {
+        proposals.value[index] = updated
+      }
+      // Обновляем детальное состояние
+      if (currentProposal.value?.id === id) {
+        currentProposal.value = updated
+      }
+      return updated
+    } catch (err: any) {
+      error.value = err.message || 'Ошибка сохранения ответа'
+      console.error('Error saving response:', err)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const aiSuggestion = ref<string | null>(null)
+
+  async function aiGenerateProposalResponse(id: number) {
+    try {
+      loading.value = true
+      error.value = null
+      const suggestion = await apiClient.aiGenerateProposalResponse(id)
+      aiSuggestion.value = suggestion
+      return suggestion
+    } catch (err: any) {
+      error.value = err.message || 'Ошибка генерации ответа'
+      console.error('Error AI-generating response:', err)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
   async function searchProposals(query: string) {
     try {
       loading.value = true
       error.value = null
-      
+
       // Устанавливаем поисковый запрос в фильтры
       filters.value.search = query
-      
+
       // Выполняем поиск через API
       const results = await apiClient.searchProposals(query)
       console.log('API search results:', results)
       proposals.value = results
       console.log('Store proposals after search:', proposals.value)
-      
+
       // Сбрасываем пагинацию для результатов поиска
       pagination.value = {
         page: 1,
@@ -221,6 +263,7 @@ export const useProposalsStore = defineStore('proposals', () => {
     error,
     pagination,
     filters,
+    aiSuggestion,
 
     // Getters
     filteredProposals,
@@ -232,6 +275,8 @@ export const useProposalsStore = defineStore('proposals', () => {
     updateProposal,
     deleteProposal,
     getSimilarProposals,
+    saveProposalResponse,
+    aiGenerateProposalResponse,
     searchProposals,
     setFilters,
     clearFilters,

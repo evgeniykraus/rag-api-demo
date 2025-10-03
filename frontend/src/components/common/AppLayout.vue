@@ -75,13 +75,13 @@
               Обращения
             </RouterLink>
             <RouterLink
+              v-if="false"
               to="/search"
               @click="setSidebarOpen(false)"
               class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-50"
               :class="{ 'text-primary-600 bg-primary-50': $route.name === 'Search' }"
             >
-              <MagnifyingGlassIcon class="mr-3 h-5 w-5" />
-              Поиск
+              <span class="sr-only">Поиск (удалено)</span>
             </RouterLink>
             <RouterLink
               to="/analytics"
@@ -118,7 +118,6 @@ import {
   XMarkIcon,
   HomeIcon,
   DocumentTextIcon,
-  MagnifyingGlassIcon,
   ChartBarIcon,
   SunIcon,
   MoonIcon
