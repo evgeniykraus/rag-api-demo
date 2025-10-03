@@ -52,7 +52,7 @@ class ProposalController extends Controller
     public function show(Proposal $proposal)
     {
         return ProposalResource::make(
-            $proposal->load(['category', 'category.parent', 'city', 'response'])
+            $proposal->load(['category', 'category.parent', 'city', 'response', 'metadata'])
         );
     }
 

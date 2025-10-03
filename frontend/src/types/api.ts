@@ -45,6 +45,7 @@ export interface Proposal {
     created_at: string
     updated_at: string
   } | null
+  metadata?: ProposalMetadata | null
 }
 
 export interface ProposalWithParent extends Proposal {
@@ -70,6 +71,28 @@ export interface Category {
 
 export interface CategoryTree extends Category {
   children: Category[]
+}
+
+// Proposal metadata (AI analysis)
+export interface ProposalMetadata {
+  correctness_score?: number | string | null
+  completeness_score?: number | string | null
+  actionable_score?: number | string | null
+  missing_points?: string[] | null
+  tone_politeness_score?: number | string | null
+  clarity_score?: number | string | null
+  jargon_flag?: boolean | null
+  policy_compliance_score?: number | string | null
+  risk_flags?: string[] | null
+  intent_tags?: string[] | null
+  entities?: {
+    locations?: string[] | null
+    objects?: string[] | null
+  } | null
+  resolution_likelihood?: number | string | null
+  followup_needed?: boolean | null
+  next_steps?: string[] | null
+  processed_at?: string | null
 }
 
 // Request types

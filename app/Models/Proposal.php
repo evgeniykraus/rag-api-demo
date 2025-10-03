@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property City $city
  * @property Category $category
  * @property ProposalResponse $response
+ * @property ProposalMetadata $metadata
  */
 class Proposal extends Model
 {
@@ -43,6 +44,11 @@ class Proposal extends Model
     public function vector(): HasOne
     {
         return $this->hasOne(ProposalVector::class);
+    }
+
+    public function metadata(): HasOne
+    {
+        return $this->hasOne(ProposalMetadata::class);
     }
 }
 

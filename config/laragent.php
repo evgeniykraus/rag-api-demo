@@ -30,5 +30,16 @@ return [
             'default_max_completion_tokens' => 10000,
             'default_temperature' => 1,
         ],
+
+        'ollama' => [
+            'name' => 'ollama',
+            'model' => 'gemma3:4b',
+            'driver' => \LarAgent\Drivers\OpenAi\OllamaDriver::class,
+            'api_key' => "ollama",
+            'api_url' => env('OLLAMA_BASE_URL'),
+            'default_context_window' => 50000,
+            'default_max_completion_tokens' => 100,
+            'default_temperature' => 1,
+        ],
     ],
 ];

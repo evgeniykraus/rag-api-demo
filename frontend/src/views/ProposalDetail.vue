@@ -190,24 +190,196 @@
             <div class="px-6 py-4 border-b border-gray-200">
               <h3 class="text-lg font-medium text-gray-900 flex items-center">
                 <CpuChipIcon class="h-5 w-5 mr-2 text-blue-500" />
-                AI-анализ
+                Анализ ответа (AI)
               </h3>
             </div>
-            <div class="px-6 py-4">
-              <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>
-                  <dt class="text-sm font-medium text-gray-500">Тональность</dt>
-                  <dd class="mt-1">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                      Отрицательная
-                    </span>
+            <div class="px-6 py-4 space-y-6">
+              <div v-if="!proposal.metadata" class="text-sm text-gray-500">
+                Метаданные анализа пока отсутствуют.
+              </div>
+
+              <template v-else>
+                <!-- Scores -->
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Соответствие вопросу</dt>
+                    <dd class="mt-1">
+                      <div class="h-2 w-full bg-gray-100 rounded">
+                        <div
+                          class="h-2 rounded bg-green-500"
+                          :style="{ width: formatPercentWidth(proposal.metadata.correctness_score) }"
+                          aria-label="Оценка соответствия"
+                          role="progressbar"
+                          :aria-valuenow="Math.round((proposal.metadata.correctness_score||0)*100)"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        />
+                      </div>
+                      <div class="mt-1 text-xs text-gray-600">{{ formatPercent(proposal.metadata.correctness_score) }}</div>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Полнота ответа</dt>
+                    <dd class="mt-1">
+                      <div class="h-2 w-full bg-gray-100 rounded">
+                        <div
+                          class="h-2 rounded bg-indigo-500"
+                          :style="{ width: formatPercentWidth(proposal.metadata.completeness_score) }"
+                          aria-label="Оценка полноты"
+                          role="progressbar"
+                          :aria-valuenow="Math.round((proposal.metadata.completeness_score||0)*100)"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        />
+                      </div>
+                      <div class="mt-1 text-xs text-gray-600">{{ formatPercent(proposal.metadata.completeness_score) }}</div>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Конкретность действий</dt>
+                    <dd class="mt-1">
+                      <div class="h-2 w-full bg-gray-100 rounded">
+                        <div
+                          class="h-2 rounded bg-amber-500"
+                          :style="{ width: formatPercentWidth(proposal.metadata.actionable_score) }"
+                          aria-label="Оценка конкретности"
+                          role="progressbar"
+                          :aria-valuenow="Math.round((proposal.metadata.actionable_score||0)*100)"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        />
+                      </div>
+                      <div class="mt-1 text-xs text-gray-600">{{ formatPercent(proposal.metadata.actionable_score) }}</div>
+                    </dd>
+                  </div>
+                </div>
+
+                <!-- Tone & clarity -->
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Вежливость тона</dt>
+                    <dd class="mt-1 text-sm text-gray-900">{{ formatPercent(proposal.metadata.tone_politeness_score) }}</dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Ясность формулировок</dt>
+                    <dd class="mt-1 text-sm text-gray-900">{{ formatPercent(proposal.metadata.clarity_score) }}</dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Канцелярит/жаргон</dt>
+                    <dd class="mt-1">
+                      <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                        :class="proposal.metadata.jargon_flag ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'"
+                      >
+                        {{ proposal.metadata.jargon_flag ? 'Есть' : 'Нет' }}
+                      </span>
+                    </dd>
+                  </div>
+                </div>
+
+                <!-- Missing points -->
+                <div v-if="proposal.metadata.missing_points?.length">
+                  <dt class="text-sm font-medium text-gray-500">Что можно улучшить</dt>
+                  <dd class="mt-2">
+                    <ul class="list-disc space-y-1 pl-5 text-sm text-gray-800">
+                      <li v-for="(mp, i) in proposal.metadata.missing_points" :key="i">{{ mp }}</li>
+                    </ul>
                   </dd>
                 </div>
-                <div>
-                  <dt class="text-sm font-medium text-gray-500">Уверенность классификации</dt>
-                  <dd class="mt-1 text-sm text-gray-900">85%</dd>
+
+                <!-- Compliance risks -->
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Соответствие правилам</dt>
+                    <dd class="mt-1 text-sm text-gray-900">{{ formatPercent(proposal.metadata.policy_compliance_score) }}</dd>
+                  </div>
+                  <div class="sm:col-span-2">
+                    <dt class="text-sm font-medium text-gray-500">Риски</dt>
+                    <dd class="mt-1">
+                      <div class="flex flex-wrap gap-2">
+                        <span
+                          v-for="(risk, idx) in (proposal.metadata.risk_flags || [])"
+                          :key="risk + idx"
+                          class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800"
+                        >
+                          {{ translateRisk(risk) }}
+                        </span>
+                        <span v-if="!proposal.metadata.risk_flags || proposal.metadata.risk_flags.length === 0" class="text-sm text-gray-500">Не выявлено</span>
+                      </div>
+                    </dd>
+                  </div>
                 </div>
-              </div>
+
+                <!-- Tags & entities -->
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+                  <div class="sm:col-span-1">
+                    <dt class="text-sm font-medium text-gray-500">Теги тематики</dt>
+                    <dd class="mt-2">
+                      <div class="flex flex-wrap gap-2">
+                        <span
+                          v-for="(tag, i) in (proposal.metadata.intent_tags || [])"
+                          :key="tag + i"
+                          class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                          :title="tag"
+                        >
+                          {{ translateIntentTag(tag) }}
+                        </span>
+                        <span v-if="!proposal.metadata.intent_tags || proposal.metadata.intent_tags.length === 0" class="text-sm text-gray-500">—</span>
+                      </div>
+                    </dd>
+                  </div>
+                  <div class="sm:col-span-1">
+                    <dt class="text-sm font-medium text-gray-500">Локации</dt>
+                    <dd class="mt-2 text-sm text-gray-900">
+                      <ul class="list-disc space-y-1 pl-5">
+                        <li v-for="(loc, i) in (proposal.metadata.entities?.locations || [])" :key="loc + i">{{ loc }}</li>
+                        <li v-if="!proposal.metadata.entities?.locations || proposal.metadata.entities.locations.length === 0" class="text-gray-500">—</li>
+                      </ul>
+                    </dd>
+                  </div>
+                  <div class="sm:col-span-1">
+                    <dt class="text-sm font-medium text-gray-500">Объекты</dt>
+                    <dd class="mt-2 text-sm text-gray-900">
+                      <ul class="list-disc space-y-1 pl-5">
+                        <li v-for="(obj, i) in (proposal.metadata.entities?.objects || [])" :key="obj + i">{{ obj }}</li>
+                        <li v-if="!proposal.metadata.entities?.objects || proposal.metadata.entities.objects.length === 0" class="text-gray-500">—</li>
+                      </ul>
+                    </dd>
+                  </div>
+                </div>
+
+                <!-- Resolution -->
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Вероятность решения</dt>
+                    <dd class="mt-1 text-sm text-gray-900">{{ formatPercent(proposal.metadata.resolution_likelihood) }}</dd>
+                  </div>
+                  <div>
+                    <dt class="text-sm font-medium text-gray-500">Нужен фоллоу-ап</dt>
+                    <dd class="mt-1">
+                      <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                        :class="proposal.metadata.followup_needed ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'"
+                      >
+                        {{ proposal.metadata.followup_needed ? 'Да' : 'Нет' }}
+                      </span>
+                    </dd>
+                  </div>
+                  <div class="sm:col-span-1">
+                    <dt class="text-sm font-medium text-gray-500">Следующие шаги</dt>
+                    <dd class="mt-2">
+                      <ul class="list-disc space-y-1 pl-5 text-sm text-gray-900">
+                        <li v-for="(step, i) in (proposal.metadata.next_steps || [])" :key="step + i">{{ step }}</li>
+                        <li v-if="!proposal.metadata.next_steps || proposal.metadata.next_steps.length === 0" class="text-gray-500">—</li>
+                      </ul>
+                    </dd>
+                  </div>
+                </div>
+
+                <div class="text-xs text-gray-500" v-if="proposal.metadata.processed_at">
+                  Обработано: {{ formatDate(proposal.metadata.processed_at) }}
+                </div>
+              </template>
             </div>
           </div>
 
@@ -347,6 +519,60 @@ const generatingResponse = ref(false)
 
 function formatDate(date: string) {
   return dayjs.utc(date).format('DD.MM.YYYY HH:mm')
+}
+
+function formatPercent(value?: number | string | null) {
+  const v = typeof value === 'string' ? parseFloat(value) : (typeof value === 'number' ? value : 0)
+  return `${Math.round(v * 100)}%`
+}
+
+function formatPercentWidth(value?: number | string | null) {
+  const v = typeof value === 'string' ? parseFloat(value) : (typeof value === 'number' ? value : 0)
+  return `${Math.max(0, Math.min(100, Math.round(v * 100)))}%`
+}
+
+function translateRisk(risk: string) {
+  switch (risk) {
+    case 'personal_data':
+      return 'Персональные данные'
+    case 'legal_risk':
+      return 'Юридический риск'
+    case 'incorrect_commitment':
+      return 'Некорректное обещание'
+    default:
+      return risk
+  }
+}
+
+function translateIntentTag(tag: string) {
+  const tagTranslations: Record<string, string> = {
+    'report_problem': 'Сообщение о проблеме',
+    'request_resolution': 'Запрос на решение',
+    'complaint': 'Жалоба',
+    'suggestion': 'Предложение',
+    'information_request': 'Запрос информации',
+    'urgent_request': 'Срочный запрос',
+    'maintenance_request': 'Запрос на обслуживание',
+    'safety_issue': 'Проблема безопасности',
+    'environmental_issue': 'Экологическая проблема',
+    'infrastructure_issue': 'Проблема инфраструктуры',
+    'housing_issue': 'Жилищная проблема',
+    'transport_issue': 'Транспортная проблема',
+    'utility_issue': 'Коммунальная проблема',
+    'cleanliness_issue': 'Проблема чистоты',
+    'noise_complaint': 'Жалоба на шум',
+    'parking_issue': 'Проблема с парковкой',
+    'lighting_issue': 'Проблема освещения',
+    'road_issue': 'Проблема дороги',
+    'sidewalk_issue': 'Проблема тротуара',
+    'green_space_issue': 'Проблема зеленых зон',
+    'public_service_issue': 'Проблема общественных услуг',
+    'administrative_request': 'Административный запрос',
+    'legal_question': 'Правовой вопрос',
+    'thank_you': 'Благодарность',
+    'follow_up': 'Дополнительное обращение',
+  }
+  return tagTranslations[tag] || tag
 }
 
 function toggleSimilarExpanded(index: number) {
