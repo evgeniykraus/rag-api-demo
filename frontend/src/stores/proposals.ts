@@ -1,0 +1,242 @@
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+import apiClient from '@/services/api'
+import type { Proposal, CreateProposalRequest, UpdateProposalRequest, ProposalFilters } from '@/types'
+
+export const useProposalsStore = defineStore('proposals', () => {
+  // State
+  const proposals = ref<Proposal[]>([])
+  const currentProposal = ref<Proposal | null>(null)
+  const loading = ref(false)
+  const error = ref<string | null>(null)
+  const pagination = ref({
+    page: 1,
+    perPage: 15,
+    total: 0,
+    totalPages: 0
+  })
+  const filters = ref<ProposalFilters>({})
+
+  // Getters
+  const filteredProposals = computed(() => {
+    // Возвращаем данные как есть, так как фильтрация происходит на сервере
+    return proposals.value
+  })
+
+  // Actions
+  async function fetchProposals(page = 1) {
+    try {
+      loading.value = true
+      error.value = null
+      
+      // Подготавливаем параметры запроса
+      const params: any = {
+        page,
+        per_page: pagination.value.perPage
+      }
+      
+      // Добавляем фильтры если они есть
+      if (filters.value.city_id) {
+        params.city_id = filters.value.city_id
+      }
+      if (filters.value.category_id) {
+        params.category_id = filters.value.category_id
+      }
+      if (filters.value.date_from) {
+        params.date_from = filters.value.date_from
+      }
+      if (filters.value.date_to) {
+        params.date_to = filters.value.date_to
+      }
+      
+      const response = await apiClient.getProposals(page, pagination.value.perPage, params)
+      proposals.value = response.data
+      
+      if (response.meta) {
+        pagination.value = {
+          page: response.meta.current_page,
+          perPage: response.meta.per_page,
+          total: response.meta.total,
+          totalPages: response.meta.last_page
+        }
+      }
+    } catch (err: any) {
+      error.value = err.message || 'Ошибка загрузки обращений'
+      console.error('Error fetching proposals:', err)
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function fetchProposal(id: number) {
+    try {
+      loading.value = true
+      error.value = null
+      
+      currentProposal.value = await apiClient.getProposal(id)
+    } catch (err: any) {
+      error.value = err.message || 'Ошибка загрузки обращения'
+      console.error('Error fetching proposal:', err)
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function createProposal(data: CreateProposalRequest) {
+    try {
+      loading.value = true
+      error.value = null
+      
+      const newProposal = await apiClient.createProposal(data)
+      proposals.value.unshift(newProposal)
+      return newProposal
+    } catch (err: any) {
+      error.value = err.message || 'Ошибка создания обращения'
+      console.error('Error creating proposal:', err)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function updateProposal(id: number, data: UpdateProposalRequest) {
+    try {
+      loading.value = true
+      error.value = null
+      
+      const updatedProposal = await apiClient.updateProposal(id, data)
+      
+      const index = proposals.value.findIndex(p => p.id === id)
+      if (index !== -1) {
+        proposals.value[index] = updatedProposal
+      }
+      
+      if (currentProposal.value?.id === id) {
+        currentProposal.value = updatedProposal
+      }
+      
+      return updatedProposal
+    } catch (err: any) {
+      error.value = err.message || 'Ошибка обновления обращения'
+      console.error('Error updating proposal:', err)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function deleteProposal(id: number) {
+    try {
+      loading.value = true
+      error.value = null
+
+      await apiClient.deleteProposal(id)
+      proposals.value = proposals.value.filter(p => p.id !== id)
+
+      if (currentProposal.value?.id === id) {
+        currentProposal.value = null
+      }
+    } catch (err: any) {
+      error.value = err.message || 'Ошибка удаления обращения'
+      console.error('Error deleting proposal:', err)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function getSimilarProposals(id: number) {
+    try {
+      loading.value = true
+      error.value = null
+
+      return await apiClient.getSimilarProposals(id)
+    } catch (err: any) {
+      error.value = err.message || 'Ошибка загрузки похожих обращений'
+      console.error('Error fetching similar proposals:', err)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function searchProposals(query: string) {
+    try {
+      loading.value = true
+      error.value = null
+      
+      // Устанавливаем поисковый запрос в фильтры
+      filters.value.search = query
+      
+      // Выполняем поиск через API
+      const results = await apiClient.searchProposals(query)
+      console.log('API search results:', results)
+      proposals.value = results
+      console.log('Store proposals after search:', proposals.value)
+      
+      // Сбрасываем пагинацию для результатов поиска
+      pagination.value = {
+        page: 1,
+        perPage: pagination.value.perPage,
+        total: results.length,
+        totalPages: 1
+      }
+    } catch (err: any) {
+      error.value = err.message || 'Ошибка поиска обращений'
+      console.error('Error searching proposals:', err)
+    } finally {
+      loading.value = false
+    }
+  }
+
+  function setFilters(newFilters: ProposalFilters) {
+    filters.value = { ...filters.value, ...newFilters }
+  }
+
+  function clearFilters() {
+    filters.value = {}
+  }
+
+  function clearSearch() {
+    filters.value.search = undefined
+    fetchProposals(1)
+  }
+
+  function setPagination(page: number, perPage?: number) {
+    pagination.value.page = page
+    if (perPage) {
+      pagination.value.perPage = perPage
+    }
+  }
+
+  function clearError() {
+    error.value = null
+  }
+
+  return {
+    // State
+    proposals,
+    currentProposal,
+    loading,
+    error,
+    pagination,
+    filters,
+
+    // Getters
+    filteredProposals,
+
+    // Actions
+    fetchProposals,
+    fetchProposal,
+    createProposal,
+    updateProposal,
+    deleteProposal,
+    getSimilarProposals,
+    searchProposals,
+    setFilters,
+    clearFilters,
+    clearSearch,
+    setPagination,
+    clearError
+  }
+})
