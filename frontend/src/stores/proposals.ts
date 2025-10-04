@@ -202,6 +202,29 @@ export const useProposalsStore = defineStore('proposals', () => {
     }
   }
 
+  async function analyzeProposal(id: number) {
+    try {
+      loading.value = true
+      error.value = null
+      await apiClient.analyzeProposal(id)
+      // Обновляем флаг is_analyzing в текущем обращении
+      if (currentProposal.value?.id === id) {
+        currentProposal.value.is_analyzing = true
+      }
+      // Обновляем флаг в списке обращений
+      const index = proposals.value.findIndex((p: Proposal) => p.id === id)
+      if (index !== -1) {
+        proposals.value[index].is_analyzing = true
+      }
+    } catch (err: any) {
+      error.value = err.message || 'Ошибка анализа обращения'
+      console.error('Error analyzing proposal:', err)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
   async function searchProposals(query: string) {
     try {
       loading.value = true
@@ -277,6 +300,7 @@ export const useProposalsStore = defineStore('proposals', () => {
     getSimilarProposals,
     saveProposalResponse,
     aiGenerateProposalResponse,
+    analyzeProposal,
     searchProposals,
     setFilters,
     clearFilters,

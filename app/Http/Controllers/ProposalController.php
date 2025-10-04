@@ -126,4 +126,15 @@ class ProposalController extends Controller
             'response' => $this->proposalService->generateResponse($proposal)
         ]);
     }
+
+    /**
+     * @param Proposal $proposal
+     * @return Response
+     * @throws Throwable
+     */
+    public function analyze(Proposal $proposal): Response
+    {
+        $this->proposalService->dispatchAnalyzeProposalJob($proposal);
+        return response()->noContent();
+    }
 }

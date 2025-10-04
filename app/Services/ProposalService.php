@@ -2,10 +2,17 @@
 
 namespace App\Services;
 
+use App\AiAgents\MetaDataExtractor\ComplianceAgent;
+use App\AiAgents\MetaDataExtractor\CorrectnessAgent;
+use App\AiAgents\MetaDataExtractor\EntitiesTagsAgent;
+use App\AiAgents\MetaDataExtractor\ResolutionAgent;
+use App\AiAgents\MetaDataExtractor\ToneClarityAgent;
 use App\AiAgents\ProposalClassifierAgent;
 use App\AiAgents\ProposalResponseGeneratorAgent;
+use App\Jobs\AnalyzeProposalJob;
 use App\Models\Category;
 use App\Models\Proposal;
+use App\Models\ProposalMetadata;
 use App\Models\ProposalResponse;
 use App\Repositories\ProposalRepository;
 use Exception;
@@ -160,6 +167,49 @@ readonly class ProposalService
     public function findSimilarCategories(Proposal $proposal, int $limit = 10): Collection
     {
         return $this->proposalRepository->getSimilarCategories($proposal, $limit);
+    }
+
+    public function dispatchAnalyzeProposalJob(Proposal $proposal): void
+    {
+        AnalyzeProposalJob::dispatch($proposal);
+    }
+
+    /**
+     * @param Proposal $proposal
+     * @return void
+     * @throws Throwable
+     */
+    public function analyzeProposal(Proposal $proposal): void
+    {
+        throw_if(!$proposal->response, new Exception('Обращение без ответа не может быть проанализировано'));
+
+        $question = $proposal->content;
+        $answer = (string)$proposal->response->content;
+
+        // Единый payload для агентов
+        $pairMessage = "Вопрос (обращение):\n{$question}\n\nОтвет менеджера:\n{$answer}";
+
+        // Запуск агентов
+        $correctness = CorrectnessAgent::for('meta')->message($pairMessage)->respond();
+        $toneClarity = ToneClarityAgent::for('meta')->message($answer)->respond();
+        $compliance = ComplianceAgent::for('meta')->message($answer)->respond();
+        $entitiesTags = EntitiesTagsAgent::for('meta')->message($pairMessage)->respond();
+        $resolution = ResolutionAgent::for('meta')->message($pairMessage)->respond();
+
+        // Все агенты отработали — создаем запись метаданных
+        $data = [
+            ...$correctness,
+            ...$toneClarity,
+            ...$compliance,
+            ...$resolution,
+            'proposal_id' => $proposal->id,
+            'intent_tags' => $entitiesTags['intent_tags'] ?? null,
+            'entities_locations' => $entitiesTags['entities']['locations'] ?? null,
+            'entities_objects' => $entitiesTags['entities']['objects'] ?? null,
+            'processed_at' => now(),
+        ];
+
+        $this->proposalRepository->storeProposalMetadata($data);
     }
 }
 

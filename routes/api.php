@@ -14,6 +14,7 @@ Route::group(['prefix' => 'v1'], function () {
 
         Route::group(['prefix' => '{proposal}', 'where' => ['proposal' => '[0-9]+']], function () {
             Route::get('similar', [ProposalController::class, 'similar']);
+            Route::get('analyze', [ProposalController::class, 'analyze']);
 
             Route::group(['prefix' => 'response'], function () {
                 Route::post('', [ProposalController::class, 'storeResponse']);

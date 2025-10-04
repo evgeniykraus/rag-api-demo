@@ -46,6 +46,7 @@ export interface Proposal {
     updated_at: string
   } | null
   metadata?: ProposalMetadata | null
+  is_analyzing?: boolean
 }
 
 export interface ProposalWithParent extends Proposal {

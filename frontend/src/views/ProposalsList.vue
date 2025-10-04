@@ -150,6 +150,12 @@
               {{ item.content.length > 120 ? `${item.content.substring(0, 120)}...` : item.content }}
             </div>
 
+            <!-- Индикатор анализа -->
+            <div v-if="item.is_analyzing" class="flex items-center space-x-1 text-xs text-blue-600 mb-2">
+              <span class="animate-spin">⟳</span>
+              <span>Анализ в процессе...</span>
+            </div>
+
             <!-- Спойлер с дополнительной информацией -->
             <details class="group">
               <summary class="inline-flex items-center px-2 py-1 text-xs font-medium text-blue-600 bg-blue-50 rounded-md cursor-pointer hover:bg-blue-100 hover:text-blue-700 transition-colors">
@@ -250,7 +256,8 @@ import {
   EyeIcon,
   PencilIcon,
   TrashIcon,
-  ChevronDownIcon
+  ChevronDownIcon,
+  CpuChipIcon
 } from '@heroicons/vue/24/outline'
 import type { TableColumn, TableAction, Proposal } from '@/types'
 import dayjs from 'dayjs'
@@ -288,6 +295,26 @@ const actions: TableAction[] = [
       // Открываем в новой вкладке
       const url = router.resolve(`/proposals/${item.id}`)
       window.open(url.href, '_blank')
+    }
+  },
+  {
+    label: 'Анализ',
+    icon: CpuChipIcon,
+    variant: 'primary',
+    disabled: (item) => !item.response || !!item.metadata || item.is_analyzing,
+    action: async (item) => {
+      if (item.is_analyzing) {
+        uiStore.showInfo('Информация', 'Анализ уже выполняется')
+        return
+      }
+      if (confirm('Запустить анализ ответа на обращение?')) {
+        try {
+          await proposalsStore.analyzeProposal(item.id)
+          uiStore.showSuccess('Анализ запущен. Результаты будут доступны через несколько минут.')
+        } catch (error) {
+          uiStore.showError('Ошибка анализа', 'Не удалось запустить анализ')
+        }
+      }
     }
   },
   {

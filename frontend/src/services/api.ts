@@ -131,6 +131,10 @@ class ApiClient {
     // API returns { response: string }
     return response.data?.response ?? response.data
   }
+
+  async analyzeProposal(id: number): Promise<void> {
+    await this.client.get(`/api/v1/proposals/${id}/analyze`)
+  }
   // Dictionary API
   async getCities(): Promise<City[]> {
     const response = await this.client.get('/api/v1/dictionary/cities')

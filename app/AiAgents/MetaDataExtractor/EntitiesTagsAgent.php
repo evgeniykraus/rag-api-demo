@@ -2,12 +2,10 @@
 
 namespace App\AiAgents\MetaDataExtractor;
 
-use App\Enums\IntentTagsEnum;
 use LarAgent\Agent;
 
 class EntitiesTagsAgent extends Agent
 {
-    protected $model = 'meta-llama-3-8b-instruct';
     protected $history = 'in_memory';
     protected $temperature = 0.0;
 
@@ -48,7 +46,7 @@ class EntitiesTagsAgent extends Agent
                             'follow_up'
                         ]
                     ],
-                    'description' => 'Короткие тематические теги (до 6) из предопределенного списка'
+                    'description' => 'Короткие тематические теги которые можно задать диалогу'
                 ],
                 'entities' => [
                     'type' => 'object',
@@ -68,11 +66,8 @@ class EntitiesTagsAgent extends Agent
 
     public function instructions(): string
     {
-        $availableTags = implode(', ', IntentTagsEnum::getValues());
-
         return (
             'Ты — агент извлечения тегов и сущностей из пары "обращение + ответ". '
-            .'Верни до 6 коротких intent_tags из предопределенного списка: ' . $availableTags . '. '
             .'Также извлеки entities.locations (адрес/улица/ориентир) и entities.objects (дороги, освещение, ТКО и др.). '
             .'Строго следуй схеме JSON и используй только теги из списка.'
         );

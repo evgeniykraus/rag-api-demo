@@ -195,7 +195,27 @@
             </div>
             <div class="px-6 py-4 space-y-6">
               <div v-if="!proposal.metadata" class="text-sm text-gray-500">
-                Метаданные анализа пока отсутствуют.
+                <div v-if="proposal.response" class="space-y-3">
+                  <div v-if="proposal.is_analyzing" class="flex items-center space-x-2 text-blue-600">
+                    <span class="animate-spin">⟳</span>
+                    <span>Анализ в процессе...</span>
+                  </div>
+                  <div v-else>
+                    <p>Метаданные анализа пока отсутствуют.</p>
+                    <button
+                      @click="analyzeProposal"
+                      :disabled="analyzing"
+                      class="btn btn-primary btn-sm"
+                    >
+                      <span v-if="analyzing" class="animate-spin mr-2">⟳</span>
+                      <CpuChipIcon class="h-4 w-4 mr-2" />
+                      Запустить анализ
+                    </button>
+                  </div>
+                </div>
+                <div v-else>
+                  Метаданные анализа пока отсутствуют. Для запуска анализа необходимо добавить ответ на обращение.
+                </div>
               </div>
 
               <template v-else>
@@ -516,6 +536,7 @@ const responseDraft = ref('')
 const savingResponse = ref(false)
 const saveError = ref<string | null>(null)
 const generatingResponse = ref(false)
+const analyzing = ref(false)
 
 function formatDate(date: string) {
   return dayjs.utc(date).format('DD.MM.YYYY HH:mm')
@@ -635,6 +656,19 @@ async function copyAISuggestion() {
     uiStore.showSuccess('Скопировано')
   } catch (_) {
     uiStore.showError('Ошибка', 'Не удалось скопировать')
+  }
+}
+
+async function analyzeProposal() {
+  if (!proposal.value) return
+  try {
+    analyzing.value = true
+    await proposalsStore.analyzeProposal(proposal.value.id)
+    uiStore.showSuccess('Анализ запущен. Результаты будут доступны через несколько минут.')
+  } catch (err: any) {
+    uiStore.showError('Ошибка анализа', err.message || 'Не удалось запустить анализ')
+  } finally {
+    analyzing.value = false
   }
 }
 

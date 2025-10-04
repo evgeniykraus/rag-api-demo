@@ -6,7 +6,6 @@ use LarAgent\Agent;
 
 class ToneClarityAgent extends Agent
 {
-    protected $model = 'meta-llama-3-8b-instruct';
     protected $history = 'in_memory';
     protected $temperature = 0.0;
 

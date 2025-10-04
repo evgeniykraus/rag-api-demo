@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Category;
 use App\Models\Proposal;
+use App\Models\ProposalMetadata;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -56,6 +57,15 @@ class ProposalRepository
     public function storeResponse(Proposal $proposal, array $data): void
     {
         $proposal->response()->updateOrCreate(['proposal_id' => $proposal->id], $data);
+    }
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function storeProposalMetadata(array $data): void
+    {
+        ProposalMetadata::query()->create($data);;
     }
 
     /**
