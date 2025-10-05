@@ -93,6 +93,33 @@
                   </option>
                 </select>
               </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                  Изображения (jpg, bmp, png) — до 5 файлов, 10MB каждый
+                </label>
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/bmp"
+                  multiple
+                  @change="onFilesChange"
+                  class="block w-full text-sm text-gray-900 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100"
+                />
+                <div v-if="previews.length" class="mt-3 grid grid-cols-3 gap-3">
+                  <div v-for="(src, i) in previews" :key="i" class="relative group">
+                    <img :src="src" class="h-24 w-full object-cover rounded border" />
+                    <button
+                      type="button"
+                      @click="removeFile(i)"
+                      class="absolute -top-2 -right-2 bg-black/70 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-90 group-hover:opacity-100"
+                      aria-label="Удалить изображение"
+                      title="Удалить"
+                    >
+                      ×
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="bg-gray-50 px-6 py-3 flex justify-end space-x-3">
@@ -138,11 +165,56 @@ const formData = ref<CreateProposalRequest>({
   content: '',
   city_id: 0
 })
+const files = ref<File[]>([])
+const previews = ref<string[]>([])
+
+function onFilesChange(e: Event) {
+  const input = e.target as HTMLInputElement
+  const selected = Array.from(input.files || [])
+  const allowed = ['image/jpeg', 'image/png', 'image/bmp']
+  const maxSize = 10 * 1024 * 1024
+
+  // Текущие файлы в виде карты для дедупликации (name + lastModified)
+  const keyOf = (f: File) => `${f.name}__${f.lastModified}`
+  const existingMap = new Map(files.value.map(f => [keyOf(f), f]))
+
+  for (const f of selected) {
+    if (!allowed.includes(f.type) || f.size > maxSize) continue
+    const key = keyOf(f)
+    if (!existingMap.has(key)) existingMap.set(key, f)
+    if (existingMap.size >= 5) break
+  }
+
+  files.value = Array.from(existingMap.values())
+
+  // Пересобираем превью, освобождая старые URL
+  for (const url of previews.value) URL.revokeObjectURL(url)
+  previews.value = files.value.map(file => URL.createObjectURL(file))
+
+  // Очистить input, чтобы можно было выбрать те же файлы снова
+  input.value = ''
+}
+
+function removeFile(index: number) {
+  const toRemove = previews.value[index]
+  if (toRemove) URL.revokeObjectURL(toRemove)
+  files.value.splice(index, 1)
+  previews.value.splice(index, 1)
+}
 
 async function handleSubmit() {
   try {
     loading.value = true
-    const newProposal = await proposalsStore.createProposal(formData.value)
+    // send multipart only if files provided
+    let payload: CreateProposalRequest | FormData = formData.value
+    if (files.value.length) {
+      const fd = new FormData()
+      fd.append('content', formData.value.content)
+      fd.append('city_id', String(formData.value.city_id))
+      files.value.forEach((f) => fd.append('attachments[]', f))
+      payload = fd
+    }
+    const newProposal = await proposalsStore.createProposal(payload)
     uiStore.showSuccess('Обращение создано')
     router.push(`/proposals/${newProposal.id}`)
   } catch (error) {

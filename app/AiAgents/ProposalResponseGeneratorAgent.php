@@ -9,8 +9,6 @@ use LarAgent\Agent;
 
 class ProposalResponseGeneratorAgent extends Agent
 {
-    protected $model = 'gpt-4.1-nano';
-
     protected $history = 'in_memory';
 
     protected $provider = 'default';

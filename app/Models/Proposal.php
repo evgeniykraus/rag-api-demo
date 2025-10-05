@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -19,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property Category $category
  * @property ProposalResponse $response
  * @property ProposalMetadata $metadata
+ * @property Collection<Attachment> $attachments
  */
 class Proposal extends Model
 {
@@ -49,6 +52,11 @@ class Proposal extends Model
     public function metadata(): HasOne
     {
         return $this->hasOne(ProposalMetadata::class);
+    }
+
+    public function attachments(): HasMany
+    {
+        return $this->hasMany(Attachment::class);
     }
 }
 

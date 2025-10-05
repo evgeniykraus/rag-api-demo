@@ -137,7 +137,7 @@ class ProposalRepository
 
     public function getSimilarCategoriesByVector(Vector $vector, int $limit = 10): Collection
     {
-        $sub = $this->topKBuilder($vector, max($limit * 10, 100))
+        $sub = $this->topKBuilder($vector, max($limit * 10, 1000))
             ->select('proposals.category_id')
             ->limit($limit);
 

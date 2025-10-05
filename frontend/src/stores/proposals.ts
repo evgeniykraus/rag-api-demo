@@ -82,7 +82,7 @@ export const useProposalsStore = defineStore('proposals', () => {
     }
   }
 
-  async function createProposal(data: CreateProposalRequest) {
+  async function createProposal(data: CreateProposalRequest | FormData) {
     try {
       loading.value = true
       error.value = null

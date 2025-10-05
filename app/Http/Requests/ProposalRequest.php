@@ -26,7 +26,12 @@ class ProposalRequest extends FormRequest
         return [
             'city_id' => ['required', 'exists:cities,id'],
             'content' => ['required', 'string', 'max:4000'],
-//            'content' => ['required', 'string', 'max:4000', new NotMeaninglessTextRule()],
+            'attachments' => ['sometimes', 'array', 'max:5'],
+            'attachments.*' => [
+                'file',
+                'mimes:jpg,bmp,png',
+                'max:10240' // 10MB
+            ],
         ];
     }
 
@@ -48,6 +53,12 @@ class ProposalRequest extends FormRequest
                 "type" => "string",
                 "required" => true,
                 "maxLength" => 1000
+            ],
+            "attachments" => [
+                "example" => ["file1.jpg", "file2.pdf"],
+                "description" => "Прикрепленные файлы (максимум 5 файлов, до 10MB каждый)",
+                "type" => "array",
+                "required" => false
             ],
         ];
     }

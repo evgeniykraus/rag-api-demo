@@ -3,17 +3,8 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        environment:
-            APP_ENV: local
-            APP_DEBUG: 'true'
-            APP_URL: http://localhost
-            # Embeddings API
-            EMBEDDINGS_BASE_URL: ${EMBEDDINGS_BASE_URL:-http://host.docker.internal:1234/v1}
-            EMBEDDINGS_MODEL: ${EMBEDDINGS_MODEL:-intfloat/multilingual-e5-large}
-            EMBEDDINGS_DIMENSION: ${EMBEDDINGS_DIMENSION:-1024}
-            # Ollama (OpenAI-compatible) for LarAgent
-            OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://10.121.249.17:11434/api}
-            OLLAMA_API_KEY: ${OLLAMA_API_KEY:-none}
+        env_file:
+            - .env
         volumes:
             - ./:/var/www/html
         depends_on:

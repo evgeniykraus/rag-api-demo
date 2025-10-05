@@ -47,6 +47,7 @@ export interface Proposal {
   } | null
   metadata?: ProposalMetadata | null
   is_analyzing?: boolean
+  attachments?: Attachment[]
 }
 
 export interface ProposalWithParent extends Proposal {
@@ -68,6 +69,7 @@ export interface Category {
   id: number
   name: string
   children?: Category[]
+  parent?: Category
 }
 
 export interface CategoryTree extends Category {
@@ -153,5 +155,15 @@ export interface AnalyticsData {
     month: string
     count: number
   }>
+}
+
+export interface Attachment {
+  id: number
+  original_name: string
+  filename: string
+  url: string
+  mime_type: string
+  size: number
+  is_image: boolean
 }
 

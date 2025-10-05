@@ -67,8 +67,11 @@ class ApiClient {
     return response.data
   }
 
-  async createProposal(data: CreateProposalRequest): Promise<Proposal> {
-    const response = await this.client.post('/api/v1/proposals', data)
+  async createProposal(data: CreateProposalRequest | FormData): Promise<Proposal> {
+    const isFormData = typeof FormData !== 'undefined' && data instanceof FormData
+    const response = await this.client.post('/api/v1/proposals', data, {
+      headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : undefined
+    })
     return response.data
   }
 

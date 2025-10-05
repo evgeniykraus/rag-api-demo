@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\AiAgents\ImageToTextAgent;
 use App\AiAgents\MetaDataExtractor\ComplianceAgent;
 use App\AiAgents\MetaDataExtractor\CorrectnessAgent;
 use App\AiAgents\MetaDataExtractor\EntitiesTagsAgent;
@@ -10,17 +11,20 @@ use App\AiAgents\MetaDataExtractor\ToneClarityAgent;
 use App\AiAgents\ProposalClassifierAgent;
 use App\AiAgents\ProposalResponseGeneratorAgent;
 use App\Jobs\AnalyzeProposalJob;
+use App\Models\Attachment;
 use App\Models\Category;
 use App\Models\Proposal;
-use App\Models\ProposalMetadata;
-use App\Models\ProposalResponse;
 use App\Repositories\ProposalRepository;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\Drivers\Gd\Encoders\JpegEncoder;
+use Intervention\Image\ImageManager;
 use Nette\Utils\Random;
 use Pgvector\Laravel\Vector as PgVector;
 use Pgvector\Vector;
+use Storage;
 use Throwable;
 
 
@@ -47,20 +51,39 @@ readonly class ProposalService
     public function store(array $data): Proposal
     {
         $content = $data['content'];
-        $vector = new PgVector($this->embeddingsService->embedOne($content));
+        $attachments = $data['attachments'] ?? [];
+
+        // Обработка изображений через ImageToTextAgent
+        $imageDescription = '';
+        if (!empty($attachments)) {
+            $imageDescription = $this->processAttachments($content, $attachments);
+        }
+
+        if (!empty($imageDescription)) {
+            $content = $content . "\n\n[Фото]: " . trim($imageDescription);
+        }
+
+        $vector = new PgVector($this->embeddingsService->embedOne('passage: ' . $content));
         $categories = $this->proposalRepository->getSimilarCategoriesByVector($vector);
 
-        $respond = ProposalClassifierAgent::for(Random::generate())->message(ProposalClassifierAgent::buildMessage($content, $categories))->respond();
+        $respond = ProposalClassifierAgent::for(uniqid())->message(ProposalClassifierAgent::buildMessage($content, $categories))->respond();
 
         $categoryId = $respond['id'];
         throw_if(Category::query()->where('id', $categoryId)->doesntExist(), new Exception("Категория с ID: {$categoryId} не найдена"));
 
         $data['category_id'] = $categoryId;
+        // Удаляем attachments из данных для создания proposal
+        unset($data['attachments']);
 
         $proposal = $this->proposalRepository->store($data);
         $this->proposalRepository->updateOrCreateVector($proposal, $vector);
 
-        return $proposal;
+        // Сохраняем файлы после создания proposal
+        if (!empty($attachments)) {
+            $this->saveAttachments($proposal, $attachments, $imageDescription);
+        }
+
+        return $proposal->load('attachments');
     }
 
     /**
@@ -142,7 +165,20 @@ readonly class ProposalService
     {
         $message = ProposalResponseGeneratorAgent::buildMessage($proposal, $this->findSimilarResponses($proposal, 3));
 
-        return ProposalResponseGeneratorAgent::for(uniqid())->message($message)->respond();
+        $imageBase64 = [];
+        $manager = new ImageManager(new Driver());
+
+        foreach ($proposal->attachments as $attachment) {
+            $filePath = Storage::disk('public')->path($attachment->path);
+
+            if (file_exists($filePath)) {
+                $image = $manager->read($filePath)->scale(width: 1024);
+                $encoded = $image->encode(new JpegEncoder(quality: 25));
+                $imageBase64[] = 'data:image/jpeg;base64,' . base64_encode((string)$encoded);
+            }
+        }
+
+        return ProposalResponseGeneratorAgent::for(uniqid())->withImages($imageBase64)->message($message)->respond();
     }
 
     /**
@@ -210,6 +246,59 @@ readonly class ProposalService
         ];
 
         $this->proposalRepository->storeProposalMetadata($data);
+    }
+
+    /**
+     * @param string $content
+     * @param array $attachments
+     * @return string
+     * @throws Throwable
+     */
+    private function processAttachments(string $content, array $attachments): string
+    {
+        $imageBase64 = [];
+        $manager = new ImageManager(new Driver());
+
+        foreach ($attachments as $file) {
+            if ($file->isValid() && str_starts_with($file->getMimeType(), 'image/')) {
+                $image = $manager->read($file->getRealPath())->scale(width: 1024);
+                $encoded = $image->encode(new JpegEncoder(quality: 25));
+                $imageBase64[] = 'data:image/jpeg;base64,' . base64_encode((string)$encoded);
+            }
+        }
+
+        return empty($imageBase64)
+            ? ''
+            : ImageToTextAgent::for(uniqid())
+                ->message("Сообщение от пользователя: \n{$content}")
+                ->withImages($imageBase64)
+                ->respond()['description'];
+    }
+
+    /**
+     * Сохранение прикрепленных файлов
+     */
+    private function saveAttachments(Proposal $proposal, array $attachments, ?string $description = null): void
+    {
+        foreach ($attachments as $file) {
+            if (!$file->isValid()) {
+                continue;
+            }
+
+            $originalName = $file->getClientOriginalName();
+            $filename = uniqid() . '_' . $originalName;
+            $path = $file->storeAs('attachments/' . date('Y/m'), $filename, 'public');
+
+            Attachment::query()->create([
+                'proposal_id' => $proposal->id,
+                'original_name' => $originalName,
+                'description' => $description,
+                'filename' => $filename,
+                'path' => $path,
+                'mime_type' => $file->getMimeType(),
+                'size' => $file->getSize(),
+            ]);
+        }
     }
 }
 

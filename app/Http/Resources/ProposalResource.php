@@ -28,6 +28,7 @@ class ProposalResource extends JsonResource
             'category' => CategoryResource::make($this->category),
             'response' => $this->whenLoaded('response', fn() => $this->response->content),
             'metadata' => $this->whenLoaded('metadata', fn() => ProposalMetadataResource::make($this->metadata)),
+            'attachments' => $this->whenLoaded('attachments', fn() => AttachmentsResource::collection($this->attachments)),
             'is_analyzing' => Cache::has("proposal:analyzing:{$this->id}"),
         ];
     }

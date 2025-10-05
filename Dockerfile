@@ -5,8 +5,11 @@ FROM php:8.4-fpm-alpine AS base
 # System deps
 RUN set -ex \
     && apk add --no-cache --virtual .build-deps $PHPIZE_DEPS postgresql-dev \
-    && apk add --no-cache postgresql-libs git bash curl unzip \
-    && docker-php-ext-install pdo_mysql pdo_pgsql pgsql \
+    && apk add --no-cache postgresql-libs git bash curl unzip libpng libpng-dev freetype-dev libjpeg-turbo-dev \
+    && docker-php-ext-configure gd \
+        --with-freetype \
+        --with-jpeg \
+    && docker-php-ext-install pdo_mysql pdo_pgsql pgsql gd \
     && apk del .build-deps
 
 # Opcache recommended settings

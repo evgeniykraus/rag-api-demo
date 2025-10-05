@@ -71,7 +71,7 @@
         </div>
 
         <!-- Content -->
-        <div v-else-if="proposal" class="space-y-6">
+        <div v-else-if="proposal" class="space-y-6" :key="route.params.id as string">
           <!-- Main Info -->
           <div class="bg-white shadow rounded-lg">
             <div class="px-6 py-4 border-b border-gray-200">
@@ -98,9 +98,14 @@
                 <div>
                   <dt class="text-sm font-medium text-gray-500">Категория</dt>
                   <dd class="mt-1">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                      {{ proposal.category.name }}
-                    </span>
+                    <div class="space-y-1">
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        {{ proposal.category.name }}
+                      </span>
+                      <span v-if="proposal.category.parent" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                        {{ proposal.category.parent.name }}
+                      </span>
+                    </div>
                   </dd>
                 </div>
               </div>
@@ -116,6 +121,38 @@
               <div class="prose max-w-none">
                 <p class="text-gray-900 whitespace-pre-wrap">{{ proposal.content }}</p>
               </div>
+            </div>
+          </div>
+
+          <!-- Attachments -->
+          <div v-if="proposal.attachments && proposal.attachments.length" class="bg-white shadow rounded-lg">
+            <div class="px-6 py-4 border-b border-gray-200">
+              <h3 class="text-lg font-medium text-gray-900">Изображения</h3>
+            </div>
+            <div class="px-6 py-4">
+              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                <button type="button"
+                  v-for="att in proposal.attachments"
+                  :key="att.id"
+                  class="block group text-left"
+                  @click="openViewer(fileUrl(att.url))"
+                >
+                  <div class="aspect-square overflow-hidden rounded border bg-gray-50 flex items-center justify-center">
+                    <img v-if="att.is_image" :src="fileUrl(att.url)" alt="" class="h-full w-full object-cover group-hover:opacity-90" />
+                    <div v-else class="p-3 text-xs text-gray-600 break-all">{{ att.original_name }}</div>
+                  </div>
+                  <div class="mt-1 text-xs text-gray-600 truncate" :title="att.original_name">{{ att.original_name }}</div>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Image Viewer Modal -->
+          <div v-if="viewerOpen" class="fixed inset-0 z-50">
+            <div class="absolute inset-0 bg-black/80" @click="closeViewer" />
+            <div class="absolute inset-0 flex items-center justify-center p-4">
+              <img :src="viewerSrc" alt="" class="max-h-[90vh] max-w-[90vw] rounded shadow-2xl" />
+              <button type="button" @click="closeViewer" class="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/70 rounded px-3 py-1 text-sm">Закрыть</button>
             </div>
           </div>
 
@@ -488,7 +525,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useProposalsStore } from '@/stores/proposals'
 import { useDictionariesStore } from '@/stores/dictionaries'
@@ -513,6 +550,24 @@ import {
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 dayjs.extend(utc)
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8088'
+function fileUrl(path: string) {
+  if (!path) return ''
+  if (path.startsWith('http://') || path.startsWith('https://')) return path
+  const rel = path.startsWith('/') ? path : `/${path}`
+  return `${API_BASE}${rel}`
+}
+
+const viewerOpen = ref(false)
+const viewerSrc = ref('')
+function openViewer(src: string) {
+  viewerSrc.value = src
+  viewerOpen.value = true
+}
+function closeViewer() {
+  viewerOpen.value = false
+  viewerSrc.value = ''
+}
 
 const router = useRouter()
 const route = useRoute()
@@ -729,6 +784,20 @@ async function handleDelete() {
 
 onMounted(async () => {
   await dictionariesStore.loadDictionaries()
+  loadProposal()
+})
+
+// Перезагрузка данных при смене ID в том же компоненте (навигация между карточками)
+watch(() => route.params.id, () => {
+  // Сброс локальных состояний
+  editingResponse.value = false
+  responseDraft.value = ''
+  saveError.value = null
+  // Можно очистить AI-подсказку, чтобы не мигрировала между карточками
+  proposalsStore.aiSuggestion && (proposalsStore.aiSuggestion.value = null)
+  // Очистить текущие данные, чтобы показать лоадер и избежать мигания старого состояния
+  proposalsStore.currentProposal = null as any
+  similarProposals.value = []
   loadProposal()
 })
 
