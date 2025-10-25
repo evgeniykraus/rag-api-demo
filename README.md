@@ -18,7 +18,7 @@
 2. **Настройте .env** в `backend/.env`:
     ```bash
    # Создайте .env файл
-   cp .env.example .env
+   cp backend/.env.example backend/.env
    ```
    Обязательно заполните эти переменные
    ```env
