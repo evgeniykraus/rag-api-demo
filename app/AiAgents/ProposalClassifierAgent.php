@@ -2,6 +2,8 @@
 
 namespace App\AiAgents;
 
+use App\AiAgents\Tools\GetChildrenCategoriesTool;
+use App\AiAgents\Tools\GetParentCategoriesTool;
 use Illuminate\Support\Collection;
 use LarAgent\Agent;
 
@@ -10,6 +12,10 @@ class ProposalClassifierAgent extends Agent
     protected $history = 'in_memory';
     protected $provider = 'default';
     protected $temperature = 0.3;
+    protected $tools = [
+        GetParentCategoriesTool::class,
+        GetChildrenCategoriesTool::class,
+    ];
 
     protected $responseSchema = [
         'name' => 'category_id',
@@ -18,7 +24,7 @@ class ProposalClassifierAgent extends Agent
             'properties' => [
                 'id' => [
                     'type' => 'integer',
-                    'description' => 'ID категории',
+                    'description' => 'ID дочерней категории',
                 ],
             ],
             'required' => ['id'],
@@ -29,7 +35,30 @@ class ProposalClassifierAgent extends Agent
 
     public function instructions(): string
     {
-        return __('prompts.category_classification_prompt');
+        return <<<'PROMPT'
+        Вы - AI агент для классификации обращений граждан.
+
+        Ваша задача:
+        1. Анализировать содержание обращения пользователя
+        2. Выбирать наиболее подходящую дочернюю категорию
+        3. Возвращать JSON объект с выбранной дочерней категорией
+
+        Важно:
+        1. При необходимости используй инструменты
+        2. Нельзя возвращать ID родительской категории!
+
+        Инструменты:
+        - get_parent_categories - возвращает все родительские категории.
+        - get_children_categories - получает ID родительской категорий, возвращает дочерние категории.
+
+
+        Формат ответа - JSON объект:
+        {
+            \"id\": [ID дочерней категории]
+        }
+
+        Отвечайте ТОЛЬКО валидным JSON без дополнительного текста.
+        PROMPT;
     }
 
     public static function buildMessage(string $content, Collection $categories): string
@@ -47,6 +76,6 @@ class ProposalClassifierAgent extends Agent
             })
             ->implode("\n\n");
 
-        return "Обращение пользователя: {$content}\n\n{$categoriesText}";
+        return "Обращение пользователя: {$content}\n\nВозможные категории: {$categoriesText}";
     }
 }
