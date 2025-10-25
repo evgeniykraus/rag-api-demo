@@ -1,13 +1,14 @@
 <template>
-  <AppLayout>
-    <div class="space-y-6">
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <AppLayout>
+      <div class="analytics-page flex flex-col space-y-4">
       <!-- Header -->
       <div class="md:flex md:items-center md:justify-between">
         <div class="flex-1 min-w-0">
-          <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+          <h2 class="text-2xl font-bold leading-7 text-gray-900 dark:text-gray-100 sm:text-3xl sm:truncate">
             Аналитика
           </h2>
-          <p class="mt-1 text-sm text-gray-500">
+          <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
             Статистика и аналитика по обращениям граждан
           </p>
         </div>
@@ -25,19 +26,19 @@
       </div>
 
       <!-- Stats Overview -->
-      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        <div class="bg-white overflow-hidden shadow rounded-lg">
-          <div class="p-5">
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="bg-white overflow-hidden shadow rounded-lg dark:bg-gray-800">
+          <div class="p-4">
             <div class="flex items-center">
               <div class="flex-shrink-0">
-                <DocumentTextIcon class="h-6 w-6 text-gray-400" />
+                <DocumentTextIcon class="h-6 w-6 text-gray-400 dark:text-gray-500" />
               </div>
               <div class="ml-5 w-0 flex-1">
                 <dl>
-                  <dt class="text-sm font-medium text-gray-500 truncate">
+                  <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
                     Всего обращений
                   </dt>
-                  <dd class="text-lg font-medium text-gray-900">
+                  <dd class="text-lg font-medium text-gray-900 dark:text-gray-100">
                     {{ analytics.totalProposals }}
                   </dd>
                 </dl>
@@ -46,18 +47,18 @@
           </div>
         </div>
 
-        <div class="bg-white overflow-hidden shadow rounded-lg">
-          <div class="p-5">
+        <div class="bg-white overflow-hidden shadow rounded-lg dark:bg-gray-800">
+          <div class="p-4">
             <div class="flex items-center">
               <div class="flex-shrink-0">
-                <TrendingUpIcon class="h-6 w-6 text-green-400" />
+                <ArrowTrendingUpIcon class="h-6 w-6 text-green-400" />
               </div>
               <div class="ml-5 w-0 flex-1">
                 <dl>
-                  <dt class="text-sm font-medium text-gray-500 truncate">
+                  <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
                     Рост за период
                   </dt>
-                  <dd class="text-lg font-medium text-gray-900">
+                  <dd class="text-lg font-medium text-gray-900 dark:text-gray-100">
                     {{ growthLabel }}
                   </dd>
                 </dl>
@@ -66,18 +67,18 @@
           </div>
         </div>
 
-        <div class="bg-white overflow-hidden shadow rounded-lg">
-          <div class="p-5">
+        <div class="bg-white overflow-hidden shadow rounded-lg dark:bg-gray-800">
+          <div class="p-4">
             <div class="flex items-center">
               <div class="flex-shrink-0">
                 <BuildingOfficeIcon class="h-6 w-6 text-blue-400" />
               </div>
               <div class="ml-5 w-0 flex-1">
                 <dl>
-                  <dt class="text-sm font-medium text-gray-500 truncate">
+                  <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
                     Активных городов
                   </dt>
-                  <dd class="text-lg font-medium text-gray-900">
+                  <dd class="text-lg font-medium text-gray-900 dark:text-gray-100">
                     {{ analytics.activeCities }}
                   </dd>
                 </dl>
@@ -86,18 +87,18 @@
           </div>
         </div>
 
-        <div class="bg-white overflow-hidden shadow rounded-lg">
-          <div class="p-5">
+        <div class="bg-white overflow-hidden shadow rounded-lg dark:bg-gray-800">
+          <div class="p-4">
             <div class="flex items-center">
               <div class="flex-shrink-0">
                 <ClockIcon class="h-6 w-6 text-yellow-400" />
               </div>
               <div class="ml-5 w-0 flex-1">
                 <dl>
-                  <dt class="text-sm font-medium text-gray-500 truncate">
+                  <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">
                     Среднее время ответа
                   </dt>
-                  <dd class="text-lg font-medium text-gray-900">
+                  <dd class="text-lg font-medium text-gray-900 dark:text-gray-100">
                     {{ avgResponseTimeLabel }}
                   </dd>
                 </dl>
@@ -108,37 +109,37 @@
       </div>
 
       <!-- Charts Row -->
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <!-- Proposals by Month -->
-        <div class="bg-white shadow rounded-lg p-6">
-          <h3 class="text-lg font-medium text-gray-900 mb-4">
+        <div class="bg-white shadow rounded-lg p-4 dark:bg-gray-800">
+          <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-3">
             Обращения по месяцам
           </h3>
-          <div class="h-64">
+          <div class="h-44">
             <canvas ref="monthlyChart" class="w-full h-full"></canvas>
           </div>
         </div>
 
         <!-- Proposals by Category -->
-        <div class="bg-white shadow rounded-lg p-6">
-          <h3 class="text-lg font-medium text-gray-900 mb-4">
+        <div class="bg-white shadow rounded-lg p-4 dark:bg-gray-800">
+          <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-3">
             Распределение по категориям
           </h3>
-          <div class="h-64">
+          <div class="h-44">
             <canvas ref="categoryChart" class="w-full h-full"></canvas>
           </div>
-          <div ref="categoryLegend" class="mt-4 max-h-40 overflow-auto"></div>
+          <div ref="categoryLegend" class="mt-4 max-h-32 overflow-auto"></div>
         </div>
       </div>
 
       <!-- Top Cities and Categories -->
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <!-- Top Cities -->
-        <div class="bg-white shadow rounded-lg">
-          <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-medium text-gray-900">Топ городов по обращениям</h3>
+        <div class="bg-white shadow rounded-lg dark:bg-gray-800">
+          <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+            <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Топ городов по обращениям</h3>
           </div>
-          <div class="px-6 py-4">
+          <div class="px-4 py-3">
             <div class="space-y-4">
               <div
                 v-for="(city, index) in topCities"
@@ -146,21 +147,21 @@
                 class="flex items-center justify-between"
               >
                 <div class="flex items-center">
-                  <div class="flex-shrink-0 w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
-                    <span class="text-sm font-medium text-primary-600">{{ index + 1 }}</span>
+                  <div class="flex-shrink-0 w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center dark:bg-primary-900">
+                    <span class="text-sm font-medium text-primary-600 dark:text-primary-400">{{ index + 1 }}</span>
                   </div>
                   <div class="ml-3">
-                    <p class="text-sm font-medium text-gray-900">{{ city.name }}</p>
+                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ city.name }}</p>
                   </div>
                 </div>
                 <div class="flex items-center">
-                  <div class="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                  <div class="w-32 bg-gray-200 rounded-full h-2 mr-3 dark:bg-gray-700">
                     <div
                       class="bg-primary-600 h-2 rounded-full"
                       :style="{ width: `${(city.count / topCities[0].count) * 100}%` }"
                     ></div>
                   </div>
-                  <span class="text-sm font-medium text-gray-900">{{ city.count }}</span>
+                  <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ city.count }}</span>
                 </div>
               </div>
             </div>
@@ -168,11 +169,11 @@
         </div>
 
         <!-- Top Categories -->
-        <div class="bg-white shadow rounded-lg">
-          <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-lg font-medium text-gray-900">Топ категорий</h3>
+        <div class="bg-white shadow rounded-lg dark:bg-gray-800">
+          <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+            <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Топ категорий</h3>
           </div>
-          <div class="px-6 py-4">
+          <div class="px-4 py-3">
             <div class="space-y-4">
               <div
                 v-for="(category, index) in topCategories"
@@ -180,21 +181,21 @@
                 class="flex items-center justify-between"
               >
                 <div class="flex items-center">
-                  <div class="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <span class="text-sm font-medium text-green-600">{{ index + 1 }}</span>
+                  <div class="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center dark:bg-green-900">
+                    <span class="text-sm font-medium text-green-600 dark:text-green-400">{{ index + 1 }}</span>
                   </div>
                   <div class="ml-3">
-                    <p class="text-sm font-medium text-gray-900">{{ category.name }}</p>
+                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ category.name }}</p>
                   </div>
                 </div>
                 <div class="flex items-center">
-                  <div class="w-32 bg-gray-200 rounded-full h-2 mr-3">
+                  <div class="w-32 bg-gray-200 rounded-full h-2 mr-3 dark:bg-gray-700">
                     <div
                       class="bg-green-600 h-2 rounded-full"
                       :style="{ width: `${(category.count / topCategories[0].count) * 100}%` }"
                     ></div>
                   </div>
-                  <span class="text-sm font-medium text-gray-900">{{ category.count }}</span>
+                  <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ category.count }}</span>
                 </div>
               </div>
             </div>
@@ -203,9 +204,9 @@
       </div>
 
       <!-- Recent Activity -->
-      <div class="bg-white shadow rounded-lg">
-        <div class="px-6 py-4 border-b border-gray-200">
-          <h3 class="text-lg font-medium text-gray-900">Последняя активность</h3>
+      <div class="bg-white shadow rounded-lg dark:bg-gray-800">
+        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+          <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Последняя активность</h3>
         </div>
         <div class="px-6 py-4">
           <div class="flow-root">
@@ -215,21 +216,21 @@
                 :key="activity.id"
                 class="relative pb-8"
               >
-                <div v-if="index !== recentActivity.length - 1" class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200"></div>
+                <div v-if="index !== recentActivity.length - 1" class="absolute top-4 left-4 -ml-px h-full w-0.5 bg-gray-200 dark:bg-gray-700"></div>
                 <div class="relative flex space-x-3">
                   <div>
-                    <span class="h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center ring-8 ring-white">
-                      <DocumentTextIcon class="h-5 w-5 text-primary-600" />
+                    <span class="h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center ring-8 ring-white dark:bg-primary-900 dark:ring-gray-800">
+                      <DocumentTextIcon class="h-5 w-5 text-primary-600 dark:text-primary-400" />
                     </span>
                   </div>
                   <div class="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                     <div>
-                      <p class="text-sm text-gray-500">
-                        Новое обращение <span class="font-medium text-gray-900">#{{ activity.id }}</span>
-                        в городе <span class="font-medium text-gray-900">{{ activity.city }}</span>
+                      <p class="text-sm text-gray-500 dark:text-gray-400">
+                        Новое обращение <span class="font-medium text-gray-900 dark:text-gray-100">#{{ activity.id }}</span>
+                        в городе <span class="font-medium text-gray-900 dark:text-gray-100">{{ activity.city }}</span>
                       </p>
                     </div>
-                    <div class="text-right text-sm whitespace-nowrap text-gray-500">
+                    <div class="text-right text-sm whitespace-nowrap text-gray-500 dark:text-gray-400">
                       {{ formatDate(activity.created_at) }}
                     </div>
                   </div>
@@ -239,8 +240,9 @@
           </div>
         </div>
       </div>
-    </div>
-  </AppLayout>
+      </div>
+    </AppLayout>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -339,7 +341,21 @@ function createCharts() {
           },
           scales: {
             y: {
-              beginAtZero: true
+              beginAtZero: true,
+              ticks: {
+                color: document.documentElement.classList.contains('dark') ? '#9CA3AF' : '#6B7280'
+              },
+              grid: {
+                color: document.documentElement.classList.contains('dark') ? '#374151' : '#E5E7EB'
+              }
+            },
+            x: {
+              ticks: {
+                color: document.documentElement.classList.contains('dark') ? '#9CA3AF' : '#6B7280'
+              },
+              grid: {
+                color: document.documentElement.classList.contains('dark') ? '#374151' : '#E5E7EB'
+              }
             }
           }
         }
@@ -394,7 +410,7 @@ function buildCategoryLegend(chart: any) {
     box.style.backgroundColor = colors[i % colors.length]
     const text = document.createElement('span')
     text.textContent = `${label} — ${values[i]}`
-    text.className = 'text-sm text-gray-700 break-words whitespace-normal'
+    text.className = 'text-sm text-gray-700 dark:text-gray-300 break-words whitespace-normal'
     li.appendChild(box)
     li.appendChild(text)
     ul.appendChild(li)

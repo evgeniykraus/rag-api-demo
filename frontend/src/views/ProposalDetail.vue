@@ -8,19 +8,19 @@
             <nav class="flex" aria-label="Breadcrumb">
               <ol class="flex items-center space-x-4">
                 <li>
-                  <RouterLink to="/proposals" class="text-gray-400 hover:text-gray-500">
+                  <RouterLink to="/proposals" class="text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400">
                     Обращения
                   </RouterLink>
                 </li>
                 <li>
-                  <ChevronRightIcon class="h-5 w-5 text-gray-400" />
+                  <ChevronRightIcon class="h-5 w-5 text-gray-400 dark:text-gray-500" />
                 </li>
                 <li>
-                  <span class="text-gray-500">Обращение #{{ proposal?.id }}</span>
+                  <span class="text-gray-500 dark:text-gray-400">Обращение #{{ proposal?.id }}</span>
                 </li>
               </ol>
             </nav>
-            <h2 class="mt-2 text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+            <h2 class="mt-2 text-2xl font-bold leading-7 text-gray-900 dark:text-gray-100 sm:text-3xl sm:truncate">
               Обращение #{{ proposal?.id }}
             </h2>
           </div>
@@ -48,14 +48,14 @@
         </div>
 
         <!-- Error State -->
-        <div v-else-if="error" class="bg-red-50 border border-red-200 rounded-md p-4">
+        <div v-else-if="error" class="bg-red-50 border border-red-200 rounded-md p-4 dark:bg-red-900/20 dark:border-red-800">
           <div class="flex">
             <ExclamationTriangleIcon class="h-5 w-5 text-red-400" />
             <div class="ml-3">
-              <h3 class="text-sm font-medium text-red-800">
+              <h3 class="text-sm font-medium text-red-800 dark:text-red-200">
                 Ошибка загрузки
               </h3>
-              <div class="mt-2 text-sm text-red-700">
+              <div class="mt-2 text-sm text-red-700 dark:text-red-300">
                 {{ error }}
               </div>
               <div class="mt-4">
@@ -73,36 +73,36 @@
         <!-- Content -->
         <div v-else-if="proposal" class="space-y-6" :key="route.params.id as string">
           <!-- Main Info -->
-          <div class="bg-white shadow rounded-lg">
-            <div class="px-6 py-4 border-b border-gray-200">
-              <h3 class="text-lg font-medium text-gray-900">Основная информация</h3>
+          <div class="bg-white shadow rounded-lg dark:bg-gray-800">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+              <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Основная информация</h3>
             </div>
             <div class="px-6 py-4 space-y-4">
               <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
-                  <dt class="text-sm font-medium text-gray-500">ID</dt>
-                  <dd class="mt-1 text-sm text-gray-900">#{{ proposal.id }}</dd>
+                  <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">ID</dt>
+                  <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">#{{ proposal.id }}</dd>
                 </div>
                 <div>
-                  <dt class="text-sm font-medium text-gray-500">Дата создания</dt>
-                  <dd class="mt-1 text-sm text-gray-900">{{ formatDate(proposal.created_at) }}</dd>
+                  <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Дата создания</dt>
+                  <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ formatDate(proposal.created_at) }}</dd>
                 </div>
                 <div>
-                  <dt class="text-sm font-medium text-gray-500">Город</dt>
+                  <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Город</dt>
                   <dd class="mt-1">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
                       {{ proposal.city.name }}
                     </span>
                   </dd>
                 </div>
                 <div>
-                  <dt class="text-sm font-medium text-gray-500">Категория</dt>
+                  <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Категория</dt>
                   <dd class="mt-1">
                     <div class="space-y-1">
-                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                      <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
                         {{ proposal.category.name }}
                       </span>
-                      <span v-if="proposal.category.parent" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                      <span v-if="proposal.category.parent" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
                         {{ proposal.category.parent.name }}
                       </span>
                     </div>
@@ -113,21 +113,21 @@
           </div>
 
           <!-- Content -->
-          <div class="bg-white shadow rounded-lg">
-            <div class="px-6 py-4 border-b border-gray-200">
-              <h3 class="text-lg font-medium text-gray-900">Содержание обращения</h3>
+          <div class="bg-white shadow rounded-lg dark:bg-gray-800">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+              <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Содержание обращения</h3>
             </div>
             <div class="px-6 py-4">
               <div class="prose max-w-none">
-                <p class="text-gray-900 whitespace-pre-wrap">{{ proposal.content }}</p>
+                <p class="text-gray-900 dark:text-gray-100 whitespace-pre-wrap">{{ proposal.content }}</p>
               </div>
             </div>
           </div>
 
           <!-- Attachments -->
-          <div v-if="proposal.attachments && proposal.attachments.length" class="bg-white shadow rounded-lg">
-            <div class="px-6 py-4 border-b border-gray-200">
-              <h3 class="text-lg font-medium text-gray-900">Изображения</h3>
+          <div v-if="proposal.attachments && proposal.attachments.length" class="bg-white shadow rounded-lg dark:bg-gray-800">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+              <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Изображения</h3>
             </div>
             <div class="px-6 py-4">
               <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
@@ -137,11 +137,11 @@
                   class="block group text-left"
                   @click="openViewer(fileUrl(att.url))"
                 >
-                  <div class="aspect-square overflow-hidden rounded border bg-gray-50 flex items-center justify-center">
+                  <div class="aspect-square overflow-hidden rounded border bg-gray-50 flex items-center justify-center dark:bg-gray-700 dark:border-gray-600">
                     <img v-if="att.is_image" :src="fileUrl(att.url)" alt="" class="h-full w-full object-cover group-hover:opacity-90" />
-                    <div v-else class="p-3 text-xs text-gray-600 break-all">{{ att.original_name }}</div>
+                    <div v-else class="p-3 text-xs text-gray-600 dark:text-gray-300 break-all">{{ att.original_name }}</div>
                   </div>
-                  <div class="mt-1 text-xs text-gray-600 truncate" :title="att.original_name">{{ att.original_name }}</div>
+                  <div class="mt-1 text-xs text-gray-600 dark:text-gray-400 truncate" :title="att.original_name">{{ att.original_name }}</div>
                 </button>
               </div>
             </div>
@@ -157,29 +157,29 @@
           </div>
 
           <!-- Response (view/edit/create) -->
-          <div class="bg-white shadow rounded-lg">
-            <div class="px-6 py-4 border-b border-gray-200">
-              <h3 class="text-lg font-medium text-gray-900">Ответ на обращение</h3>
+          <div class="bg-white shadow rounded-lg dark:bg-gray-800">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+              <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Ответ на обращение</h3>
             </div>
             <div class="px-6 py-4 space-y-3">
               <!-- View mode -->
               <template v-if="!editingResponse">
                 <div v-if="proposal.response">
                   <template v-if="typeof proposal.response !== 'string'">
-                    <div class="text-sm text-gray-500" v-if="proposal.response?.created_at">
+                    <div class="text-sm text-gray-500 dark:text-gray-400" v-if="proposal.response?.created_at">
                       Дата ответа: {{ formatDate(proposal.response.created_at) }}
                     </div>
                     <div class="prose max-w-none" v-if="proposal.response?.content">
-                      <p class="text-gray-900 whitespace-pre-wrap">{{ proposal.response.content }}</p>
+                      <p class="text-gray-900 dark:text-gray-100 whitespace-pre-wrap">{{ proposal.response.content }}</p>
                     </div>
                   </template>
                   <template v-else>
                     <div class="prose max-w-none">
-                      <p class="text-gray-900 whitespace-pre-wrap">{{ proposal.response }}</p>
+                      <p class="text-gray-900 dark:text-gray-100 whitespace-pre-wrap">{{ proposal.response }}</p>
                     </div>
                   </template>
                 </div>
-                <div v-else class="text-sm text-gray-500">Ответ отсутствует</div>
+                <div v-else class="text-sm text-gray-500 dark:text-gray-400">Ответ отсутствует</div>
                 <div class="pt-2 flex items-center space-x-3">
                   <button @click="startEditResponse" class="btn btn-secondary btn-sm">
                     {{ proposal.response ? 'Редактировать ответ' : 'Добавить ответ' }}
@@ -194,7 +194,7 @@
               <!-- Edit mode -->
               <template v-else>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-1">Текст ответа</label>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Текст ответа</label>
                   <textarea v-model="responseDraft" rows="6" class="input" placeholder="Введите ответ..." />
                 </div>
                 <div class="flex items-center space-x-3">
@@ -204,36 +204,36 @@
                   </button>
                   <button @click="cancelEditResponse" :disabled="savingResponse" class="btn btn-secondary btn-sm">Отмена</button>
                 </div>
-                <div v-if="saveError" class="text-sm text-red-600">{{ saveError }}</div>
+                <div v-if="saveError" class="text-sm text-red-600 dark:text-red-400">{{ saveError }}</div>
               </template>
 
               <!-- AI Suggestion Panel -->
-              <div v-if="aiSuggestion" class="mt-4 border border-blue-200 rounded-md bg-blue-50">
-                <div class="px-4 py-2 border-b border-blue-200 flex items-center justify-between">
-                  <div class="text-sm font-medium text-blue-800">Предложенный ответ (AI)</div>
+              <div v-if="aiSuggestion" class="mt-4 border border-blue-200 rounded-md bg-blue-50 dark:border-blue-800 dark:bg-blue-900/20">
+                <div class="px-4 py-2 border-b border-blue-200 dark:border-blue-800 flex items-center justify-between">
+                  <div class="text-sm font-medium text-blue-800 dark:text-blue-200">Предложенный ответ (AI)</div>
                   <div class="flex items-center space-x-2">
                     <button @click="copyAISuggestion" class="btn btn-secondary btn-sm">Копировать</button>
                   </div>
                 </div>
                 <div class="p-4">
-                  <pre class="whitespace-pre-wrap text-sm text-blue-900">{{ aiSuggestion }}</pre>
+                  <pre class="whitespace-pre-wrap text-sm text-blue-900 dark:text-blue-100">{{ aiSuggestion }}</pre>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- AI Analysis -->
-          <div class="bg-white shadow rounded-lg">
-            <div class="px-6 py-4 border-b border-gray-200">
-              <h3 class="text-lg font-medium text-gray-900 flex items-center">
+          <div class="bg-white shadow rounded-lg dark:bg-gray-800">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+              <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex items-center">
                 <CpuChipIcon class="h-5 w-5 mr-2 text-blue-500" />
                 Анализ ответа (AI)
               </h3>
             </div>
             <div class="px-6 py-4 space-y-6">
-              <div v-if="!proposal.metadata" class="text-sm text-gray-500">
+              <div v-if="!proposal.metadata" class="text-sm text-gray-500 dark:text-gray-400">
                 <div v-if="proposal.response" class="space-y-3">
-                  <div v-if="proposal.is_analyzing || pollingMetadata" class="flex items-center space-x-2 text-blue-600">
+                  <div v-if="proposal.is_analyzing || pollingMetadata" class="flex items-center space-x-2 text-blue-600 dark:text-blue-400">
                     <span class="animate-spin">⟳</span>
                     <span v-if="pollingMetadata">Ожидание результатов анализа...</span>
                     <span v-else>Анализ в процессе...</span>
@@ -260,9 +260,9 @@
                 <!-- Scores -->
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                   <div>
-                    <dt class="text-sm font-medium text-gray-500">Соответствие вопросу</dt>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Соответствие вопросу</dt>
                     <dd class="mt-1">
-                      <div class="h-2 w-full bg-gray-100 rounded">
+                      <div class="h-2 w-full bg-gray-100 rounded dark:bg-gray-700">
                         <div
                           class="h-2 rounded bg-green-500"
                           :style="{ width: formatPercentWidth(proposal.metadata.correctness_score) }"
@@ -273,13 +273,13 @@
                           aria-valuemax="100"
                         />
                       </div>
-                      <div class="mt-1 text-xs text-gray-600">{{ formatPercent(proposal.metadata.correctness_score) }}</div>
+                      <div class="mt-1 text-xs text-gray-600 dark:text-gray-400">{{ formatPercent(proposal.metadata.correctness_score) }}</div>
                     </dd>
                   </div>
                   <div>
-                    <dt class="text-sm font-medium text-gray-500">Полнота ответа</dt>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Полнота ответа</dt>
                     <dd class="mt-1">
-                      <div class="h-2 w-full bg-gray-100 rounded">
+                      <div class="h-2 w-full bg-gray-100 rounded dark:bg-gray-700">
                         <div
                           class="h-2 rounded bg-indigo-500"
                           :style="{ width: formatPercentWidth(proposal.metadata.completeness_score) }"
@@ -290,13 +290,13 @@
                           aria-valuemax="100"
                         />
                       </div>
-                      <div class="mt-1 text-xs text-gray-600">{{ formatPercent(proposal.metadata.completeness_score) }}</div>
+                      <div class="mt-1 text-xs text-gray-600 dark:text-gray-400">{{ formatPercent(proposal.metadata.completeness_score) }}</div>
                     </dd>
                   </div>
                   <div>
-                    <dt class="text-sm font-medium text-gray-500">Конкретность действий</dt>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Конкретность действий</dt>
                     <dd class="mt-1">
-                      <div class="h-2 w-full bg-gray-100 rounded">
+                      <div class="h-2 w-full bg-gray-100 rounded dark:bg-gray-700">
                         <div
                           class="h-2 rounded bg-amber-500"
                           :style="{ width: formatPercentWidth(proposal.metadata.actionable_score) }"
@@ -307,7 +307,7 @@
                           aria-valuemax="100"
                         />
                       </div>
-                      <div class="mt-1 text-xs text-gray-600">{{ formatPercent(proposal.metadata.actionable_score) }}</div>
+                      <div class="mt-1 text-xs text-gray-600 dark:text-gray-400">{{ formatPercent(proposal.metadata.actionable_score) }}</div>
                     </dd>
                   </div>
                 </div>
@@ -315,19 +315,19 @@
                 <!-- Tone & clarity -->
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                   <div>
-                    <dt class="text-sm font-medium text-gray-500">Вежливость тона</dt>
-                    <dd class="mt-1 text-sm text-gray-900">{{ formatPercent(proposal.metadata.tone_politeness_score) }}</dd>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Вежливость тона</dt>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ formatPercent(proposal.metadata.tone_politeness_score) }}</dd>
                   </div>
                   <div>
-                    <dt class="text-sm font-medium text-gray-500">Ясность формулировок</dt>
-                    <dd class="mt-1 text-sm text-gray-900">{{ formatPercent(proposal.metadata.clarity_score) }}</dd>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Ясность формулировок</dt>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ formatPercent(proposal.metadata.clarity_score) }}</dd>
                   </div>
                   <div>
-                    <dt class="text-sm font-medium text-gray-500">Канцелярит/жаргон</dt>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Канцелярит/жаргон</dt>
                     <dd class="mt-1">
                       <span
                         class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-                        :class="proposal.metadata.jargon_flag ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'"
+                        :class="proposal.metadata.jargon_flag ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'"
                       >
                         {{ proposal.metadata.jargon_flag ? 'Есть' : 'Нет' }}
                       </span>
@@ -337,9 +337,9 @@
 
                 <!-- Missing points -->
                 <div v-if="proposal.metadata.missing_points?.length">
-                  <dt class="text-sm font-medium text-gray-500">Что можно улучшить</dt>
+                  <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Что можно улучшить</dt>
                   <dd class="mt-2">
-                    <ul class="list-disc space-y-1 pl-5 text-sm text-gray-800">
+                    <ul class="list-disc space-y-1 pl-5 text-sm text-gray-800 dark:text-gray-200">
                       <li v-for="(mp, i) in proposal.metadata.missing_points" :key="i">{{ mp }}</li>
                     </ul>
                   </dd>
@@ -348,21 +348,21 @@
                 <!-- Compliance risks -->
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                   <div>
-                    <dt class="text-sm font-medium text-gray-500">Соответствие правилам</dt>
-                    <dd class="mt-1 text-sm text-gray-900">{{ formatPercent(proposal.metadata.policy_compliance_score) }}</dd>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Соответствие правилам</dt>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ formatPercent(proposal.metadata.policy_compliance_score) }}</dd>
                   </div>
                   <div class="sm:col-span-2">
-                    <dt class="text-sm font-medium text-gray-500">Риски</dt>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Риски</dt>
                     <dd class="mt-1">
                       <div class="flex flex-wrap gap-2">
                         <span
                           v-for="(risk, idx) in (proposal.metadata.risk_flags || [])"
                           :key="risk + idx"
-                          class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800"
+                          class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
                         >
                           {{ translateRisk(risk) }}
                         </span>
-                        <span v-if="!proposal.metadata.risk_flags || proposal.metadata.risk_flags.length === 0" class="text-sm text-gray-500">Не выявлено</span>
+                        <span v-if="!proposal.metadata.risk_flags || proposal.metadata.risk_flags.length === 0" class="text-sm text-gray-500 dark:text-gray-400">Не выявлено</span>
                       </div>
                     </dd>
                   </div>
@@ -371,36 +371,36 @@
                 <!-- Tags & entities -->
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
                   <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">Теги тематики</dt>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Теги тематики</dt>
                     <dd class="mt-2">
                       <div class="flex flex-wrap gap-2">
                         <span
                           v-for="(tag, i) in (proposal.metadata.intent_tags || [])"
                           :key="tag + i"
-                          class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                          class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
                           :title="tag"
                         >
                           {{ translateIntentTag(tag) }}
                         </span>
-                        <span v-if="!proposal.metadata.intent_tags || proposal.metadata.intent_tags.length === 0" class="text-sm text-gray-500">—</span>
+                        <span v-if="!proposal.metadata.intent_tags || proposal.metadata.intent_tags.length === 0" class="text-sm text-gray-500 dark:text-gray-400">—</span>
                       </div>
                     </dd>
                   </div>
                   <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">Локации</dt>
-                    <dd class="mt-2 text-sm text-gray-900">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Локации</dt>
+                    <dd class="mt-2 text-sm text-gray-900 dark:text-gray-100">
                       <ul class="list-disc space-y-1 pl-5">
                         <li v-for="(loc, i) in (proposal.metadata.entities?.locations || [])" :key="loc + i">{{ loc }}</li>
-                        <li v-if="!proposal.metadata.entities?.locations || proposal.metadata.entities.locations.length === 0" class="text-gray-500">—</li>
+                        <li v-if="!proposal.metadata.entities?.locations || proposal.metadata.entities.locations.length === 0" class="text-gray-500 dark:text-gray-400">—</li>
                       </ul>
                     </dd>
                   </div>
                   <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">Объекты</dt>
-                    <dd class="mt-2 text-sm text-gray-900">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Объекты</dt>
+                    <dd class="mt-2 text-sm text-gray-900 dark:text-gray-100">
                       <ul class="list-disc space-y-1 pl-5">
                         <li v-for="(obj, i) in (proposal.metadata.entities?.objects || [])" :key="obj + i">{{ obj }}</li>
-                        <li v-if="!proposal.metadata.entities?.objects || proposal.metadata.entities.objects.length === 0" class="text-gray-500">—</li>
+                        <li v-if="!proposal.metadata.entities?.objects || proposal.metadata.entities.objects.length === 0" class="text-gray-500 dark:text-gray-400">—</li>
                       </ul>
                     </dd>
                   </div>
@@ -409,32 +409,32 @@
                 <!-- Resolution -->
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                   <div>
-                    <dt class="text-sm font-medium text-gray-500">Вероятность решения</dt>
-                    <dd class="mt-1 text-sm text-gray-900">{{ formatPercent(proposal.metadata.resolution_likelihood) }}</dd>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Вероятность решения</dt>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ formatPercent(proposal.metadata.resolution_likelihood) }}</dd>
                   </div>
                   <div>
-                    <dt class="text-sm font-medium text-gray-500">Нужен фоллоу-ап</dt>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Нужен фоллоу-ап</dt>
                     <dd class="mt-1">
                       <span
                         class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
-                        :class="proposal.metadata.followup_needed ? 'bg-yellow-100 text-yellow-800' : 'bg-green-100 text-green-800'"
+                        :class="proposal.metadata.followup_needed ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'"
                       >
                         {{ proposal.metadata.followup_needed ? 'Да' : 'Нет' }}
                       </span>
                     </dd>
                   </div>
                   <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">Следующие шаги</dt>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">Следующие шаги</dt>
                     <dd class="mt-2">
-                      <ul class="list-disc space-y-1 pl-5 text-sm text-gray-900">
+                      <ul class="list-disc space-y-1 pl-5 text-sm text-gray-900 dark:text-gray-100">
                         <li v-for="(step, i) in (proposal.metadata.next_steps || [])" :key="step + i">{{ step }}</li>
-                        <li v-if="!proposal.metadata.next_steps || proposal.metadata.next_steps.length === 0" class="text-gray-500">—</li>
+                        <li v-if="!proposal.metadata.next_steps || proposal.metadata.next_steps.length === 0" class="text-gray-500 dark:text-gray-400">—</li>
                       </ul>
                     </dd>
                   </div>
                 </div>
 
-                <div class="text-xs text-gray-500" v-if="proposal.metadata.processed_at">
+                <div class="text-xs text-gray-500 dark:text-gray-400" v-if="proposal.metadata.processed_at">
                   Обработано: {{ formatDate(proposal.metadata.processed_at) }}
                 </div>
               </template>
@@ -442,20 +442,20 @@
           </div>
 
           <!-- Similar Proposals -->
-          <div class="bg-white shadow rounded-lg">
-            <div class="px-6 py-4 border-b border-gray-200">
-              <h3 class="text-lg font-medium text-gray-900">Похожие обращения</h3>
+          <div class="bg-white shadow rounded-lg dark:bg-gray-800">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+              <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">Похожие обращения</h3>
             </div>
             <div class="px-6 py-4">
               <div class="space-y-4">
                 <div
                   v-for="(similar, index) in similarProposals"
                   :key="similar.id"
-                  class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50"
+                  class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700"
                 >
                   <div class="flex items-start justify-between">
                     <div class="flex-1 min-w-0">
-                      <div class="text-sm text-gray-900">
+                      <div class="text-sm text-gray-900 dark:text-gray-100">
                         <p v-if="!expandedSimilar[index] && similar.content.length > 150" class="line-clamp-2">
                           {{ similar.content.substring(0, 150) }}...
                         </p>
@@ -465,12 +465,12 @@
                         <button
                           v-if="similar.content.length > 150"
                           @click="toggleSimilarExpanded(index)"
-                          class="mt-1 text-xs text-primary-600 hover:text-primary-800 font-medium"
+                          class="mt-1 text-xs text-primary-600 hover:text-primary-800 font-medium dark:text-primary-400 dark:hover:text-primary-300"
                         >
                           {{ expandedSimilar[index] ? 'Свернуть' : 'Развернуть' }}
                         </button>
                       </div>
-                      <div class="mt-2 flex items-center space-x-4 text-xs text-gray-500">
+                      <div class="mt-2 flex items-center space-x-4 text-xs text-gray-500 dark:text-gray-400">
                         <span class="flex items-center">
                           <BuildingOfficeIcon class="h-4 w-4 mr-1" />
                           {{ similar.city.name }}

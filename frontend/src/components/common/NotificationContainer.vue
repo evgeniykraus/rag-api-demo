@@ -15,7 +15,7 @@
         leave-to-class="opacity-0"
       >
         <div
-          class="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden"
+          class="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden dark:bg-gray-800 dark:ring-gray-700"
         >
           <div class="p-4">
             <div class="flex items-start">
@@ -38,17 +38,17 @@
                 />
               </div>
               <div class="ml-3 w-0 flex-1 pt-0.5">
-                <p class="text-sm font-medium text-gray-900">
+                <p class="text-sm font-medium text-gray-900 dark:text-gray-100">
                   {{ notification.title }}
                 </p>
-                <p v-if="notification.message" class="mt-1 text-sm text-gray-500">
+                <p v-if="notification.message" class="mt-1 text-sm text-gray-500 dark:text-gray-400">
                   {{ notification.message }}
                 </p>
               </div>
               <div class="ml-4 flex-shrink-0 flex">
                 <button
                   @click="removeNotification(notification.id)"
-                  class="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                  class="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 dark:bg-gray-800 dark:text-gray-500 dark:hover:text-gray-400"
                 >
                   <span class="sr-only">Закрыть</span>
                   <XMarkIcon class="h-5 w-5" />
