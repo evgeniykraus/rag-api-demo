@@ -22,3 +22,5 @@ yarn-error.log
 /.vscode
 /.zed
 /.scribe/
+/docs/scribe/index.html
+/docs/scribe/*/

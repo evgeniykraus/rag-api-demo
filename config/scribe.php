@@ -47,7 +47,7 @@ return [
     // — "static" сгенерирует статическую HTML-страницу в папке /public/docs,
     // — "laravel" сгенерирует документацию как Blade-шаблон, чтобы вы могли добавить маршрутизацию и аутентификацию.
     // — "external_static" и "external_laravel" делают то же самое, но передают спецификацию OpenAPI как URL внешнему UI-шаблону.
-    'type' => 'laravel',
+    'type' => 'static',
 
     // Смотри тут поддерживаемые темы https://scribe.knuckles.wtf/laravel/reference/config#theme
 //    'theme' => 'default',

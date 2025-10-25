@@ -233,15 +233,16 @@
             <div class="px-6 py-4 space-y-6">
               <div v-if="!proposal.metadata" class="text-sm text-gray-500">
                 <div v-if="proposal.response" class="space-y-3">
-                  <div v-if="proposal.is_analyzing" class="flex items-center space-x-2 text-blue-600">
+                  <div v-if="proposal.is_analyzing || pollingMetadata" class="flex items-center space-x-2 text-blue-600">
                     <span class="animate-spin">⟳</span>
-                    <span>Анализ в процессе...</span>
+                    <span v-if="pollingMetadata">Ожидание результатов анализа...</span>
+                    <span v-else>Анализ в процессе...</span>
                   </div>
                   <div v-else>
                     <p>Метаданные анализа пока отсутствуют.</p>
                     <button
                       @click="analyzeProposal"
-                      :disabled="analyzing"
+                      :disabled="analyzing || pollingMetadata"
                       class="btn btn-primary btn-sm"
                     >
                       <span v-if="analyzing" class="animate-spin mr-2">⟳</span>
@@ -525,7 +526,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useProposalsStore } from '@/stores/proposals'
 import { useDictionariesStore } from '@/stores/dictionaries'
@@ -592,6 +593,8 @@ const savingResponse = ref(false)
 const saveError = ref<string | null>(null)
 const generatingResponse = ref(false)
 const analyzing = ref(false)
+const pollingMetadata = ref(false)
+const pollingInterval = ref<NodeJS.Timeout | null>(null)
 
 function formatDate(date: string) {
   return dayjs.utc(date).format('DD.MM.YYYY HH:mm')
@@ -720,11 +723,44 @@ async function analyzeProposal() {
     analyzing.value = true
     await proposalsStore.analyzeProposal(proposal.value.id)
     uiStore.showSuccess('Анализ запущен. Результаты будут доступны через несколько минут.')
+    // Запускаем опрос метаданных
+    startPollingMetadata()
   } catch (err: any) {
     uiStore.showError('Ошибка анализа', err.message || 'Не удалось запустить анализ')
   } finally {
     analyzing.value = false
   }
+}
+
+function startPollingMetadata() {
+  if (!proposal.value || pollingMetadata.value) return
+
+  pollingMetadata.value = true
+  pollingInterval.value = setInterval(async () => {
+    try {
+      await proposalsStore.fetchProposalMetadata(proposal.value!.id)
+      // Если метаданные получены, останавливаем опрос
+      if (proposal.value?.metadata && !proposal.value.is_analyzing) {
+        stopPollingMetadata()
+        uiStore.showSuccess('Анализ завершен')
+      }
+    } catch (err: any) {
+      // Если ошибка 404 или анализ еще не готов, продолжаем опрос
+      if (err.message?.includes('404') || err.message?.includes('not found')) {
+        return // Продолжаем опрос
+      }
+      // Для других ошибок останавливаем опрос
+      stopPollingMetadata()
+    }
+  }, 5000) // Опрашиваем каждые 5 секунд
+}
+
+function stopPollingMetadata() {
+  if (pollingInterval.value) {
+    clearInterval(pollingInterval.value)
+    pollingInterval.value = null
+  }
+  pollingMetadata.value = false
 }
 
 // removed useAISuggestion per requirements
@@ -737,10 +773,10 @@ function openProposalInNewTab(proposalId: number) {
 async function loadProposal() {
   const proposalId = Number(route.params.id)
   if (!proposalId) return
-  
+
   loading.value = true
   error.value = null
-  
+
   try {
     await proposalsStore.fetchProposal(proposalId)
     // Load similar proposals from API
@@ -787,8 +823,15 @@ onMounted(async () => {
   loadProposal()
 })
 
+onUnmounted(() => {
+  // Очищаем интервал при размонтировании компонента
+  stopPollingMetadata()
+})
+
 // Перезагрузка данных при смене ID в том же компоненте (навигация между карточками)
 watch(() => route.params.id, () => {
+  // Останавливаем опрос метаданных при смене предложения
+  stopPollingMetadata()
   // Сброс локальных состояний
   editingResponse.value = false
   responseDraft.value = ''

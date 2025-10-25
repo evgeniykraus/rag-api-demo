@@ -6,6 +6,7 @@ use App\Http\Requests\ProposalRequest;
 use App\Http\Requests\ProposalResponseRequest;
 use App\Http\Requests\ProposalSearchRequest;
 use App\Http\Requests\ProposalUpdateRequest;
+use App\Http\Resources\ProposalMetadataResource;
 use App\Http\Resources\ProposalResource;
 use App\Http\Resources\SimilarProposalResource;
 use App\Models\Proposal;
@@ -136,5 +137,19 @@ class ProposalController extends Controller
     {
         $this->proposalService->dispatchAnalyzeProposalJob($proposal);
         return response()->noContent();
+    }
+
+    /**
+     * @param Proposal $proposal
+     * @return ProposalMetadataResource
+     */
+    public function getMetaData(Proposal $proposal): ProposalMetadataResource
+    {
+        $metadata = $proposal->metadata;
+        if (!$metadata) {
+            abort(404, 'Metadata not found');
+        }
+
+        return ProposalMetadataResource::make($metadata);
     }
 }

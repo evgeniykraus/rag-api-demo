@@ -7,7 +7,8 @@ import type {
   SearchProposalsRequest,
   City,
   CategoryTree,
-  ApiError
+  ApiError,
+  ProposalMetadata
 } from '@/types'
 
 class ApiClient {
@@ -137,6 +138,12 @@ class ApiClient {
 
   async analyzeProposal(id: number): Promise<void> {
     await this.client.get(`/api/v1/proposals/${id}/analyze`)
+  }
+
+  async getProposalMetadata(id: number): Promise<ProposalMetadata> {
+    const response = await this.client.get(`/api/v1/proposals/${id}/meta-data`)
+    // Laravel Resource может обернуть данные в 'data' ключ
+    return response.data.data || response.data
   }
   // Dictionary API
   async getCities(): Promise<City[]> {

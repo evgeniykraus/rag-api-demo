@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import apiClient from '@/services/api'
-import type { Proposal, CreateProposalRequest, UpdateProposalRequest, ProposalFilters } from '@/types'
+import type { Proposal, CreateProposalRequest, UpdateProposalRequest, ProposalFilters, ProposalMetadata } from '@/types'
 
 export const useProposalsStore = defineStore('proposals', () => {
   // State
@@ -225,6 +225,35 @@ export const useProposalsStore = defineStore('proposals', () => {
     }
   }
 
+  async function fetchProposalMetadata(id: number): Promise<ProposalMetadata> {
+    try {
+      loading.value = true
+      error.value = null
+      const metadata = await apiClient.getProposalMetadata(id)
+
+      // Обновляем метаданные в текущем обращении
+      if (currentProposal.value?.id === id) {
+        currentProposal.value.metadata = metadata
+        currentProposal.value.is_analyzing = false
+      }
+
+      // Обновляем метаданные в списке обращений
+      const index = proposals.value.findIndex((p: Proposal) => p.id === id)
+      if (index !== -1) {
+        proposals.value[index].metadata = metadata
+        proposals.value[index].is_analyzing = false
+      }
+
+      return metadata
+    } catch (err: any) {
+      error.value = err.message || 'Ошибка загрузки метаданных'
+      console.error('Error fetching proposal metadata:', err)
+      throw err
+    } finally {
+      loading.value = false
+    }
+  }
+
   async function searchProposals(query: string) {
     try {
       loading.value = true
@@ -235,9 +264,7 @@ export const useProposalsStore = defineStore('proposals', () => {
 
       // Выполняем поиск через API
       const results = await apiClient.searchProposals(query)
-      console.log('API search results:', results)
       proposals.value = results
-      console.log('Store proposals after search:', proposals.value)
 
       // Сбрасываем пагинацию для результатов поиска
       pagination.value = {
@@ -301,6 +328,7 @@ export const useProposalsStore = defineStore('proposals', () => {
     saveProposalResponse,
     aiGenerateProposalResponse,
     analyzeProposal,
+    fetchProposalMetadata,
     searchProposals,
     setFilters,
     clearFilters,
