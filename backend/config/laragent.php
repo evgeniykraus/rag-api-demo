@@ -24,7 +24,7 @@ return [
     'providers' => [
         'default' => [
             'label' => 'openai',
-            'model' => env('OPENAI_API_MODEL', 'meta-llama-3-8b-instruct'),
+            'model' => env('OPENAI_MODEL', 'meta-llama-3-8b-instruct'),
             'api_url' => env('OPENAI_BASE_URL'),
             'api_key' => env('OPENAI_API_KEY'),
             'default_context_window' => 50000,

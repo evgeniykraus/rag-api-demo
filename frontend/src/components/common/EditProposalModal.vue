@@ -31,8 +31,8 @@
               </label>
               <textarea
                 v-model="formData.content"
-                rows="12"
-                class="input"
+                rows="16"
+                class="input h-64"
                 placeholder="Введите содержание обращения..."
                 required
               ></textarea>
