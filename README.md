@@ -1,67 +1,68 @@
-# KO Embedding Service
+# Система управления обращениями граждан с AI-классификацией
 
-Микросервис для работы с эмбеддингами и классификации предложений на основе векторных представлений.
-
-## Описание
-
-Сервис предоставляет API для:
-- Классификации предложений по категориям с использованием векторных эмбеддингов
-- Поиска похожих предложений на основе косинусного сходства
-- Интеграции с GigaChat для AI-функциональности
-- Построения и управления векторными представлениями
-
-## Технологии
-
-- **PHP 8.4**
-- **Laravel 12** - PHP фреймворк
-- **PostgreSQL + pgvector** - база данных с поддержкой векторных операций
-- **OpenAI API клиент** - для работы с OpenAI API
-- **GigaChat** - AI генерация ответов на обращения
-- **Docker** - контейнеризация
+Веб-приложение для управления обращениями граждан с автоматической классификацией, семантическим поиском и AI-генерацией ответов. Система использует векторные представления для интеллектуальной обработки текстовых данных.
 
 ## Быстрый старт
 
-### 1. Клонирование
-```bash
-git clone https://git.eltc.ru/capp-kuzbass/ai-search.git
-cd ai-search
-```
+### Требования
+- **Docker** и **Docker Compose**
+- **Git**
 
-### 2. Настройка окружения
-```bash
-cp .env.example .env
-# Отредактируйте .env файл
-```
+### Установка
+1. **Клонируйте репозиторий**:
+   ```bash
+   git clone https://github.com/evgeniykraus/rag-api-demo.git
+   cd rag-api-demo
+   ```
 
-### 3. Запуск через Docker
-```bash
-docker-compose up -d
-```
+2. **Настройте .env** в `backend/.env`:
+    ```bash
+   # Создайте .env файл
+   cp .env.example .env
+   ```
+   Обязательно заполните эти переменные
+   ```env
+   # Модель для создания эмбеддингов
+   EMBEDDINGS_MODEL=text-embedding-3-small (по-умолчанию)
+   
+   # Модель для агентов
+   OPENAI_MODEL=gpt-4o
+   
+   # API ключи
+   OPENAI_API_KEY=your_openai_api_key
+   
+   # URL API (необходимо OpenAI совместимое API)
+   OPENAI_BASE_URL=your_openai_url
+   EMBEDDINGS_BASE_URL=your_openai_url
+   ```
 
-### 4. Установка зависимостей и миграции
-```bash
-docker-compose exec app composer install
-docker-compose exec app php artisan key:generate
-docker-compose exec app php artisan migrate
-```
+3. **Запустите приложение**:
+   ```bash
+   docker-compose up -d
+   ```
+
+4. **Настройте Laravel** (выполните один раз):
+   ```bash
+   # Создайте .env файл
+   docker-compose exec app cp .env.example .env
+   
+   # Сгенерируйте ключ приложения
+   docker-compose exec app php artisan key:generate
+   
+   # Выполните миграции
+   docker-compose exec app php artisan migrate
+   
+   # Заполните базовые данные (опционально)
+   docker-compose exec app php artisan db:seed
+   ```
+
+## Доступ к приложению
+
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:8088
+- **База данных**: localhost:5435 (PostgreSQL)
 
 ## Основные команды
-
-```bash
-# Построение векторов категорий
-php artisan embeddings:build-categories
-
-# Построение векторов предложений
-php artisan embeddings:build-proposals
-
-# Отладка классификации
-php artisan embeddings:classify-single
-
-# Валидация классификатора
-php artisan embeddings:validate
-```
-
-## Docker команды
 
 ```bash
 # Запуск
@@ -76,3 +77,22 @@ docker-compose down
 # Пересборка
 docker-compose build --no-cache
 ```
+
+## Технологии
+
+- **Backend**: Laravel 12 + PHP 8.4
+- **Frontend**: Vue 3 + TypeScript + Tailwind CSS
+- **База данных**: PostgreSQL + pgvector
+- **AI**: OpenAI API
+- **Контейнеризация**: Docker + Docker Compose
+
+## Документация API
+В проекте установлен пакет [knuckleswtf/scribe](https://scribe.knuckles.wtf/laravel/), который используется для
+автоматической генерации документации в формате Swagger, OpenAPI, а также для создания коллекций для Postman.
+
+Сгенерированные документы сохраняются в папке [scribe](backend/docs/scribe)
+
+### Для генерации документации нужно выполнить команду:
+```bash
+   docker-compose exec app php artisan scribe:generate
+   ```
