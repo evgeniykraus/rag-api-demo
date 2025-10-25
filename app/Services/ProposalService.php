@@ -10,14 +10,17 @@ use App\AiAgents\MetaDataExtractor\ResolutionAgent;
 use App\AiAgents\MetaDataExtractor\ToneClarityAgent;
 use App\AiAgents\ProposalClassifierAgent;
 use App\AiAgents\ProposalResponseGeneratorAgent;
+use App\Http\Resources\CategoryResource;
 use App\Jobs\AnalyzeProposalJob;
-use App\Models\Attachment;
 use App\Models\Category;
 use App\Models\Proposal;
+use App\Repositories\DictionaryRepository;
 use App\Repositories\ProposalRepository;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\Drivers\Gd\Encoders\JpegEncoder;
 use Intervention\Image\ImageManager;
@@ -31,8 +34,9 @@ use Throwable;
 readonly class ProposalService
 {
     public function __construct(
-        private ProposalRepository $proposalRepository,
-        private EmbeddingService   $embeddingsService
+        private ProposalRepository   $proposalRepository,
+        private DictionaryRepository $dictionaryRepository,
+        private EmbeddingService     $embeddingsService
     )
     {
     }
@@ -75,15 +79,15 @@ readonly class ProposalService
         // Удаляем attachments из данных для создания proposal
         unset($data['attachments']);
 
-        $proposal = $this->proposalRepository->store($data);
-        $this->proposalRepository->updateOrCreateVector($proposal, $vector);
+        return DB::transaction(function () use ($data, $vector, $attachments, $imageDescription): Proposal {
+            $proposal = $this->proposalRepository->store($data);
+            $this->proposalRepository->updateOrCreateVector($proposal, $vector);
+            if (!empty($attachments)) {
+                $this->saveAttachments($proposal, $attachments, $imageDescription);
+            }
 
-        // Сохраняем файлы после создания proposal
-        if (!empty($attachments)) {
-            $this->saveAttachments($proposal, $attachments, $imageDescription);
-        }
-
-        return $proposal->load('attachments');
+            return $proposal->load('attachments');
+        });
     }
 
     /**
@@ -102,7 +106,9 @@ readonly class ProposalService
 
             $respond = ProposalClassifierAgent::for(Random::generate())->message(ProposalClassifierAgent::buildMessage($data['content'], $categories))->respond();
             $categoryId = $respond['id'];
-            throw_if(Category::query()->whereId($categoryId)->doesntExist(), new \Exception("Category {$categoryId} not found"));
+
+            throw_if(!$this->dictionaryRepository->categoryExists($categoryId), new Exception("Category {$categoryId} not found"));
+
             $data['category_id'] = $categoryId;
         }
 
@@ -277,6 +283,10 @@ readonly class ProposalService
 
     /**
      * Сохранение прикрепленных файлов
+     * @param Proposal $proposal
+     * @param array $attachments
+     * @param string|null $description
+     * @return void
      */
     private function saveAttachments(Proposal $proposal, array $attachments, ?string $description = null): void
     {
@@ -286,18 +296,23 @@ readonly class ProposalService
             }
 
             $originalName = $file->getClientOriginalName();
-            $filename = uniqid() . '_' . $originalName;
-            $path = $file->storeAs('attachments/' . date('Y/m'), $filename, 'public');
+            $filename = uniqid() . '_' . Str::slug(pathinfo($originalName, PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
 
-            Attachment::query()->create([
-                'proposal_id' => $proposal->id,
-                'original_name' => $originalName,
-                'description' => $description,
-                'filename' => $filename,
-                'path' => $path,
-                'mime_type' => $file->getMimeType(),
-                'size' => $file->getSize(),
-            ]);
+            $path = Storage::disk('public')
+                ->putFileAs('attachments/' . date('Y/m'), $file, $filename);
+
+
+            $this->proposalRepository->storeAttachment(
+                [
+                    'proposal_id' => $proposal->id,
+                    'original_name' => $originalName,
+                    'description' => $description,
+                    'filename' => $filename,
+                    'path' => $path,
+                    'mime_type' => $file->getMimeType(),
+                    'size' => $file->getSize(),
+                ]
+            );
         }
     }
 }

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Services\AnalyticsService;
 use Illuminate\Http\Request;
 
+/**
+ * @group Analytics
+ */
 class AnalyticsController extends Controller
 {
     public function __construct(private readonly AnalyticsService $analyticsService)

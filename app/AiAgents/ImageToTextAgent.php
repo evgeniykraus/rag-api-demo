@@ -6,8 +6,6 @@ use LarAgent\Agent;
 
 class ImageToTextAgent extends Agent
 {
-    protected $apiUrl = 'http://host.docker.internal:1234/v1';
-    protected $model = 'qwen2-vl-2b-instruct';
     protected $history = 'in_memory';
     protected $provider = 'default';
     protected $temperature = 0.3;

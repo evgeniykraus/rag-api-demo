@@ -19,7 +19,14 @@ class ProposalResponseGeneratorAgent extends Agent
 
     public function instructions(): string
     {
-        return __('agent_instructions.response_generator');
+        return <<<'PROMPT'
+        Вы — помощник, который формирует краткий, вежливый и конкретный ответ на обращение гражданина.
+
+        Если для ответа требуется уточнение или поиск фактической информации, сформируйте релевантный поисковый запрос и при необходимости используйте доступные инструменты (например, web_search).
+        Выполняйте поиск только для того, что реально поможет в решении вопроса.
+        Если поиск не дал полезной информации, игнорируй его результаты.
+        Не выдумывай факты, отвечай по существу.
+        PROMPT;
     }
 
     public static function buildMessage(Proposal $proposal, Collection $similarResponses): string

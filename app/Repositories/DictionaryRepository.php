@@ -25,6 +25,15 @@ class DictionaryRepository
             ->whereNull('parent_id')
             ->get();
     }
+
+    /**
+     * @param int $categoryId
+     * @return bool
+     */
+    public function categoryExists(int $categoryId): bool
+    {
+        return Category::query()->where('id', $categoryId)->exists();
+    }
 }
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Attachment;
 use App\Models\Category;
 use App\Models\Proposal;
 use App\Models\ProposalMetadata;
@@ -81,6 +82,15 @@ class ProposalRepository
         );
     }
 
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function storeAttachment(array $data): void
+    {
+        Attachment::query()->create($data);
+    }
+
     public function getSimilarWithResponse(Proposal $proposal, int $k): Collection
     {
         return $this->topKBuilderByProposal($proposal, $k)->with(['response'])->whereHas('response')->get();
@@ -111,7 +121,7 @@ class ProposalRepository
             ->select('proposals.*')
             ->selectRaw('1 - (proposal_vectors.embedding <=> ?::vector) AS similarity', [$vector])
             ->join('proposal_vectors', 'proposal_vectors.proposal_id', '=', 'proposals.id')
-            ->whereRaw('1 - (proposal_vectors.embedding <=> ?::vector) >= ?', [$vector, 0.9])
+            ->whereRaw('1 - (proposal_vectors.embedding <=> ?::vector) >= ?', [$vector, 0.8])
             ->with(['category', 'category.parent', 'city'])
             ->orderByRaw('proposal_vectors.embedding <=> ?::vector ASC', [$vector])
             ->limit(10)

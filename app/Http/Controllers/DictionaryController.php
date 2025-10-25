@@ -7,6 +7,9 @@ use App\Http\Resources\CityResource;
 use App\Repositories\DictionaryRepository;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
+/**
+ * @group Dictionary
+ */
 class DictionaryController extends Controller
 {
     public function __construct(

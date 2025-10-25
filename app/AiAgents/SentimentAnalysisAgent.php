@@ -6,8 +6,6 @@ use LarAgent\Agent;
 
 class SentimentAnalysisAgent extends Agent
 {
-//    protected $model = 'multilingual-sentiment-analysis';
-    protected $model = 'meta-llama-3-8b-instruct';
     protected $history = 'in_memory';
     protected $provider = 'default';
     protected $temperature = 0.0;
@@ -37,6 +35,14 @@ class SentimentAnalysisAgent extends Agent
 
     public function instructions(): string
     {
-        return __('prompts.text_classification_prompt');
+        return <<<'PROMPT'
+        Ты — эксперт по анализу тональности русского текста.
+
+        Задача: классифицировать данный текст как один из вариантов:
+        "positive" — положительный (явно выражается благодарность, восхищение),
+        "negative" — отрицательный (явно выражается недовольство),
+        "neutral" — нейтральный (констатация фактов, нейтральный текст),
+        "meaningless" — бессмысленный (несвязный текст, шум или случайные символы.)
+        PROMPT;
     }
 }
