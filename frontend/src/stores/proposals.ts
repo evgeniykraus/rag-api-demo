@@ -8,6 +8,7 @@ export const useProposalsStore = defineStore('proposals', () => {
   const proposals = ref<Proposal[]>([])
   const currentProposal = ref<Proposal | null>(null)
   const loading = ref(false)
+  const isSearching = ref(false)
   const error = ref<string | null>(null)
   const pagination = ref({
     page: 1,
@@ -256,6 +257,7 @@ export const useProposalsStore = defineStore('proposals', () => {
 
   async function searchProposals(query: string) {
     try {
+      isSearching.value = true
       loading.value = true
       error.value = null
 
@@ -277,6 +279,7 @@ export const useProposalsStore = defineStore('proposals', () => {
       error.value = err.message || 'Ошибка поиска обращений'
       console.error('Error searching proposals:', err)
     } finally {
+      isSearching.value = false
       loading.value = false
     }
   }
@@ -291,6 +294,7 @@ export const useProposalsStore = defineStore('proposals', () => {
 
   function clearSearch() {
     filters.value.search = undefined
+    isSearching.value = false
     fetchProposals(1)
   }
 
@@ -310,6 +314,7 @@ export const useProposalsStore = defineStore('proposals', () => {
     proposals,
     currentProposal,
     loading,
+    isSearching,
     error,
     pagination,
     filters,

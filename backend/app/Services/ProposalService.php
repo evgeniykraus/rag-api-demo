@@ -10,7 +10,7 @@ use App\AiAgents\MetaDataExtractor\ResolutionAgent;
 use App\AiAgents\MetaDataExtractor\ToneClarityAgent;
 use App\AiAgents\ProposalClassifierAgent;
 use App\AiAgents\ProposalResponseGeneratorAgent;
-use App\Http\Resources\CategoryResource;
+use App\AiAgents\QueryEnrichmentAgent;
 use App\Jobs\AnalyzeProposalJob;
 use App\Models\Category;
 use App\Models\Proposal;
@@ -132,6 +132,10 @@ readonly class ProposalService
      */
     public function search(string $query): Collection
     {
+        try {
+            $query = QueryEnrichmentAgent::for(uniqid())->message($query)->respond()['expanded_query'];
+        } catch (Throwable $e) {
+        }
         return $this->proposalRepository->getTopKByVector(
             new Vector($this->embeddingsService->embedOne($query))
         );
