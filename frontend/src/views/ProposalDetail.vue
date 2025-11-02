@@ -551,7 +551,8 @@ import {
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 dayjs.extend(utc)
-const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8088'
+// Используем относительный путь, чтобы запросы шли через прокси Vite
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api'
 function fileUrl(path: string) {
   if (!path) return ''
   if (path.startsWith('http://') || path.startsWith('https://')) return path

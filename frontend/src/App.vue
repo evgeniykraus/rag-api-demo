@@ -1,10 +1,11 @@
 <template>
   <div id="app" class="min-h-screen bg-gray-50 dark:bg-gray-900">
     <RouterView />
+    <ChatAssistant />
   </div>
 </template>
 
 <script setup lang="ts">
-// App component
+import ChatAssistant from '@/components/common/ChatAssistant.vue'
 </script>
 

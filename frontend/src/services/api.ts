@@ -4,7 +4,6 @@ import type {
   Proposal,
   CreateProposalRequest,
   UpdateProposalRequest,
-  SearchProposalsRequest,
   City,
   CategoryTree,
   ApiError,
@@ -18,6 +17,7 @@ class ApiClient {
     this.client = axios.create({
       baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8088',
       timeout: 30000,
+      withCredentials: true, // Включаем отправку cookies для работы сессий
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
@@ -57,36 +57,36 @@ class ApiClient {
   // Proposals API
   async getProposals(page = 1, perPage = 15, additionalParams: any = {}): Promise<ApiResponse<Proposal[]>> {
     const params = { page, per_page: perPage, ...additionalParams }
-    const response = await this.client.get(`/api/v1/proposals`, {
+    const response = await this.client.get(`/v1/proposals`, {
       params
     })
     return response.data
   }
 
   async getProposal(id: number): Promise<Proposal> {
-    const response = await this.client.get(`/api/v1/proposals/${id}`)
+    const response = await this.client.get(`/v1/proposals/${id}`)
     return response.data
   }
 
   async createProposal(data: CreateProposalRequest | FormData): Promise<Proposal> {
     const isFormData = typeof FormData !== 'undefined' && data instanceof FormData
-    const response = await this.client.post('/api/v1/proposals', data, {
+    const response = await this.client.post('/v1/proposals', data, {
       headers: isFormData ? { 'Content-Type': 'multipart/form-data' } : undefined
     })
     return response.data
   }
 
   async updateProposal(id: number, data: UpdateProposalRequest): Promise<Proposal> {
-    const response = await this.client.put(`/api/v1/proposals/${id}`, data)
+    const response = await this.client.put(`/v1/proposals/${id}`, data)
     return response.data
   }
 
   async deleteProposal(id: number): Promise<void> {
-    await this.client.delete(`/api/v1/proposals/${id}`)
+    await this.client.delete(`/v1/proposals/${id}`)
   }
 
   async searchProposals(query: string): Promise<Proposal[]> {
-    const response = await this.client.get('/api/v1/proposals/search', {
+    const response = await this.client.get('/v1/proposals/search', {
       params: { query }
     })
     // API возвращает данные в формате {data: [...]}
@@ -94,13 +94,13 @@ class ApiClient {
   }
 
   async getSimilarProposals(id: number): Promise<Proposal[]> {
-    const response = await this.client.get(`/api/v1/proposals/${id}/similar`)
+    const response = await this.client.get(`/v1/proposals/${id}/similar`)
     return response.data.data || response.data
   }
 
   // Analytics API
   async getAnalyticsOverview(params: { from?: string; to?: string } = {}) {
-    const response = await this.client.get('/api/v1/analytics/overview', { params })
+    const response = await this.client.get('/v1/analytics/overview', { params })
     return response.data as {
       total_proposals: number
       period_proposals: number
@@ -110,49 +110,60 @@ class ApiClient {
   }
 
   async getAnalyticsByPeriod(params: { granularity?: 'day' | 'week' | 'month'; from?: string; to?: string } = {}) {
-    const response = await this.client.get('/api/v1/analytics/by-period', { params })
+    const response = await this.client.get('/v1/analytics/by-period', { params })
     return (response.data?.data || response.data) as Array<{ period: string; count: number }>
   }
 
   async getAnalyticsByCategory(limit = 10) {
-    const response = await this.client.get('/api/v1/analytics/by-category', { params: { limit } })
+    const response = await this.client.get('/v1/analytics/by-category', { params: { limit } })
     return (response.data?.data || response.data) as Array<{ category: string; count: number }>
   }
 
   async getAnalyticsByCity(limit = 10) {
-    const response = await this.client.get('/api/v1/analytics/by-city', { params: { limit } })
+    const response = await this.client.get('/v1/analytics/by-city', { params: { limit } })
     return (response.data?.data || response.data) as Array<{ city: string; count: number }>
   }
 
   // Proposal response API
   async postProposalResponse(id: number, content: string): Promise<Proposal> {
-    const response = await this.client.post(`/api/v1/proposals/${id}/response`, { content })
+    const response = await this.client.post(`/v1/proposals/${id}/response`, { content })
     return response.data
   }
 
   async aiGenerateProposalResponse(id: number): Promise<string> {
-    const response = await this.client.get(`/api/v1/proposals/${id}/response/ai-generate`)
+    const response = await this.client.get(`/v1/proposals/${id}/response/ai-generate`)
     // API returns { response: string }
     return response.data?.response ?? response.data
   }
 
   async analyzeProposal(id: number): Promise<void> {
-    await this.client.get(`/api/v1/proposals/${id}/analyze`)
+    await this.client.get(`/v1/proposals/${id}/analyze`)
   }
 
   async getProposalMetadata(id: number): Promise<ProposalMetadata> {
-    const response = await this.client.get(`/api/v1/proposals/${id}/meta-data`)
+    const response = await this.client.get(`/v1/proposals/${id}/meta-data`)
     // Laravel Resource может обернуть данные в 'data' ключ
     return response.data.data || response.data
   }
   // Dictionary API
   async getCities(): Promise<City[]> {
-    const response = await this.client.get('/api/v1/dictionary/cities')
+    const response = await this.client.get('/v1/dictionary/cities')
     return response.data
   }
 
   async getCategories(): Promise<CategoryTree[]> {
-    const response = await this.client.get('/api/v1/dictionary/categories')
+    const response = await this.client.get('/v1/dictionary/categories')
+    return response.data
+  }
+
+  // Chat API
+  async getChatHistory(): Promise<{ history: Array<{ role: string; content: string }>; count: number }> {
+    const response = await this.client.get('/v1/chat/history')
+    return response.data
+  }
+
+  async clearChatHistory(): Promise<{ success: boolean; message: string }> {
+    const response = await this.client.delete('/v1/chat/history')
     return response.data
   }
 }

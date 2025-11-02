@@ -8,6 +8,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AppLayout: typeof import('./src/components/common/AppLayout.vue')['default']
+    ChatAssistant: typeof import('./src/components/common/ChatAssistant.vue')['default']
+    ChatSection: typeof import('./src/components/common/ChatSection.vue')['default']
     ConfirmModal: typeof import('./src/components/common/ConfirmModal.vue')['default']
     DataTable: typeof import('./src/components/common/DataTable.vue')['default']
     EditProposalModal: typeof import('./src/components/common/EditProposalModal.vue')['default']
