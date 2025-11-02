@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatAssistantController;
 use App\Http\Controllers\DictionaryController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ProposalController;
@@ -36,6 +37,12 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('by-period', [AnalyticsController::class, 'byPeriod']);
         Route::get('by-category', [AnalyticsController::class, 'byCategory']);
         Route::get('by-city', [AnalyticsController::class, 'byCity']);
+    });
+
+    Route::group(['prefix' => 'chat'], function () {
+        Route::post('/', [ChatAssistantController::class, 'chat']);
+        Route::get('history', [ChatAssistantController::class, 'history']);
+        Route::delete('history', [ChatAssistantController::class, 'clearHistory']);
     });
 });
 

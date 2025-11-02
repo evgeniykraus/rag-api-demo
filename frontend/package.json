@@ -20,7 +20,10 @@
     "dayjs": "^1.11.0",
     "@heroicons/vue": "^2.0.18",
     "@headlessui/vue": "^1.7.16",
-    "clsx": "^2.0.0"
+    "clsx": "^2.0.0",
+    "markdown-it": "^14.0.0",
+    "markdown-it-multimd-table": "^4.2.3",
+    "dompurify": "^3.0.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.0",
@@ -36,6 +39,8 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.0.0",
-    "eslint-plugin-vue": "^9.0.0"
+    "eslint-plugin-vue": "^9.0.0",
+    "@types/dompurify": "^3.0.5",
+    "@types/markdown-it": "^14.0.1"
   }
 }
