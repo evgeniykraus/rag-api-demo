@@ -31,8 +31,18 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://localhost:8088',
-        changeOrigin: true
+        // В Docker используем имя сервиса nginx, локально - localhost:8088
+        target: process.env.DOCKER_ENV === 'true' ? 'http://nginx:80' : 'http://localhost:8088',
+        changeOrigin: true,
+        ws: true, // для WebSocket поддержки
+        // Включаем передачу cookies для работы сессий
+        cookieDomainRewrite: '',
+        // Важно для SSE - отключаем буферизацию
+        configure: (proxy, _options) => {
+          proxy.on('error', (err, _req, _res) => {
+            console.log('proxy error', err);
+          });
+        },
       }
     }
   },
